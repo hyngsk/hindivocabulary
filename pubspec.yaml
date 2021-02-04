@@ -1,0 +1,129 @@
+name: hindivocabulary
+description: A new Flutter application.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  url_launcher: ^5.4.0
+  flutter:
+    sdk: flutter
+  share: ^0.6.5+4
+  excel: ^1.1.5
+  auto_size_text: ^2.1.0
+  flutter_slidable:
+  swipedetector: 1.2.0
+
+  #앱 아이콘, 이름 의존성 설정
+  flutter_launcher_icons: ^0.7.3
+  flutter_launcher_name: ^0.0.1
+
+  cupertino_icons: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+#앱 아이콘 설정
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/title_icon.png"
+
+#앱 이름 설정
+flutter_launcher_name:
+  name: "HUFS 힌디어 단어장"
+
+flutter:
+  assets:
+    - pictures/indiaflag.jpg
+    - pictures/splash_logo.jpg
+    - pictures/cfl_logo.png
+    - pictures/remember_again.png
+    - assets/loading.gif
+    - assets/A0.xlsx
+    - assets/A1.xlsx
+    - assets/A2.xlsx
+    - assets/B1.xlsx
+
+    #Main 배너 책 광고
+    - pictures/informed_pictures/flex_book_picture.png
+    - pictures/informed_pictures/hindi_rootberb_voca_book_picture.png
+    - pictures/informed_pictures/hindi_verb_book_picture.png
+    - pictures/informed_pictures/hindi_a1_book.png
+
+    #Main 배너 팜플렛
+    - pictures/informed_pictures/hindi_songfestival_first.jpg
+    - pictures/informed_pictures/hindi_songfestival_second.jpg
+    - pictures/informed_pictures/hindi_songfestival_third.jpg
+
+    #etc 사진
+    - pictures/etc/loading_icon.png
+    - pictures/etc/title_share_icon.png
+
+    #학과 단어 아이콘 모음
+    - pictures/etc/elementary_hindi_reading.png
+    - pictures/etc/elementary_hindi_grammar.png
+    - pictures/etc/middle_hindi_reading.png
+    - pictures/etc/middle_hindi_grammar.png
+    - pictures/etc/elementary_hindi_reading.jpg
+    - pictures/etc/elementary_hindi_grammar.jpg
+    - pictures/etc/middle_hindi_reading.jpg
+    - pictures/etc/middle_hindi_grammar.jpg
+    - pictures/Flex_Logo/number_one.jpg
+    - pictures/Flex_Logo/number_two.jpg
+    - pictures/Flex_Logo/number_three.jpg
+    - pictures/Flex_Logo/number_four.jpg
+
+    #학과 단어, 힌디 단어장 메인 화면 베너
+    - pictures/etc/level_banner.jpg
+    - pictures/etc/major_banner.jpg
+    - pictures/etc/temp_major_banner.jpg
+
+    #CFLPT 단계별 로고
+    - pictures/CFLPT_Logo/CFLPT_A0.jpg
+    - pictures/CFLPT_Logo/CFLPT_A1.jpg
+    - pictures/CFLPT_Logo/CFLPT_A2.jpg
+    - pictures/CFLPT_Logo/CFLPT_B1.jpg
+    - pictures/CFLPT_Logo/CFLPT_B2.jpg
+    - pictures/CFLPT_Logo/CFLPT_C1.jpg
+    - pictures/CFLPT_Logo/CFLPT_C2.jpg
+
+    #단어장 선택 아이콘
+    - pictures/Choice_Voca/List_Voca.jpg
+    - pictures/Choice_Voca/One_by_one_voca.jpg
+    - pictures/Choice_Voca/Test_voca.jpg
+
+
+
+
+  uses-material-design: true
+
+  fonts:
+    - family: hufsfontBold
+      fonts:
+        - asset: fonts\hufsfontB.ttf
+
+    - family: hufsfontLight
+      fonts:
+        - asset: fonts\hufsfontL.ttf
+    - family: hufsfontMedium
+      fonts:
+        - asset: fonts\hufsfontM.ttf
+
