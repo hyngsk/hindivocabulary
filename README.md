@@ -1,6 +1,6 @@
 # hindivocabulary
 
-A new Flutter application.
+It's a cross flatform app. It's for students who are learning hindi in Repulbic of Korea. 
 
 ## Getting Started
 
