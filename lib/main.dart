@@ -10,20 +10,39 @@ import 'package:hindivocabulary/myVoca.dart';
 import 'package:hindivocabulary/rememberZone.dart';
 import 'package:hindivocabulary/makeTestSheet.dart';
 import 'dart:ui';
+import 'dart:io';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
+
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return WillPopScope(
+
+        onWillPop: () async => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: Text('단어장을 종료할까요?'),
+            actions: <Widget>[
+              RaisedButton(
+                  child: Text('아니오'),
+                  onPressed: () => Navigator.of(context).pop(false)),
+              RaisedButton(
+                  child: Text('예'),
+                  onPressed: () => exit(0)),
+            ])),
+    child: MaterialApp(
       title: "힌디 단어장",
       theme: ThemeData(
         primaryColor: Colors.white,
@@ -32,32 +51,24 @@ class _MyAppState extends State<MyApp> {
         length: 4,
         child: Main_AppBar(),
       ),
-    );
+    ),);
   }
 }
 
 class Main_AppBar extends StatefulWidget {
+
+
   @override
   _Main_AppBarState createState() => _Main_AppBarState();
 }
 
 class _Main_AppBarState extends State<Main_AppBar> {
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                  title: Text('단어장을 종료할까요?'),
-                  actions: <Widget>[
-                    RaisedButton(
-                        child: Text('아니오'),
-                        onPressed: () => Navigator.of(context).pop(false)),
-                    RaisedButton(
-                        child: Text('예'),
-                        onPressed: () => Navigator.of(context).pop(true)),
-                  ])),
-      child: SafeArea(
+    return
+       SafeArea(
+
         child: Scaffold(
           appBar: AppBar(
             leading: Builder(
@@ -90,6 +101,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
             ),
             bottom: TabBar(
               indicatorColor: Colors.white,
+
               labelColor: Colors.white,
               isScrollable: false,
               indicatorWeight: 1,
@@ -240,7 +252,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
             ],
           )),
         ),
-      ),
+
     );
   }
 }

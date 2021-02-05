@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:excel/excel.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:hindivocabulary/function/test_result_page.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
 import 'dart:async';
 import 'dart:math';
@@ -77,6 +79,13 @@ class _TestVocaState extends State<TestVoca> {
 
   //힌디 단어 시험인지, 한국어 의미 단어 시험인지 설정
   bool _choice_language = true;
+
+  //이번 해당 장에 틀린 힌디어 단어 리스트
+  List<String> wrong_hindi_words = new List<String>();
+  List<String> wrong_korean_words = new List<String>();
+
+
+
 
   Map<String, dynamic> make_question(
       bool choice_num,
@@ -229,16 +238,14 @@ class _TestVocaState extends State<TestVoca> {
                 this.hindi_word = snapshot.data[global_index][0].toString();
 
                 this.korean_word = snapshot.data[global_index][2].toString();
+              } else {
+                move_page(
+                    context,
+                    this.page_name,
+                    this._total_itemcount,
+                    this.correct,
+                    wrong_hindi_words,wrong_korean_words);
               }
-              // else
-              //   {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) {}
-              //       ),
-              //     );
-              //   }
             }
 
             List<String> hindi_wrong_word = [];
@@ -467,6 +474,7 @@ class _TestVocaState extends State<TestVoca> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
+                            alignment: Alignment.center,
                             width: horizontal_size * 0.84,
                             height: vertical_size * 0.23,
                             decoration: BoxDecoration(
@@ -482,13 +490,17 @@ class _TestVocaState extends State<TestVoca> {
                                 ]),
 
                             //color: Colors.white,
-                            child: AutoSizeText(question['main_word']),
+                            child: AutoSizeText(question['main_word'],maxFontSize: 30,minFontSize: 12,softWrap: true,style: TextStyle(
+                              fontSize: 25
+                            ),
+                            ),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           InkWell(
                               child: Container(
+                                alignment: Alignment.centerLeft,
                                 width: horizontal_size * 0.84,
                                 height: vertical_size * 0.065,
                                 decoration: BoxDecoration(
@@ -502,12 +514,15 @@ class _TestVocaState extends State<TestVoca> {
                                           blurRadius: 10.0,
                                           spreadRadius: 0.0)
                                     ]),
-                                child: AutoSizeText(question['wrong_word'][0]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 13),
+                                  child:AutoSizeText("1.   "+question['wrong_word'][0],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                      fontSize: 18
+                                  ),),),
                               ),
                               onTap: () {
                                 setState(() {
-                                  print("정답" +
-                                      question['correct_number'].toString());
+
                                   if (question['correct_number'] == 0) {
                                     correct++;
                                     count++;
@@ -524,6 +539,8 @@ class _TestVocaState extends State<TestVoca> {
                                             .toString(),
                                         snapshot.data[global_index][4]
                                             .toString());
+                                    wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                    wrong_korean_words.add(snapshot.data[global_index][2].toString());
                                     incorrect++;
                                     count++;
                                     global_index++;
@@ -535,6 +552,7 @@ class _TestVocaState extends State<TestVoca> {
                           ),
                           InkWell(
                               child: Container(
+                                alignment: Alignment.centerLeft,
                                 width: horizontal_size * 0.84,
                                 height: vertical_size * 0.065,
                                 decoration: BoxDecoration(
@@ -548,11 +566,14 @@ class _TestVocaState extends State<TestVoca> {
                                           blurRadius: 10.0,
                                           spreadRadius: 0.0)
                                     ]),
-                                child: AutoSizeText(question['wrong_word'][1]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 13),
+                                  child:AutoSizeText("2.   "+question['wrong_word'][1],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                      fontSize: 18
+                                  ),),),
                               ),
                               onTap: () {
-                                print("정답" +
-                                    question['correct_number'].toString());
+
                                 setState(() {
                                   if (question['correct_number'] == 1) {
                                     correct++;
@@ -570,6 +591,8 @@ class _TestVocaState extends State<TestVoca> {
                                             .toString(),
                                         snapshot.data[global_index][4]
                                             .toString());
+                                    wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                    wrong_korean_words.add(snapshot.data[global_index][2].toString());
                                     incorrect++;
                                     count++;
                                     global_index++;
@@ -581,6 +604,7 @@ class _TestVocaState extends State<TestVoca> {
                           ),
                           InkWell(
                               child: Container(
+                                alignment: Alignment.centerLeft,
                                 width: horizontal_size * 0.84,
                                 height: vertical_size * 0.065,
                                 decoration: BoxDecoration(
@@ -594,11 +618,14 @@ class _TestVocaState extends State<TestVoca> {
                                           blurRadius: 10.0,
                                           spreadRadius: 0.0)
                                     ]),
-                                child: AutoSizeText(question['wrong_word'][2]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 13),
+                                  child:AutoSizeText("3.   "+question['wrong_word'][2],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                      fontSize: 18
+                                  ),),),
                               ),
                               onTap: () {
-                                print("정답" +
-                                    question['correct_number'].toString());
+
                                 setState(() {
                                   if (question['correct_number'] == 2) {
                                     correct++;
@@ -616,6 +643,8 @@ class _TestVocaState extends State<TestVoca> {
                                             .toString(),
                                         snapshot.data[global_index][4]
                                             .toString());
+                                    wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                    wrong_korean_words.add(snapshot.data[global_index][2].toString());
                                     incorrect++;
                                     count++;
                                     global_index++;
@@ -627,6 +656,7 @@ class _TestVocaState extends State<TestVoca> {
                           ),
                           InkWell(
                             child: Container(
+                              alignment: Alignment.centerLeft,
                               width: horizontal_size * 0.84,
                               height: vertical_size * 0.065,
                               decoration: BoxDecoration(
@@ -640,12 +670,15 @@ class _TestVocaState extends State<TestVoca> {
                                         blurRadius: 10.0,
                                         spreadRadius: 0.0)
                                   ]),
-                              child: AutoSizeText(question['wrong_word'][3]),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 13),
+                                child:AutoSizeText("4.   "+question['wrong_word'][3],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                  fontSize: 18
+                              ),),),
                             ),
                             onTap: () {
                               setState(() {
-                                print("정답" +
-                                    question['correct_number'].toString());
+
                                 if (question['correct_number'] == 3) {
                                   correct++;
                                   count++;
@@ -656,8 +689,9 @@ class _TestVocaState extends State<TestVoca> {
                                       snapshot.data[global_index][1].toString(),
                                       snapshot.data[global_index][2].toString(),
                                       snapshot.data[global_index][3].toString(),
-                                      snapshot.data[global_index][4]
-                                          .toString());
+                                      snapshot.data[global_index][4].toString());
+                                  wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                  wrong_korean_words.add(snapshot.data[global_index][2].toString());
                                   incorrect++;
                                   count++;
                                   global_index++;
@@ -679,38 +713,16 @@ class _TestVocaState extends State<TestVoca> {
   }
 }
 
-void finish_alert(BuildContext context, String file_name)async  {
-  var alert = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "테스트 결과",
-            style: TextStyle(
-                fontSize: 20, letterSpacing: 2, fontFamily: 'hufsfontMedium'),
-          ),
-          content: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: Colors.white10,
-              borderRadius: BorderRadius.all(Radius.circular(45)),
-            ),
-            child: Text(
-              "단어 테스트 결과: \n틀린 단어들은 내 단어장으로 이동하였습니다.",
-              softWrap: true,
-              style: TextStyle(
-                  height: 1.5, fontSize: 15, fontFamily: 'hufsfontLight'),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () {
-                alert_backto_lobi(context, file_name);
-              },
-              child: Text("확인"),
-            ),
+//페이지 이동
+void move_page(BuildContext context, String page_name, int _total_itemcount,
+    int correct,List<String> wrong_hindi_words,List<String> wrong_korean_words){
 
-          ],
-        );
-      });
+  SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => test_result(
+                page_name, _total_itemcount, correct,wrong_hindi_words,wrong_korean_words)));
+  });
+
 }
