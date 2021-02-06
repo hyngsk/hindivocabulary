@@ -37,7 +37,9 @@ class hindiCommonVoca extends StatelessWidget {
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
     var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
 
     return Scaffold(
       backgroundColor: Colors.grey[200],

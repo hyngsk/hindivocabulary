@@ -98,7 +98,9 @@ class _word_list_vocaState extends State<word_list_voca> {
   @override
   Widget build(BuildContext context) {
     var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
 
     // TODO: implement build
     return new FutureBuilder(

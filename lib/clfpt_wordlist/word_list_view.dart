@@ -75,6 +75,8 @@ class level_State extends State<level_> {
           ),
           color: Colors.indigo,
           child: Container(
+            width: horizontal_size*0.7,
+            height: vertical_size*0.04,
             child: Text(
               '암기 방법 선택',
               style: TextStyle(
@@ -90,27 +92,29 @@ class level_State extends State<level_> {
         content: Builder(
           builder: (context) {
             var horizontal_size = MediaQuery.of(context).size.width;
-            var vertical_size = MediaQuery.of(context).size.height * 0.14;
+            var vertical_size = (MediaQuery.of(context).size.height -
+                AppBar().preferredSize.height -
+                MediaQuery.of(context).padding.top);
             return Container(
               margin: EdgeInsets.all(10),
               color: Colors.red.withOpacity(0),
-              width: 360,
-              height: vertical_size,
+              width: horizontal_size*0.8,
+              height: vertical_size*0.2,
               padding: EdgeInsets.zero,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
                     child: Container(
-                      width: 100,
-                      height: 80,
+                      width: horizontal_size*0.23,
+                      height: vertical_size*0.19,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             select_icon_for_word[0]['image'],
-                            width: 80,
-                            height: 55,
+                            width: horizontal_size*0.2,
+                            height: vertical_size*0.13,
                           ),
                           Text(
                             select_icon_for_word[0]['title'],
@@ -136,15 +140,15 @@ class level_State extends State<level_> {
                   ),
                   InkWell(
                     child: Container(
-                      width: 100,
-                      height: 80,
+                      width: horizontal_size*0.23,
+                      height: vertical_size*0.19,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             select_icon_for_word[1]['image'],
-                            width: 80,
-                            height: 55,
+                            width: horizontal_size*0.2,
+                            height: vertical_size*0.13,
                           ),
                           Text(
                             select_icon_for_word[1]['title'],
@@ -170,15 +174,16 @@ class level_State extends State<level_> {
                   ),
                   InkWell(
                     child: Container(
-                      width: 100,
-                      height: 80,
+                      width: horizontal_size*0.23,
+                      height: vertical_size*0.19,
+
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             select_icon_for_word[2]['image'],
-                            width: 80,
-                            height: 55,
+                            width: horizontal_size*0.2,
+                            height: vertical_size*0.13,
                           ),
                           Text(
                             select_icon_for_word[2]['title'],

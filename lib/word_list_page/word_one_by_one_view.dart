@@ -152,7 +152,9 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
   @override
   Widget build(BuildContext context) {
     var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
 
     return new FutureBuilder(
         future: make_word_list(_start_word_num, _finish_word_num, file_name),
@@ -471,7 +473,9 @@ class CustomCard_Behind extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
     return Container(
         decoration: BoxDecoration(
             color: this.color,

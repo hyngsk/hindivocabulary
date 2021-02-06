@@ -57,7 +57,9 @@ class _mainfunction extends State<home> {
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
     var horizontal_size = MediaQuery.of(context).size.width;
-
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
     return Scaffold(
       backgroundColor: Colors.white10,
       body: Column(
@@ -65,7 +67,7 @@ class _mainfunction extends State<home> {
         children: <Widget>[
           //배너 부분 컨테이너
           Container(
-            height: MediaQuery.of(context).size.height * 0.525,
+            height: vertical_size* 0.525,
             width: horizontal_size,
             margin: EdgeInsets.symmetric(horizontal: 0.1),
             alignment: Alignment.center,
@@ -89,7 +91,7 @@ class _mainfunction extends State<home> {
                     FadeInImage(
                       placeholder: AssetImage('assets/loading.gif'),
                       image: AssetImage(images[position]['image']),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.scaleDown,
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -128,13 +130,13 @@ class _mainfunction extends State<home> {
           //배너, 공지사항 부분 구분자
           Divider(
             color: Colors.black54,
-            height: 4,
+            height: vertical_size*0.01,
           ),
 
           //***공지사항 컨테이너***
           Container(
             width: horizontal_size,
-            height: MediaQuery.of(context).size.height * 0.31,
+            height: vertical_size * 0.31,
             margin: EdgeInsets.symmetric(horizontal: 1),
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
             alignment: Alignment.topLeft,
@@ -164,7 +166,7 @@ class _mainfunction extends State<home> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 25.0),
+                      SizedBox(height: vertical_size*0.03),
                       RichText(
                         text: TextSpan(
                           text: '▶ 특수외국어 기초교재 및 사전 이용 안내',
@@ -181,7 +183,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       RichText(
                         text: TextSpan(
                           text: '▶ CFLPT 모의테스트 시행 안내',
@@ -198,7 +200,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       RichText(
                         text: TextSpan(
                           text: '▶ 취업연계 전략시장 취업역량 캠프 안내',
@@ -215,7 +217,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       RichText(
                         text: TextSpan(
                           text: '▶ 특수외국어학회 CFLLS 회원모집 공고(수정)',
@@ -233,7 +235,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       RichText(
                         text: TextSpan(
                           text: '▶ 제1회 CFLLS 진로 세미나 대학원생편 안내',
@@ -250,7 +252,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       RichText(
                         text: TextSpan(
                           text: '▶ CFLLS K-POP 번안 노래부르기 공모전 결과 안내',
@@ -271,43 +273,44 @@ class _mainfunction extends State<home> {
                   ),
                 ),
                 Container(
+                  margin: EdgeInsets.only(top: vertical_size*0.03),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       //공지사항 게시 날짜 수정란
-                      SizedBox(height: 53.0),
+                      SizedBox(height: vertical_size*0.02),
                       //첫 번째 게시물 날짜
                       Text(
                         "20.12.15",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       //두 번째 게시물 날짜
                       Text(
                         "20.11.16",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       //세 번째 게시물 날짜
                       Text(
                         "20.11.16",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       //네 번째 게시물 날짜
                       Text(
                         "20.11.06",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       //다섯 번째 게시물 날짜
                       Text(
                         "20.11.04",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: 13.0),
+                      SizedBox(height: vertical_size*0.013),
                       //여섯 번째 게시물 날짜
                       Text(
                         "20.10.30",

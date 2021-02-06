@@ -118,12 +118,12 @@ flutter:
   fonts:
     - family: hufsfontBold
       fonts:
-        - asset: fonts\hufsfontB.ttf
+        - asset: fonts/hufsfontB.ttf
 
     - family: hufsfontLight
       fonts:
-        - asset: fonts\hufsfontL.ttf
+        - asset: fonts/hufsfontL.ttf
     - family: hufsfontMedium
       fonts:
-        - asset: fonts\hufsfontM.ttf
+        - asset: fonts/hufsfontM.ttf
 

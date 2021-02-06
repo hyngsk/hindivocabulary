@@ -223,7 +223,9 @@ class _TestVocaState extends State<TestVoca> {
   @override
   Widget build(BuildContext context) {
     var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top);
 
     return new FutureBuilder(
         future: make_word_list(_start_word_num, _finish_word_num, file_name),
@@ -395,7 +397,7 @@ class _TestVocaState extends State<TestVoca> {
                         children: [
                           Container(
                             alignment: Alignment.center,
-                            height: 80,
+                            height: vertical_size*0.15,
                             width: horizontal_size * 0.4,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -435,7 +437,7 @@ class _TestVocaState extends State<TestVoca> {
                           ),
                           Container(
                             alignment: Alignment.center,
-                            height: 80,
+                            height: vertical_size*0.15,
                             width: horizontal_size * 0.32,
                             child: Container(
                               child: Text(
@@ -459,7 +461,7 @@ class _TestVocaState extends State<TestVoca> {
                       margin:
                           EdgeInsets.symmetric(vertical: 22, horizontal: 15),
                       width: horizontal_size * 0.95,
-                      height: vertical_size * 0.61,
+                      height: vertical_size * 0.65,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(240, 242, 242, 242),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -496,7 +498,7 @@ class _TestVocaState extends State<TestVoca> {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: vertical_size*0.025,
                           ),
                           InkWell(
                               child: Container(
@@ -548,7 +550,7 @@ class _TestVocaState extends State<TestVoca> {
                                 });
                               }),
                           SizedBox(
-                            height: 12,
+                            height: vertical_size*0.015,
                           ),
                           InkWell(
                               child: Container(
@@ -600,7 +602,7 @@ class _TestVocaState extends State<TestVoca> {
                                 });
                               }),
                           SizedBox(
-                            height: 12,
+                            height: vertical_size*0.015,
                           ),
                           InkWell(
                               child: Container(
@@ -652,7 +654,7 @@ class _TestVocaState extends State<TestVoca> {
                                 });
                               }),
                           SizedBox(
-                            height: 12,
+                            height: vertical_size*0.015,
                           ),
                           InkWell(
                             child: Container(
