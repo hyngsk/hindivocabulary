@@ -156,7 +156,7 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top);
 
-    return new FutureBuilder(
+    return WillPopScope(child: new FutureBuilder(
         future: make_word_list(_start_word_num, _finish_word_num, file_name),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -265,7 +265,7 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
                         width: horizontal_size,
                         height: vertical_size * 0.06,
                         decoration:
-                            BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxDecoration(color: Colors.white, boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 2,
@@ -327,7 +327,7 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
                                         Color.fromARGB(240, 150, 131, 60)),
                                     onTap: flipCard,
                                     onHorizontalDragStart:
-                                        _onHorizontalDragStartHandler,
+                                    _onHorizontalDragStartHandler,
                                   ),
                                   animation: _backAnimation,
                                   builder:
@@ -348,9 +348,9 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
                                         Color.fromARGB(240, 112, 126, 250)),
                                     onTap: flipCard,
                                     onHorizontalDragStart:
-                                        _onHorizontalDragStartHandler,
+                                    _onHorizontalDragStartHandler,
                                     onVerticalDragStart:
-                                        _onVerticalDragStartHandler,
+                                    _onVerticalDragStartHandler,
                                   ),
                                   animation: _frontAnimation,
                                   builder:
@@ -373,7 +373,7 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
             );
           } else
             return Text("한 개당 보여주는 단어장 로딩 Failed");
-        });
+        }), onWillPop: () async => false);
   }
 }
 

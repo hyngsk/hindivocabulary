@@ -62,7 +62,7 @@ class hindiCommonVoca extends StatelessWidget {
           ),
           Container(
             width: horizontal_size,
-            height: vertical_size * 0.7,
+            height: vertical_size * 0.75,
             alignment: Alignment.center,
             child: GridView.builder(
               itemCount: major_icon_images.length,
@@ -96,7 +96,7 @@ class hindiCommonVoca extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    moving_link_cfl_list[index]),
+                                moving_link_cfl_list[index]),
                           ),
                         },
                         child: Container(

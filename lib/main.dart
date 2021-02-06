@@ -64,11 +64,12 @@ class Main_AppBar extends StatefulWidget {
 
 class _Main_AppBarState extends State<Main_AppBar> {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return
        SafeArea(
-
+        key:_scaffoldKey,
         child: Scaffold(
           appBar: AppBar(
             leading: Builder(

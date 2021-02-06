@@ -54,19 +54,20 @@ class majorVoca extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
+
             width: horizontal_size,
             height: vertical_size * 0.144,
-            alignment: Alignment.center,
-            // decoration: BoxDecoration(
-            //   border: Border.all(width: 0.1, color: Colors.black87),
-            // ),
+            alignment: Alignment.topCenter,
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.1, color: Colors.black87),
+            ),
             child:
                 Image.asset('pictures/etc/major_banner.jpg', fit: BoxFit.fill,height: vertical_size*0.144, width: horizontal_size,
                 ),
           ),
           Container(
             width: horizontal_size,
-            height: vertical_size *0.7,
+            height: vertical_size *0.75,
             alignment: Alignment.center,
             child: GridView.builder(
               itemCount: major_icon_images.length,

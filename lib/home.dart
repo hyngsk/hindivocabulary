@@ -136,7 +136,7 @@ class _mainfunction extends State<home> {
           //***공지사항 컨테이너***
           Container(
             width: horizontal_size,
-            height: vertical_size * 0.31,
+            height: vertical_size * 0.36,
             margin: EdgeInsets.symmetric(horizontal: 1),
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
             alignment: Alignment.topLeft,
@@ -183,7 +183,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       RichText(
                         text: TextSpan(
                           text: '▶ CFLPT 모의테스트 시행 안내',
@@ -200,7 +200,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       RichText(
                         text: TextSpan(
                           text: '▶ 취업연계 전략시장 취업역량 캠프 안내',
@@ -217,7 +217,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       RichText(
                         text: TextSpan(
                           text: '▶ 특수외국어학회 CFLLS 회원모집 공고(수정)',
@@ -235,7 +235,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       RichText(
                         text: TextSpan(
                           text: '▶ 제1회 CFLLS 진로 세미나 대학원생편 안내',
@@ -252,7 +252,7 @@ class _mainfunction extends State<home> {
                             },
                         ),
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       RichText(
                         text: TextSpan(
                           text: '▶ CFLLS K-POP 번안 노래부르기 공모전 결과 안내',
@@ -286,31 +286,31 @@ class _mainfunction extends State<home> {
                         "20.12.15",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       //두 번째 게시물 날짜
                       Text(
                         "20.11.16",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       //세 번째 게시물 날짜
                       Text(
                         "20.11.16",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       //네 번째 게시물 날짜
                       Text(
                         "20.11.06",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       //다섯 번째 게시물 날짜
                       Text(
                         "20.11.04",
                         style: announcement_text_style,
                       ),
-                      SizedBox(height: vertical_size*0.013),
+                      SizedBox(height: vertical_size*0.015),
                       //여섯 번째 게시물 날짜
                       Text(
                         "20.10.30",
