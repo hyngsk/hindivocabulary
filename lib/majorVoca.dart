@@ -67,7 +67,7 @@ class majorVoca extends StatelessWidget {
           ),
           Container(
             width: horizontal_size,
-            height: vertical_size *0.75,
+            height: vertical_size *0.7,
             alignment: Alignment.center,
             child: GridView.builder(
               itemCount: major_icon_images.length,
@@ -76,7 +76,7 @@ class majorVoca extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return new Card(
                   elevation: 4,
-                  margin: EdgeInsets.symmetric(horizontal: 7, vertical: 6),
+                  margin: EdgeInsets.symmetric(horizontal: horizontal_size*0.006, vertical: vertical_size*0.005),
                   color:  Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
@@ -99,7 +99,7 @@ class majorVoca extends StatelessWidget {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          margin: EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+                          margin: EdgeInsets.symmetric(vertical: vertical_size*0.008,horizontal: horizontal_size*0.01),
 
                           child: new Image.asset(major_icon_images[index]['image'],fit: BoxFit.fill,alignment: Alignment.center,width:200,height:250,),
 

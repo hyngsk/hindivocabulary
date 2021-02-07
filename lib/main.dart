@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:hindivocabulary/majorVoca.dart';
 import 'package:hindivocabulary/hindiCommonVoca.dart';
 import 'package:hindivocabulary/setting.dart';
-
+import 'package:hindivocabulary/function/unmemory_list.dart';
 import 'package:hindivocabulary/home.dart';
 import 'package:hindivocabulary/myVoca.dart';
 import 'package:hindivocabulary/rememberZone.dart';
@@ -200,7 +200,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     CupertinoPageRoute(
-                        builder: (BuildContext context) => myVoca()),
+                        builder: (BuildContext context) => myVoca(unMemory_words.list)),
                   );
                 },
               ),

@@ -7,52 +7,34 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
 
-//미 암기 단어 모음 리스트
-final List<Map<String, String>> unMemory_word_list =
-new List<Map<String, String>>();
 
 class myVoca extends StatefulWidget {
 
-  //단어 레벨 타이틀
-  String page_name;
-  String file_name;
+  //미암기 단어들 모음
+  List<Map<String, String>> my_Voca_list;
 
-  //단계별로 총 단어 수를 원하는 부분 별로 자르기 위한 변수
-  int start_word_num;
-  int finish_word_num;
-  int _total_itemcount;
 
-  //엑셀 파일 word list는 비동기 리스트라서 word_mean으로 강제 형 변환시킴
-  Future<List<dynamic>> word_list;
+
 
   //생성자 , 첫 번째 범위, 두 번째, 세 번째 단원을 나누는 범위
   myVoca(
-      {Key key,
-        @required this.start_word_num,
-        @required this.finish_word_num,
-        @required this.page_name,
-        @required this.file_name}) {
-    this.word_list = make_word_list(start_word_num, finish_word_num, file_name);
+      List<Map<String, String>>
 
-    this.page_name = page_name;
-    this.file_name = file_name;
-    this._total_itemcount = finish_word_num - start_word_num +1;
+        my_Voca_list) {
+    this.my_Voca_list = my_Voca_list;
+
+
   }
 
   @override
   _myVocaState createState() => _myVocaState(
-      start_word_num, finish_word_num, page_name, file_name);
+       my_Voca_list);
 }
 
 class _myVocaState extends State<myVoca> {
-  //단어 레벨 타이틀
-  String page_name;
-  String file_name;
+  //미암기 단어 리스트
+  List<Map<String, String>> my_Voca_list;
 
-  //단계별로 총 단어 수를 원하는 부분 별로 자르기 위한 변수
-  int _start_word_num;
-  int _finish_word_num;
-  int _total_itemcount;
 
   //힌디어 단어 가리기
   int alpha_hindi = 255;
@@ -70,19 +52,12 @@ class _myVocaState extends State<myVoca> {
   double font_size_hindi = 22;
   double font_size_korean = 13;
 
-  //엑셀 파일 word list는 비동기 리스트라서 word_mean으로 강제 형 변환시킴
-  Future<List<dynamic>> word_list;
 
 
 
-  _myVocaState(int start_word_num, int finish_word_num,
-      String page_name, String file_name) {
-    this._start_word_num = start_word_num;
-    this._finish_word_num = finish_word_num;
-    this.word_list = make_word_list(start_word_num, finish_word_num, file_name);
-    this.page_name = page_name;
-    this.file_name = file_name;
-    this._total_itemcount = finish_word_num - start_word_num +1;
+  _myVocaState(List<Map<String, String>> my_Voca_list) {
+    this.my_Voca_list = my_Voca_list;
+
   }
 
   //BottomNavigationBar
@@ -103,10 +78,10 @@ class _myVocaState extends State<myVoca> {
         MediaQuery.of(context).padding.top);
 
     // TODO: implement build
-    return new FutureBuilder(
-        future: make_word_list(_start_word_num, _finish_word_num, file_name),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
+    return new Builder(
+
+        builder: (BuildContext context) {
+
 
             return SafeArea(
                 child: Scaffold(
@@ -246,9 +221,9 @@ class _myVocaState extends State<myVoca> {
                                 width: horizontal_size * 0.4,
                                 height: vertical_size * 0.05,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(left: 0.5),
+
                                 child: Text(
-                                  page_name,
+                                  '미암기 단어',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'hufsfontMedium',
@@ -261,7 +236,7 @@ class _myVocaState extends State<myVoca> {
                                 width: horizontal_size * 0.32,
                                 height: vertical_size * 0.05,
                                 alignment: Alignment.center,
-                                child: Text("단어 수: "+_total_itemcount.toString()+"개",style: TextStyle(
+                                child: Text("단어 수: "+my_Voca_list.length.toString()+"개",style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'hufsfontMedium',
                                   fontWeight: FontWeight.w500,
@@ -283,22 +258,16 @@ class _myVocaState extends State<myVoca> {
                                     actionExtentRatio: 0.17,
                                     actions: <Widget>[
                                       IconSlideAction(
-                                        caption: '저장',
-                                        color: Color.fromARGB(200, 0, 0, 139),
+                                        caption: '삭',
+                                        color: Colors.red,
                                         icon: Icons.archive,
                                         onTap: () => setState(() {
-                                          unMemory_words(
 
-                                              snapshot.data[index][0].toString(),
-                                              snapshot.data[index][1].toString(),
-                                              snapshot.data[index][2].toString(),
-                                              snapshot.data[index][3].toString(),
-                                              snapshot.data[index][4].toString());
 
                                           var snackbar = SnackBar(
                                             behavior: SnackBarBehavior.floating,
                                             content:
-                                            Text("미암기 단어장에 해당 단어가 추가되었습니다."),
+                                            Text("해당 단어는 기억상자에서 확인할 수 있습니다."),
 
                                             action: SnackBarAction(
                                               label: "확인",
@@ -324,7 +293,7 @@ class _myVocaState extends State<myVoca> {
                                           padding: EdgeInsets.symmetric(
                                               vertical: 1, horizontal: 0.8),
                                           child: AutoSizeText(
-                                            snapshot.data[index][0],
+                                            my_Voca_list[index]['힌디어'],
                                             style: TextStyle(
                                               fontSize: font_size_hindi,
                                               fontWeight: FontWeight.w400,
@@ -339,7 +308,7 @@ class _myVocaState extends State<myVoca> {
                                           ),
                                         ),
                                         subtitle: AutoSizeText(
-                                          snapshot.data[index][2],
+                                          my_Voca_list[index]['품사'],
                                           style: TextStyle(
                                             fontSize: font_size_korean,
                                             fontWeight: FontWeight.w100,
@@ -357,7 +326,7 @@ class _myVocaState extends State<myVoca> {
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 5, horizontal: 16),
                                             child: AutoSizeText(
-                                              snapshot.data[index][1],
+                                              my_Voca_list[index]['의미'],
                                               style: TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w300),
@@ -369,7 +338,7 @@ class _myVocaState extends State<myVoca> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 16, vertical: 6),
                                             child: AutoSizeText(
-                                              snapshot.data[index][3],
+                                              my_Voca_list[index]['힌디어 예시'],
                                               style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w500),
@@ -381,7 +350,7 @@ class _myVocaState extends State<myVoca> {
                                             padding:
                                             EdgeInsets.fromLTRB(16, 5, 16, 10),
                                             child: AutoSizeText(
-                                              snapshot.data[index][4],
+                                                my_Voca_list[index]['한국어 예시'],
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w100),
@@ -401,15 +370,15 @@ class _myVocaState extends State<myVoca> {
                               separatorBuilder: (context, index) => Divider(
                                 color: Colors.black26,
                               ),
-                              itemCount: snapshot.data.length),
+                              itemCount: my_Voca_list.length),
                         ),
                       ],
                     ),
                   ),
                 ));
-          } else {
-            return Text('Data 로딩 실패');
           }
-        });
-  }
+    );
+          }
+
+
 }

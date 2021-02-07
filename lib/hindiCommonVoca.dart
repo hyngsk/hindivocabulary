@@ -62,7 +62,7 @@ class hindiCommonVoca extends StatelessWidget {
           ),
           Container(
             width: horizontal_size,
-            height: vertical_size * 0.75,
+            height: vertical_size * 0.7,
             alignment: Alignment.center,
             child: GridView.builder(
               itemCount: major_icon_images.length,

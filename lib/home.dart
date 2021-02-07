@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class home extends StatefulWidget {
   @override
@@ -67,7 +69,7 @@ class _mainfunction extends State<home> {
         children: <Widget>[
           //배너 부분 컨테이너
           Container(
-            height: vertical_size* 0.525,
+            height: vertical_size* 0.5,
             width: horizontal_size,
             margin: EdgeInsets.symmetric(horizontal: 0.1),
             alignment: Alignment.center,
@@ -97,7 +99,7 @@ class _mainfunction extends State<home> {
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         margin: EdgeInsets.only(bottom: 10),
-                        height: 10,
+                        height: vertical_size*0.01,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: images.map((image) {
@@ -136,191 +138,276 @@ class _mainfunction extends State<home> {
           //***공지사항 컨테이너***
           Container(
             width: horizontal_size,
-            height: vertical_size * 0.36,
-            margin: EdgeInsets.symmetric(horizontal: 1),
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
-            alignment: Alignment.topLeft,
+            height: vertical_size * 0.34,
+
+            //padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               border: Border.all(width: 1, color: Colors.black12),
               color: Colors.grey[200],
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child:
+            Column(
               children: [
                 Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: '공지사항',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.5,
-                            fontFamily: 'hufsfontMedium',
-                            fontSize: 25.0,
-                            color: Colors.black,
-                          ),
+                    padding: EdgeInsets.fromLTRB(horizontal_size*0.01, vertical_size*0.005, 0,0),
+                    width: horizontal_size,
+                    height: vertical_size*0.037,
+                    child:RichText(
+                      softWrap: true,
+                      text: TextSpan(
+                        text: '공지사항',
+
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.5,
+                          fontFamily: 'hufsfontMedium',
+                          fontSize: 25.0,
+                          color: Colors.black,
+
                         ),
                       ),
-                      SizedBox(height: vertical_size*0.03),
-                      RichText(
-                        text: TextSpan(
-                          text: '▶ 특수외국어 기초교재 및 사전 이용 안내',
-                          style: announcement_text_style,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              var url =
-                                  'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=634&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                        ),
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      RichText(
-                        text: TextSpan(
-                          text: '▶ CFLPT 모의테스트 시행 안내',
-                          style: announcement_text_style,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              var url =
-                                  'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=581&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                        ),
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      RichText(
-                        text: TextSpan(
-                          text: '▶ 취업연계 전략시장 취업역량 캠프 안내',
-                          style: announcement_text_style,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              var url =
-                                  'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=579&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                        ),
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      RichText(
-                        text: TextSpan(
-                          text: '▶ 특수외국어학회 CFLLS 회원모집 공고(수정)',
-                          style: announcement_text_style,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              //URL 수정 부분
-                              var url =
-                                  'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=552&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                        ),
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      RichText(
-                        text: TextSpan(
-                          text: '▶ 제1회 CFLLS 진로 세미나 대학원생편 안내',
-                          style: announcement_text_style,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              var url =
-                                  'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=545&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                        ),
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      RichText(
-                        text: TextSpan(
-                          text: '▶ CFLLS K-POP 번안 노래부르기 공모전 결과 안내',
-                          style: announcement_text_style,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              var url =
-                                  'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=535&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: vertical_size*0.03),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  width: horizontal_size,
+                  height: vertical_size*0.3,
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //공지사항 게시 날짜 수정란
-                      SizedBox(height: vertical_size*0.02),
-                      //첫 번째 게시물 날짜
-                      Text(
-                        "20.12.15",
-                        style: announcement_text_style,
+                      Container(
+                        width: horizontal_size*0.7,
+                        height: vertical_size*0.3,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+
+                            SizedBox(height: vertical_size*0.03),
+                            SizedBox(
+                              width: horizontal_size*0.7,
+                              height: vertical_size*0.03,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '▶ 특수외국어 기초교재 및 사전 이용 안내',
+                                  style: announcement_text_style,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      var url =
+                                          'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=634&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: vertical_size*0.005),
+                            SizedBox(
+                              width: horizontal_size*0.7,
+                              height: vertical_size*0.03,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '▶ CFLPT 모의테스트 시행 안내',
+                                  style: announcement_text_style,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      var url =
+                                          'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=581&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ),),
+
+                            SizedBox(height: vertical_size*0.005),
+                            SizedBox(
+
+                              width: horizontal_size*0.7,
+                              height: vertical_size*0.03,
+                              child: RichText(
+
+                                text: TextSpan(
+                                  text: '▶ 취업연계 전략시장 취업역량 캠프 안내',
+                                  style: announcement_text_style,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      var url =
+                                          'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=579&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ),),
+
+                            SizedBox(height: vertical_size*0.005),
+                            SizedBox(
+                              width: horizontal_size*0.7,
+                              height: vertical_size*0.03,
+
+                              child:RichText(
+                                text: TextSpan(
+                                  text: '▶ 특수외국어학회 CFLLS 회원모집 공고(수정)',
+                                  style: announcement_text_style,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      //URL 수정 부분
+                                      var url =
+                                          'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=552&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: vertical_size*0.005),
+                            SizedBox(
+                              width: horizontal_size*0.7,
+                              height: vertical_size*0.03,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '▶ 제1회 CFLLS 진로 세미나 대학원생편 안내',
+                                  style: announcement_text_style,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      var url =
+                                          'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=545&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ),),
+                            SizedBox(height: vertical_size*0.005),
+                            SizedBox(
+                              width: horizontal_size*0.7,
+                              height: vertical_size*0.03,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '▶ CFLLS K-POP 번안 노래부르기 공모전 결과 안내',
+                                  style: announcement_text_style,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      var url =
+                                          'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=535&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ),),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: vertical_size*0.015),
-                      //두 번째 게시물 날짜
-                      Text(
-                        "20.11.16",
-                        style: announcement_text_style,
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      //세 번째 게시물 날짜
-                      Text(
-                        "20.11.16",
-                        style: announcement_text_style,
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      //네 번째 게시물 날짜
-                      Text(
-                        "20.11.06",
-                        style: announcement_text_style,
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      //다섯 번째 게시물 날짜
-                      Text(
-                        "20.11.04",
-                        style: announcement_text_style,
-                      ),
-                      SizedBox(height: vertical_size*0.015),
-                      //여섯 번째 게시물 날짜
-                      Text(
-                        "20.10.30",
-                        style: announcement_text_style,
-                      ),
+                      Container(
+                        width: horizontal_size*0.25,
+                        height: vertical_size*0.3,
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(left: horizontal_size*0.1),
+                        //margin: EdgeInsets.only(top: vertical_size*0.035),
+                        child: Column(
+                          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            //공지사항 게시 날짜 수정란
+                            SizedBox(height: vertical_size*0.03),
+                            //첫 번째 게시물 날짜
+                            SizedBox(
+                              width: horizontal_size*0.25,
+                              height: vertical_size*0.02,
+                              child: AutoSizeText(
+                                "20.12.15",
+                                maxFontSize: 10,
+                                minFontSize: 6,
+                                style: announcement_text_style,
+                              ),),
+
+                            SizedBox(height: vertical_size*0.015),
+                            //두 번째 게시물 날짜
+                            SizedBox(
+                              width: horizontal_size*0.25,
+                              height: vertical_size*0.02,
+                              child: AutoSizeText(
+                                "20.11.16",
+                                maxFontSize: 10,
+                                minFontSize: 6,
+                                style: announcement_text_style,
+                              ),),
+                            SizedBox(height: vertical_size*0.015),
+                            //세 번째 게시물 날짜
+                            SizedBox(
+                              width: horizontal_size*0.25,
+                              height: vertical_size*0.02,
+                              child: AutoSizeText(
+                                "20.11.16",
+                                maxFontSize: 10,
+                                minFontSize: 6,
+                                style: announcement_text_style,
+                              ),),
+                            SizedBox(height: vertical_size*0.015),
+                            //네 번째 게시물 날짜
+                            SizedBox(
+                              width: horizontal_size*0.25,
+                              height: vertical_size*0.02,
+                              child: AutoSizeText(
+                                "20.11.06",
+                                maxFontSize: 10,
+                                minFontSize: 6,
+                                style: announcement_text_style,
+                              ),),
+                            SizedBox(height: vertical_size*0.015),
+                            //다섯 번째 게시물 날짜
+                            SizedBox(
+                              width: horizontal_size*0.25,
+                              height: vertical_size*0.02,
+                              child:AutoSizeText(
+                                "20.11.04",
+                                maxFontSize: 10,
+                                minFontSize: 6,
+                                style: announcement_text_style,
+                              ),),
+
+                            SizedBox(height: vertical_size*0.015),
+                            //여섯 번째 게시물 날짜
+                            SizedBox(
+                              width: horizontal_size*0.25,
+                              height: vertical_size*0.02,
+                              child: AutoSizeText(
+                                "20.10.30",
+                                maxFontSize: 10,
+                                minFontSize: 6,
+                                style: announcement_text_style,
+                              ),),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 )
               ],
             ),
+
           ),
         ],
       ),

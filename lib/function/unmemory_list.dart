@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 //안 외워진 단어 저장하는 리스트
@@ -60,15 +62,15 @@ class temp_unMemory_words {
 // //리스트형 안 외워지는 단어를 set형으로 변환시키는 함수
 // Set convertList(List<Map<String, String>> list)
 // {
-//   Set<Map<String,String>> setList =new Set();
+//   HashSet<Map<String,String>> setList =new HashSet();
 //
 //   for(int i =0; i<list.length; i++)
 //     {
 //       setList.add(list[i]);
 //     }
-//   for(Set i in setList)
+//   for(HashSet i in setList['힌디'])
 //     {
 //       print(i);
 //     }
-//   return setList;
+//   return setList;어
 // }
