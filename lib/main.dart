@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hindivocabulary/majorVoca.dart';
 import 'package:hindivocabulary/hindiCommonVoca.dart';
@@ -67,6 +68,8 @@ class _Main_AppBarState extends State<Main_AppBar> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+
+    print("전체 높이0:"+MediaQuery.of(context).size.height.toString());
     return
        SafeArea(
         key:_scaffoldKey,
@@ -74,6 +77,8 @@ class _Main_AppBarState extends State<Main_AppBar> {
           appBar: AppBar(
             leading: Builder(
               builder: (BuildContext context) {
+
+
                 return IconButton(
                   icon: const Icon(
                     Icons.menu,

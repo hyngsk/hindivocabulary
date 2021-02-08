@@ -62,6 +62,13 @@ class _mainfunction extends State<home> {
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top);
+
+    // var tapbar_height = (TabBar().preferredSize.height);
+    print("전체 높이:"+MediaQuery.of(context).size.height.toString());
+    print("앱바 높이:"+AppBar().preferredSize.height.toString());
+    print("패딩 탑 높이:"+MediaQuery.of(context).padding.top.toString());
+    print("앱바 높이/전체 높이:"+((AppBar().preferredSize.height)/(MediaQuery.of(context).size.height)).toString());
+    //print("탭바 높이:"+ tapbar_height.toString());
     return Scaffold(
       backgroundColor: Colors.white10,
       body: Column(
@@ -136,9 +143,9 @@ class _mainfunction extends State<home> {
           ),
 
           //***공지사항 컨테이너***
-          Container(
+          Expanded(child: Container(
             width: horizontal_size,
-            height: vertical_size * 0.39,
+            //height: vertical_size * 0.39,
 
             //padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
             alignment: Alignment.center,
@@ -151,24 +158,25 @@ class _mainfunction extends State<home> {
             Column(
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(horizontal_size*0.01, vertical_size*0.005, 0,0),
-                    width: horizontal_size,
-                    height: vertical_size*0.04,
-                    child:RichText(
-                      softWrap: true,
-                      text: TextSpan(
-                        text: '공지사항',
+                  margin:EdgeInsets.only(top: vertical_size*0.007),
+                  padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
+                  width: horizontal_size,
+                  height: vertical_size*0.04,
+                  child:RichText(
+                    softWrap: true,
+                    text: TextSpan(
+                      text: '공지사항',
 
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.5,
-                          fontFamily: 'hufsfontMedium',
-                          fontSize: 25.0,
-                          color: Colors.black,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.5,
+                        fontFamily: 'hufsfontMedium',
+                        fontSize: 25.0,
+                        color: Colors.black,
 
-                        ),
                       ),
                     ),
+                  ),
                 ),
                 Container(
                   width: horizontal_size,
@@ -189,7 +197,7 @@ class _mainfunction extends State<home> {
                             SizedBox(height: vertical_size*0.03),
                             SizedBox(
                               width: horizontal_size*0.7,
-                              height: vertical_size*0.03,
+                              height: vertical_size*0.032,
                               child: RichText(
                                 text: TextSpan(
                                   text: '▶ 특수외국어 기초교재 및 사전 이용 안내',
@@ -211,7 +219,7 @@ class _mainfunction extends State<home> {
                             SizedBox(height: vertical_size*0.005),
                             SizedBox(
                               width: horizontal_size*0.7,
-                              height: vertical_size*0.03,
+                              height: vertical_size*0.032,
                               child: RichText(
                                 text: TextSpan(
                                   text: '▶ CFLPT 모의테스트 시행 안내',
@@ -233,7 +241,7 @@ class _mainfunction extends State<home> {
                             SizedBox(
 
                               width: horizontal_size*0.7,
-                              height: vertical_size*0.03,
+                              height: vertical_size*0.032,
                               child: RichText(
 
                                 text: TextSpan(
@@ -255,7 +263,7 @@ class _mainfunction extends State<home> {
                             SizedBox(height: vertical_size*0.005),
                             SizedBox(
                               width: horizontal_size*0.7,
-                              height: vertical_size*0.03,
+                              height: vertical_size*0.032,
 
                               child:RichText(
                                 text: TextSpan(
@@ -279,7 +287,7 @@ class _mainfunction extends State<home> {
                             SizedBox(height: vertical_size*0.005),
                             SizedBox(
                               width: horizontal_size*0.7,
-                              height: vertical_size*0.03,
+                              height: vertical_size*0.032,
                               child: RichText(
                                 text: TextSpan(
                                   text: '▶ 제1회 CFLLS 진로 세미나 대학원생편 안내',
@@ -299,7 +307,7 @@ class _mainfunction extends State<home> {
                             SizedBox(height: vertical_size*0.005),
                             SizedBox(
                               width: horizontal_size*0.7,
-                              height: vertical_size*0.03,
+                              height: vertical_size*0.032,
                               child: RichText(
                                 text: TextSpan(
                                   text: '▶ CFLLS K-POP 번안 노래부르기 공모전 결과 안내',
@@ -321,7 +329,7 @@ class _mainfunction extends State<home> {
                       ),
                       Container(
                         width: horizontal_size*0.25,
-                        height: vertical_size*0.3,
+                        height: vertical_size*0.33,
                         alignment: Alignment.centerRight,
                         padding: EdgeInsets.only(left: horizontal_size*0.1),
                         //margin: EdgeInsets.only(top: vertical_size*0.035),
@@ -335,7 +343,7 @@ class _mainfunction extends State<home> {
                             //첫 번째 게시물 날짜
                             SizedBox(
                               width: horizontal_size*0.25,
-                              height: vertical_size*0.02,
+                              height: vertical_size*0.032,
                               child: AutoSizeText(
                                 "20.12.15",
                                 maxFontSize: 10,
@@ -343,44 +351,44 @@ class _mainfunction extends State<home> {
                                 style: announcement_text_style,
                               ),),
 
-                            SizedBox(height: vertical_size*0.015),
+                            SizedBox(height: vertical_size*0.005),
                             //두 번째 게시물 날짜
                             SizedBox(
                               width: horizontal_size*0.25,
-                              height: vertical_size*0.02,
+                              height: vertical_size*0.032,
                               child: AutoSizeText(
                                 "20.11.16",
                                 maxFontSize: 10,
                                 minFontSize: 6,
                                 style: announcement_text_style,
                               ),),
-                            SizedBox(height: vertical_size*0.015),
+                            SizedBox(height: vertical_size*0.005),
                             //세 번째 게시물 날짜
                             SizedBox(
                               width: horizontal_size*0.25,
-                              height: vertical_size*0.02,
+                              height: vertical_size*0.032,
                               child: AutoSizeText(
                                 "20.11.16",
                                 maxFontSize: 10,
                                 minFontSize: 6,
                                 style: announcement_text_style,
                               ),),
-                            SizedBox(height: vertical_size*0.015),
+                            SizedBox(height: vertical_size*0.005),
                             //네 번째 게시물 날짜
                             SizedBox(
                               width: horizontal_size*0.25,
-                              height: vertical_size*0.02,
+                              height: vertical_size*0.032,
                               child: AutoSizeText(
                                 "20.11.06",
                                 maxFontSize: 10,
                                 minFontSize: 6,
                                 style: announcement_text_style,
                               ),),
-                            SizedBox(height: vertical_size*0.015),
+                            SizedBox(height: vertical_size*0.005),
                             //다섯 번째 게시물 날짜
                             SizedBox(
                               width: horizontal_size*0.25,
-                              height: vertical_size*0.02,
+                              height: vertical_size*0.032,
                               child:AutoSizeText(
                                 "20.11.04",
                                 maxFontSize: 10,
@@ -388,11 +396,11 @@ class _mainfunction extends State<home> {
                                 style: announcement_text_style,
                               ),),
 
-                            SizedBox(height: vertical_size*0.015),
+                            SizedBox(height: vertical_size*0.005),
                             //여섯 번째 게시물 날짜
                             SizedBox(
                               width: horizontal_size*0.25,
-                              height: vertical_size*0.02,
+                              height: vertical_size*0.032,
                               child: AutoSizeText(
                                 "20.10.30",
                                 maxFontSize: 10,
@@ -408,7 +416,7 @@ class _mainfunction extends State<home> {
               ],
             ),
 
-          ),
+          ),),
         ],
       ),
     );
