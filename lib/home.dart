@@ -178,7 +178,7 @@ class _mainfunction extends State<home> {
                     ),
                   ),
                 ),
-                Container(
+                Expanded(child: Container(
                   width: horizontal_size,
                   height: vertical_size*0.34,
                   child: Row(
@@ -412,7 +412,7 @@ class _mainfunction extends State<home> {
                       )
                     ],
                   ),
-                )
+                )),
               ],
             ),
 
