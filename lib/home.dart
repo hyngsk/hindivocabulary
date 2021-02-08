@@ -65,7 +65,7 @@ class _mainfunction extends State<home> {
     return Scaffold(
       backgroundColor: Colors.white10,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           //배너 부분 컨테이너
           Container(
@@ -138,7 +138,7 @@ class _mainfunction extends State<home> {
           //***공지사항 컨테이너***
           Container(
             width: horizontal_size,
-            height: vertical_size * 0.34,
+            height: vertical_size * 0.39,
 
             //padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
             alignment: Alignment.center,
@@ -153,7 +153,7 @@ class _mainfunction extends State<home> {
                 Container(
                     padding: EdgeInsets.fromLTRB(horizontal_size*0.01, vertical_size*0.005, 0,0),
                     width: horizontal_size,
-                    height: vertical_size*0.037,
+                    height: vertical_size*0.04,
                     child:RichText(
                       softWrap: true,
                       text: TextSpan(
@@ -172,13 +172,13 @@ class _mainfunction extends State<home> {
                 ),
                 Container(
                   width: horizontal_size,
-                  height: vertical_size*0.3,
+                  height: vertical_size*0.34,
                   child: Row(
                     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         width: horizontal_size*0.7,
-                        height: vertical_size*0.3,
+                        height: vertical_size*0.33,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
