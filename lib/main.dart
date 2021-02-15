@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:hindivocabulary/majorVoca.dart';
+import 'package:hindivocabulary/hindiCommonVoca_Sentence.dart';
 import 'package:hindivocabulary/hindiCommonVoca.dart';
 import 'package:hindivocabulary/setting.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
@@ -113,7 +113,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
               indicatorWeight: 1,
               tabs: [
                 Tab(text: '홈'),
-                Tab(text: '문장 시'),
+                Tab(text: '문장 시험'),
                 Tab(text: '시험 단어'),
                 Tab(text: '설정')
               ],

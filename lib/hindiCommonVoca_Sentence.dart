@@ -8,30 +8,31 @@ import 'package:hindivocabulary/clfpt_wordlist/B2.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
+import 'package:hindivocabulary/clfpt_wordlist/word_list_view_sentence.dart';
 
 class hindiCommonVocaSentence extends StatelessWidget {
   @override
   final List<Map> major_icon_images = [
     {
       'id': 0,
-      'image': 'pictures/CFLPT_Logo/CFLPT_A0_Sentence.jpg',
+      'image': 'pictures/CFLPT_Logo/CFLPT_A0_Sentence.png',
       'title': 'CLFPT A0 '
     },
-    {'id': 1, 'image': 'pictures/CFLPT_Logo/CFLPT_A1_Sentence.jpg', 'title': 'CLFPT A1'},
-    {'id': 2, 'image': 'pictures/CFLPT_Logo/CFLPT_A2_Sentence.jpg', 'title': 'CLFPT A2'},
-    {'id': 3, 'image': 'pictures/CFLPT_Logo/CFLPT_B1_Sentence.jpg', 'title': 'CLFPT B1'},
-    {'id': 4, 'image': 'pictures/CFLPT_Logo/CFLPT_B2_Sentence.jpg', 'title': 'CLFPT B2'},
-    //{'id': 5, 'image': 'pictures/CFLPT_Logo/CFLPT_C1_Sentence.jpeg', 'title': 'CLFPT C1'},
-    //{'id': 6, 'image': 'pictures/CFLPT_Logo/CFLPT_C2_Sentence.jpeg', 'title': 'CLFPT C2'},
+    {'id': 1, 'image': 'pictures/CFLPT_Logo/CFLPT_A1_Sentence.png', 'title': 'CLFPT A1'},
+    {'id': 2, 'image': 'pictures/CFLPT_Logo/CFLPT_A2_Sentence.png', 'title': 'CLFPT A2'},
+    {'id': 3, 'image': 'pictures/CFLPT_Logo/CFLPT_B1_Sentence.png', 'title': 'CLFPT B1'},
+    {'id': 4, 'image': 'pictures/CFLPT_Logo/CFLPT_B2_Sentence.png', 'title': 'CLFPT B2'},
+    //{'id': 5, 'image': 'pictures/CFLPT_Logo/CFLPT_C1_Sentence.png', 'title': 'CLFPT C1'},
+    //{'id': 6, 'image': 'pictures/CFLPT_Logo/CFLPT_C2_Sentence.png', 'title': 'CLFPT C2'},
   ];
 
   //해당 CFL 레벨 클릭시 해당 패이지로 연결되는 리스트
   List<dynamic> moving_link_cfl_list = [
-    level_(A0_word_list_page, A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
-    level_(A1_word_list_page, A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
-    level_(A2_word_list_page, A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
-    level_(B1_word_list_page, B1_word_list_scale, "B1 단어장", "assets/B1.xlsx"),
-    level_(B1_word_list_page, B1_word_list_scale, "B2 단어장", "assets/B1.xlsx"),
+    level_Sentence(A0_word_list_page, A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
+    level_Sentence(A1_word_list_page, A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
+    level_Sentence(A2_word_list_page, A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
+    level_Sentence(B1_word_list_page, B1_word_list_scale, "B1 단어장", "assets/B1.xlsx"),
+    level_Sentence(B1_word_list_page, B1_word_list_scale, "B2 단어장", "assets/B1.xlsx"),
   ]; // C1,C2는 아직 안 만들어졌음
 
   Widget build(BuildContext context) {
@@ -55,14 +56,13 @@ class hindiCommonVocaSentence extends StatelessWidget {
             ),
             child: Image.asset(
               'pictures/etc/level_banner.jpg',
-              fit: BoxFit.fill,
+              fit: BoxFit.fitHeight,
               height: vertical_size * 0.144,
               width: horizontal_size,
             ),
           ),
-          Container(
-            width: horizontal_size,
-            height: vertical_size * 0.7,
+          Expanded(child: Container(
+
             alignment: Alignment.center,
             child: GridView.builder(
               itemCount: major_icon_images.length,
@@ -116,7 +116,8 @@ class hindiCommonVocaSentence extends StatelessWidget {
                 );
               },
             ),
-          ),
+          )),
+
         ],
       ),
     );

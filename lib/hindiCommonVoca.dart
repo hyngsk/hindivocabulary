@@ -60,9 +60,8 @@ class hindiCommonVoca extends StatelessWidget {
               width: horizontal_size,
             ),
           ),
-          Container(
-            width: horizontal_size,
-            height: vertical_size * 0.7,
+          Expanded(child: Container(
+            
             alignment: Alignment.center,
             child: GridView.builder(
               itemCount: major_icon_images.length,
@@ -116,7 +115,7 @@ class hindiCommonVoca extends StatelessWidget {
                 );
               },
             ),
-          ),
+          ))
         ],
       ),
     );

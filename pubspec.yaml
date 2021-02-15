@@ -106,13 +106,13 @@ flutter:
     - pictures/CFLPT_Logo/CFLPT_C2.jpg
 
     #CFLPT 단계별 문장 로고
-    - pictures/CFLPT_Logo/CFLPT_A0_Sentence.jpg
-    - pictures/CFLPT_Logo/CFLPT_A1_Sentence.jpg
-    - pictures/CFLPT_Logo/CFLPT_A2_Sentence.jpg
-    - pictures/CFLPT_Logo/CFLPT_B1_Sentence.jpg
-    - pictures/CFLPT_Logo/CFLPT_B2_Sentence.jpg
-    - pictures/CFLPT_Logo/CFLPT_C1_Sentence.jpg
-    - pictures/CFLPT_Logo/CFLPT_C2_Sentence.jpg
+    - pictures/CFLPT_Logo/CFLPT_A0_Sentence.png
+    - pictures/CFLPT_Logo/CFLPT_A1_Sentence.png
+    - pictures/CFLPT_Logo/CFLPT_A2_Sentence.png
+    - pictures/CFLPT_Logo/CFLPT_B1_Sentence.png
+    - pictures/CFLPT_Logo/CFLPT_B2_Sentence.png
+    - pictures/CFLPT_Logo/CFLPT_C1_Sentence.png
+    - pictures/CFLPT_Logo/CFLPT_C2_Sentence.png
 
 
     #단어장 선택 아이콘
