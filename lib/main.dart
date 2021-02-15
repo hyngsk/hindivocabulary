@@ -113,7 +113,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
               indicatorWeight: 1,
               tabs: [
                 Tab(text: '홈'),
-                Tab(text: '학과 단어'),
+                Tab(text: '문장 시'),
                 Tab(text: '시험 단어'),
                 Tab(text: '설정')
               ],
@@ -123,7 +123,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
             physics: NeverScrollableScrollPhysics(),
             children: [
               Center(child: home()),
-              Center(child: majorVoca()),
+              Center(child: hindiCommonVocaSentence()),
               Center(child: hindiCommonVoca()),
               Center(child: setting())
             ],
@@ -251,7 +251,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     CupertinoPageRoute(
-                        builder: (BuildContext context) => makeTestSheet()),
+                        builder: (BuildContext context) => majorVoca()),
                   );
                 },
               ),
