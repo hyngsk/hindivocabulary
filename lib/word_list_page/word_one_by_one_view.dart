@@ -308,7 +308,7 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
                         ),
                       ),
                       Container(
-                        height: vertical_size * 0.84,
+                        height: vertical_size * 0.81,
                         width: horizontal_size,
                         alignment: Alignment.center,
                         child: Center(
@@ -542,7 +542,7 @@ class CustomCard_Behind extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: vertical_size * 0.04),
+            SizedBox(height: vertical_size * 0.023),
             Container(
               width: horizontal_size * 0.7,
               height: vertical_size * 0.27,

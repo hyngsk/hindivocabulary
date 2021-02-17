@@ -114,7 +114,7 @@ class level_SentenceState extends State<level_Sentence> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => new sentence_Test(
+                                  builder: (context) => new Sentence_Test(
                                       this_page_start_num,
                                       this_page_end_num,
                                       wordlist[index],
