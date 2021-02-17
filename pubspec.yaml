@@ -29,6 +29,7 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_slidable:
   swipedetector: 1.2.0
+  animated_widgets: ^1.0.6
 
   #앱 아이콘, 이름 의존성 설정
   flutter_launcher_icons: ^0.7.3
