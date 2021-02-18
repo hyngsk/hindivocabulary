@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -110,8 +112,13 @@ class _SentenceTestState extends State<SentenceTest>
   //인덱스
   int global_index = 0;
 
-  //오답이면 카드가 뒤집혀지는 것을 결정하는 변수
-  bool change_desicion;
+  //선택하지 않고 넘기려거나 탭하려고 할 때 진동이 울리게 하는 함수
+  //아무 것도 정답 선택하지 않으면 true, 답을 선택하면 false
+  bool change_desicion = true;
+
+  //정답이면 체크가 나오게하는 변슈
+  bool check_decision_right = true;
+  bool check_decision_wrong = true;
 
   //단어 리스트에 있는 인덱스와 한 번 만 초기화하기 위한 count 변수
   int index = 0;
@@ -123,6 +130,9 @@ class _SentenceTestState extends State<SentenceTest>
   //챕터별 모든 문장 학습이 끝나면 틀린 단어 모아 볼 수 있게하는 리스트 변수
   List<String> wrong_hindi_words;
   List<String> wrong_korean_words;
+
+  //o,x 를 선택하지 않을 때 다른 행동을 강제하는 변수
+  bool change_decision = true;
 
   _SentenceTestState(int start_word_num, int finish_word_num, String page_name,
       String file_name) {
@@ -185,59 +195,86 @@ class _SentenceTestState extends State<SentenceTest>
     );
   }
 
-  Widget wrongAnswer_flip(bool change_decision) {
-    if (change_decision) {
-      print("답이 틀림");
-      Stack(
-        children: <Widget>[
-          AnimatedBuilder(
-              child: GestureDetector(
-                  child: CustomCard_Behind(
-                      this.hindi_word,
-                      this.korean_word,
-                      this.word_case,
-                      this.hindi_example,
-                      this.korean_example,
-                      this.korean_wrong_example,
-                      this.count,
-                      this._total_itemcount,
-                      this.result_right_num,
-                      Color.fromARGB(240, 150, 131, 60)),
-                  onTap: warning_Tap),
-              animation: _backAnimation,
-              builder: (BuildContext context, Widget child) {
-                return Transform(
-                  alignment: FractionalOffset.center,
-                  child: child,
-                  transform: Matrix4.identity()..rotateY(_backAnimation.value),
-                );
-              }),
-          AnimatedBuilder(
-              child: GestureDetector(
-                child: CustomCard_Front(
+  //답 선택 전이면 진동, 선택 후는 카드를 넘길 수 있는 함수
+  void decide_flipcard_or_warning(bool decision) {
+    if (decision) {
+      warning_Tap();
+    } else {
+      flipCard();
+    }
+  }
+
+  //카드 넘기기 기능만 있는 함수
+  Widget flip_func(bool change_decision,String right_or_wrong){
+    Stack(
+      children: <Widget>[
+        AnimatedBuilder(
+            child: GestureDetector(
+                child: CustomCard_Behind(
+                    this.hindi_word,
+                    this.korean_word,
+                    this.word_case,
                     this.hindi_example,
+                    this.korean_example,
                     this.korean_wrong_example,
                     this.count,
                     this._total_itemcount,
                     this.result_right_num,
-                    Color.fromARGB(240, 112, 126, 250)),
-                onTap: flipCard,
-              ),
-              animation: _frontAnimation,
-              builder: (BuildContext context, Widget child) {
-                return Transform(
-                  alignment: FractionalOffset.center,
-                  child: child,
-                  transform: Matrix4.identity()..rotateY(_frontAnimation.value),
-                );
-              }),
-        ],
-      );
+                    right_or_wrong,
+                    Color.fromARGB(255, 18, 28, 132)),
+                onTap: flipCard),
+            animation: _backAnimation,
+            builder: (BuildContext context, Widget child) {
+              return Transform(
+                alignment: FractionalOffset.center,
+                child: child,
+                transform: Matrix4.identity()..rotateY(_backAnimation.value),
+              );
+            }),
+        AnimatedBuilder(
+            child: GestureDetector(
+              child: CustomCard_Front(
+                  this.hindi_example,
+                  this.korean_wrong_example,
+                  this.count,
+                  this._total_itemcount,
+                  this.result_right_num,
+                  right_or_wrong,
+                  Color.fromARGB(255, 130, 120, 218)),
+              onTap: () {
+                if (!this.change_desicion) {
+                  flipCard();
+                } else {
+                  warning_Tap();
+                }
+              },
+            ),
+            animation: _frontAnimation,
+            builder: (BuildContext context, Widget child) {
+              return Transform(
+                alignment: FractionalOffset.center,
+                child: child,
+                transform: Matrix4.identity()..rotateY(_frontAnimation.value),
+              );
+            }),
+      ],
+    );
+  }
+
+  //정답이면 다른 단어로 넘어가고 아니면 답을 확인하는 함수
+  Widget wrongAnswer_flip(bool change_decision, bool right, bool wrong) {
+    if (right ==false && wrong ==true) {
+      String result = 'wrong';
+      print("답이 틀림");
+      flip_func(change_decision,result);
     } else {
       print("답이 맞음");
-      result_right_num++;
+      String result = 'right';
+      flip_func(change_decision,result);
+      Timer(Duration(seconds: 2),(){result_right_num++;
       count++;
-      global_index++;
+      global_index++;});
+
     }
   }
 
@@ -410,71 +447,15 @@ class _SentenceTestState extends State<SentenceTest>
                             ),
                           ),
                           SizedBox(
-                            height: vertical_size*0.02,
+                            height: vertical_size * 0.02,
                           ),
-
                           Container(
                             height: vertical_size * 0.77,
                             width: horizontal_size,
                             alignment: Alignment.center,
                             child: Center(
                               // ignore: missing_return
-                              child: Stack(
-                                children: <Widget>[
-                                  AnimatedBuilder(
-                                      child: GestureDetector(
-                                        child: CustomCard_Behind(
-                                            this.hindi_word,
-                                            this.korean_word,
-                                            this.word_case,
-                                            this.hindi_example,
-                                            this.korean_wrong_example,
-                                            this.korean_example,
-                                            this.count,
-                                            this._total_itemcount,
-                                            this.result_right_num,
-                                            Color.fromARGB(240, 150, 131, 60)),
-                                        onTap: flipCard,
-                                        onHorizontalDragStart:
-                                            _onHorizontalDragStartHandler,
-                                      ),
-                                      animation: _backAnimation,
-                                      builder:
-                                          (BuildContext context, Widget child) {
-                                        return Transform(
-                                          alignment: FractionalOffset.center,
-                                          child: child,
-                                          transform: Matrix4.identity()
-                                            ..rotateY(_backAnimation.value),
-                                        );
-                                      }),
-                                  AnimatedBuilder(
-                                      child: GestureDetector(
-                                        child: CustomCard_Front(
-                                            this.hindi_example,
-                                            this.korean_wrong_example,
-                                            this.count,
-                                            this._total_itemcount,
-                                            this.result_right_num,
-                                            Color.fromARGB(240, 112, 126, 250)),
-                                        onTap: flipCard,
-                                        onHorizontalDragStart:
-                                            _onHorizontalDragStartHandler,
-                                        onVerticalDragStart:
-                                            _onVerticalDragStartHandler,
-                                      ),
-                                      animation: _frontAnimation,
-                                      builder:
-                                          (BuildContext context, Widget child) {
-                                        return Transform(
-                                          alignment: FractionalOffset.center,
-                                          child: child,
-                                          transform: Matrix4.identity()
-                                            ..rotateY(_frontAnimation.value),
-                                        );
-                                      }),
-                                ],
-                              ),
+                              child: wrongAnswer_flip(change_decision, check_decision_right, check_decision_wrong),
                             ),
                           ),
                           Divider(
@@ -509,13 +490,17 @@ class _SentenceTestState extends State<SentenceTest>
                                       setState(() {
                                         if (right_num.compareTo('1') == 0) {
                                           this.change_desicion = false;
-                                          wrongAnswer_flip(
-                                              this.change_desicion);
+                                          this.check_decision_right = true;
+                                          this.check_decision_wrong = false;
+                                          wrongAnswer_flip(this.change_desicion,
+                                              this.check_decision_right,this.check_decision_wrong);
                                         } else {
-                                          change_desicion = true;
+                                          this.change_desicion = false;
+                                          this.check_decision_right = false;
+                                          this.check_decision_wrong = true;
 
-                                          wrongAnswer_flip(
-                                              this.change_desicion);
+                                          wrongAnswer_flip(this.change_desicion,this.check_decision_right,
+                                              this.check_decision_wrong);
                                           // wrong_hindi_words.add(snapshot
                                           //     .data[global_index][0]
                                           //     .toString());
@@ -550,11 +535,17 @@ class _SentenceTestState extends State<SentenceTest>
                                     setState(() {
                                       if (right_num.compareTo('0') == 0) {
                                         this.change_desicion = false;
-                                        wrongAnswer_flip(this.change_desicion);
+                                        this.check_decision_right = true;
+                                        this.check_decision_wrong = false;
+                                        wrongAnswer_flip(this.change_desicion,
+                                            this.check_decision_right,this.check_decision_wrong);
                                       } else {
-                                        change_desicion = true;
+                                        change_desicion = false;
+                                        this.check_decision_right = false;
+                                        this.check_decision_wrong = true;
 
-                                        wrongAnswer_flip(this.change_desicion);
+                                        wrongAnswer_flip(this.change_desicion,this.check_decision_right,
+                                            this.check_decision_wrong);
                                         // wrong_hindi_words.add(snapshot
                                         //     .data[global_index][0]
                                         //     .toString());
@@ -588,14 +579,16 @@ class CustomCard_Front extends StatelessWidget {
   int count;
   String total_count;
   int right_count;
+  String right_or_wrong;
 
   CustomCard_Front(String _hindi_sentence, String _korean_question, int count,
-      int total_count,int right_count, Color color) {
+      int total_count, int right_count,String right_or_wrong, Color color) {
     this._hindi_sentence = _hindi_sentence;
     this._korean_question = _korean_question;
     this.color = color;
     this.count = count;
-    this.right_count= right_count;
+    this.right_count = right_count;
+    this.right_or_wrong = right_or_wrong;
     this.total_count = total_count.toString();
   }
 
@@ -629,7 +622,10 @@ class CustomCard_Front extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       child: AutoSizeText(
-                        "진행: "+this.count.toString() + "/" + total_count.toString(),
+                        "진행: " +
+                            this.count.toString() +
+                            "/" +
+                            total_count.toString(),
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -648,7 +644,10 @@ class CustomCard_Front extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       child: AutoSizeText(
-                        "점수: " + right_count.toString()+"/"+total_count.toString(),
+                        "점수: " +
+                            right_count.toString() +
+                            "/" +
+                            total_count.toString(),
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -658,10 +657,7 @@ class CustomCard_Front extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ),
-
-
               ],
             ),
             SizedBox(
@@ -680,6 +676,10 @@ class CustomCard_Front extends StatelessWidget {
             Stack(
               alignment: Alignment.center,
               children: [
+                Divider(
+                  thickness: 1,
+                  color: Colors.white,
+                ),
                 Container(
                   width: horizontal_size * 0.2,
                   height: vertical_size * 0.05,
@@ -706,10 +706,6 @@ class CustomCard_Front extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(
-                  thickness: 1,
-                  color: Colors.white24,
-                )
               ],
             ),
             SizedBox(
@@ -737,13 +733,19 @@ class CustomCard_Behind extends StatelessWidget {
   String _hindi_example;
   String _korean_question;
   String _korean_right_answer;
+
   //인덱스
   int count;
+
   //총 단어 갯수
   int total_count;
   Color color;
+
   //정답 갯수
   int right_count;
+
+  //맞으면 정답 표시 뜨게 하는 것
+  String right_or_wrong;
 
   CustomCard_Behind(
       String _hindi_word,
@@ -752,9 +754,11 @@ class CustomCard_Behind extends StatelessWidget {
       String _hindi_example,
       String _korean_question,
       String _korean_right_answer,
+
       int count,
       int total_count,
       int right_count,
+      String right_or_wrong,
       Color color) {
     this._hindi_word = _hindi_word;
     this._korean_word = _korean_word;
@@ -764,7 +768,8 @@ class CustomCard_Behind extends StatelessWidget {
     this._korean_right_answer = _korean_right_answer;
     this.count = count;
     this.total_count = total_count;
-    this.right_count= right_count;
+    this.right_count = right_count;
+    this.right_or_wrong = right_or_wrong;
     this.color = color;
   }
 
@@ -786,25 +791,28 @@ class CustomCard_Behind extends StatelessWidget {
                   spreadRadius: 0.0)
             ]),
         width: horizontal_size * 0.8,
-        height: vertical_size * 0.6,
+        height: vertical_size * 0.65,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [
                 SizedBox(
-                  width: horizontal_size * 0.35,
+                  width: horizontal_size * 0.28,
                   height: vertical_size * 0.05,
                   child: Container(
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       child: AutoSizeText(
-                        "진행: "+this.count.toString() + "/" + total_count.toString(),
+                        "진행: " +
+                            this.count.toString() +
+                            "/" +
+                            total_count.toString(),
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black38),
+                            color: Colors.white70),
                         maxLines: 1,
                         minFontSize: 15,
                       ),
@@ -812,30 +820,41 @@ class CustomCard_Behind extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: horizontal_size * 0.35,
+                  width: horizontal_size * 0.28,
                   height: vertical_size * 0.05,
                   child: Container(
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       child: AutoSizeText(
-                        "점수: " + right_count.toString()+"/"+total_count.toString(),
+                        "점수: " +
+                            right_count.toString() +
+                            "/" +
+                            total_count.toString(),
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black38),
+                            color: Colors.white70),
                         maxLines: 1,
                         minFontSize: 15,
                       ),
                     ),
                   ),
-
                 ),
-
-
+                OpacityAnimatedWidget.tween(
+                    opacityEnabled: 1,
+                    opacityDisabled: 0,
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      height: vertical_size * 0.05,
+                      width: horizontal_size * 0.14,
+                      child: Icon(
+                        Icons.done_outline,
+                        color: Colors.white,
+                      ),
+                    ))
               ],
             ),
-
             SizedBox(height: vertical_size * 0.03),
             Container(
               width: horizontal_size * 0.7,
@@ -846,6 +865,7 @@ class CustomCard_Behind extends StatelessWidget {
                 child: AutoSizeText(
                   this._hindi_word,
                   style: TextStyle(
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'hufsfontMedium'),
                   maxLines: 3,
@@ -861,13 +881,16 @@ class CustomCard_Behind extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 child: AutoSizeText(
                   this._korean_word,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500),
                   maxLines: 3,
                   minFontSize: 10,
                 ),
               ),
             ),
-            SizedBox(height: vertical_size * 0.02),
+            SizedBox(height: vertical_size * 0.04),
             Container(
               width: horizontal_size * 0.7,
               height: vertical_size * 0.35,
@@ -926,29 +949,25 @@ class CustomCard_Behind extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    width: horizontal_size * 0.7,
-                    height: vertical_size * 0.035,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: horizontal_size * 0.64,
-                        height: vertical_size * 0.05,
-                        decoration: BoxDecoration(
-                          color: Colors.white10,
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        ),
-                        child: AutoSizeText(
-                          "문제",
-                          style: TextStyle(
-                              color: Colors.black38,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 3),
-                          maxLines: 1,
-                          minFontSize: 12,
-                        ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: horizontal_size * 0.64,
+                      height: vertical_size * 0.02,
+                      decoration: BoxDecoration(
+                        color: Colors.white10,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      child: AutoSizeText(
+                        "문제",
+                        style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 3),
+                        maxLines: 1,
+                        minFontSize: 12,
                       ),
                     ),
                   ),
@@ -968,29 +987,25 @@ class CustomCard_Behind extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    width: horizontal_size * 0.7,
-                    height: vertical_size * 0.035,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: horizontal_size * 0.64,
-                        height: vertical_size * 0.05,
-                        decoration: BoxDecoration(
-                          color: Colors.white10,
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        ),
-                        child: AutoSizeText(
-                          "정답",
-                          style: TextStyle(
-                              color: Colors.black38,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 3),
-                          maxLines: 1,
-                          minFontSize: 12,
-                        ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: horizontal_size * 0.64,
+                      height: vertical_size * 0.02,
+                      decoration: BoxDecoration(
+                        color: Colors.white10,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      child: AutoSizeText(
+                        "정답",
+                        style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 3),
+                        maxLines: 1,
+                        minFontSize: 12,
                       ),
                     ),
                   ),
