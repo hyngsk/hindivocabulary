@@ -81,9 +81,6 @@ class SentenceTest extends StatefulWidget {
 
 class _SentenceTestState extends State<SentenceTest>
     with TickerProviderStateMixin {
-  AnimationController _flipCardController;
-  Animation<double> _frontAnimation;
-  Animation<double> _backAnimation;
 
   //해당 단어 파트 이름
   String page_name;
@@ -114,11 +111,10 @@ class _SentenceTestState extends State<SentenceTest>
 
   //선택하지 않고 넘기려거나 탭하려고 할 때 진동이 울리게 하는 함수
   //아무 것도 정답 선택하지 않으면 true, 답을 선택하면 false
-  bool change_desicion = true;
+  bool change_decision = false;
 
-  //정답이면 체크가 나오게하는 변슈
-  bool check_decision_right = true;
-  bool check_decision_wrong = true;
+  //정답이면 체크가 나오게하는 변수, 답이면 1 오답이면 0
+  int check_right;
 
   //단어 리스트에 있는 인덱스와 한 번 만 초기화하기 위한 count 변수
   int index = 0;
@@ -131,9 +127,6 @@ class _SentenceTestState extends State<SentenceTest>
   List<String> wrong_hindi_words;
   List<String> wrong_korean_words;
 
-  //o,x 를 선택하지 않을 때 다른 행동을 강제하는 변수
-  bool change_decision = true;
-
   _SentenceTestState(int start_word_num, int finish_word_num, String page_name,
       String file_name) {
     this._start_word_num = start_word_num;
@@ -144,38 +137,6 @@ class _SentenceTestState extends State<SentenceTest>
     this._total_itemcount = finish_word_num - start_word_num + 1;
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    _flipCardController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-
-    // play from 0  to 0.5s
-    _frontAnimation = Tween<double>(begin: 0.0, end: 0.5 * pi).animate(
-        CurvedAnimation(parent: _flipCardController, curve: Interval(0, 0.5)));
-
-    // delay in 0.5s(wait for the front flip completed) and then play
-    _backAnimation = Tween<double>(begin: 1.5 * pi, end: 2 * pi).animate(
-        CurvedAnimation(parent: _flipCardController, curve: Interval(0.5, 1)));
-  }
-
-  @override
-  void dispose() {
-    _flipCardController.dispose();
-    super.dispose();
-  }
-
-  void flipCard() {
-    result_wrong_num++;
-    count++;
-    global_index++;
-    if (_flipCardController.isDismissed) {
-      _flipCardController.forward();
-    } else {
-      _flipCardController.reverse();
-    }
-  }
 
   //답을 선택하지 않고 카드를 탭하면 흔들리는 경고성 메세지 함수
   void warning_Tap() {
@@ -194,88 +155,73 @@ class _SentenceTestState extends State<SentenceTest>
       ),
     );
   }
-
-  //답 선택 전이면 진동, 선택 후는 카드를 넘길 수 있는 함수
-  void decide_flipcard_or_warning(bool decision) {
-    if (decision) {
-      warning_Tap();
-    } else {
-      flipCard();
-    }
+  
+  //정답이면 정답 아이콘이 뜨고 오답이면 오답 아이콘이 뜨게하는 함수
+  Widget decision_Icon(int right_or_wrong,bool decision ){
+    if(decision==true && right_or_wrong==1)
+      {
+        Icon(
+          Icons.check
+        );
+      }
+    if(decision==true && right_or_wrong==0)
+      {
+        Icon(
+          Icons.warning_rounded
+        );
+      }
   }
+  //단어 답 선택 후 카드 크기가 커질 때 같이 나오는 한국어 문장 답, 힌디어 뜻, 한국어 뜻
+  Widget largesize_meaning(bool decision,double horizontal_size, double vertical_size)
+  {
+    if(decision)
+      {
+        return Container(
+          height: vertical_size*0.4,
+          width: horizontal_size*0.8,
+          child:Column(
+            children: [
+              Container(
+                width: horizontal_size*0.8,
+                height: vertical_size*0.1,
+                child:AutoSizeText("정답",minFontSize: 20,maxFontSize: 25,style: TextStyle(
+                    fontWeight: FontWeight.bold,fontSize: 23
+                ),),
+              ),
+              Container(
+                width: horizontal_size*0.8,
+                height: vertical_size*0.1,
+                child:AutoSizeText(korean_example,minFontSize: 20,maxFontSize: 25,style: TextStyle(
+                    fontWeight: FontWeight.bold,fontSize: 23
+                ),),
+              ),
+              Container(
+                width: horizontal_size*0.8,
+                height: vertical_size*0.05,
+                child:AutoSizeText('단어 ',minFontSize: 20,maxFontSize: 25,style: TextStyle(
+                    fontWeight: FontWeight.bold,fontSize: 23
+                ),),
+              ),
 
-  //카드 넘기기 기능만 있는 함수
-  Widget flip_func(bool change_decision,String right_or_wrong){
-    Stack(
-      children: <Widget>[
-        AnimatedBuilder(
-            child: GestureDetector(
-                child: CustomCard_Behind(
-                    this.hindi_word,
-                    this.korean_word,
-                    this.word_case,
-                    this.hindi_example,
-                    this.korean_example,
-                    this.korean_wrong_example,
-                    this.count,
-                    this._total_itemcount,
-                    this.result_right_num,
-                    right_or_wrong,
-                    Color.fromARGB(255, 18, 28, 132)),
-                onTap: flipCard),
-            animation: _backAnimation,
-            builder: (BuildContext context, Widget child) {
-              return Transform(
-                alignment: FractionalOffset.center,
-                child: child,
-                transform: Matrix4.identity()..rotateY(_backAnimation.value),
-              );
-            }),
-        AnimatedBuilder(
-            child: GestureDetector(
-              child: CustomCard_Front(
-                  this.hindi_example,
-                  this.korean_wrong_example,
-                  this.count,
-                  this._total_itemcount,
-                  this.result_right_num,
-                  right_or_wrong,
-                  Color.fromARGB(255, 130, 120, 218)),
-              onTap: () {
-                if (!this.change_desicion) {
-                  flipCard();
-                } else {
-                  warning_Tap();
-                }
-              },
-            ),
-            animation: _frontAnimation,
-            builder: (BuildContext context, Widget child) {
-              return Transform(
-                alignment: FractionalOffset.center,
-                child: child,
-                transform: Matrix4.identity()..rotateY(_frontAnimation.value),
-              );
-            }),
-      ],
-    );
-  }
+              Container(
+                width: horizontal_size*0.8,
+                height: vertical_size*0.05,
+                child:AutoSizeText(hindi_word,minFontSize: 20,maxFontSize: 25,style: TextStyle(
+                    fontWeight: FontWeight.bold,fontSize: 23
+                ),),
+              ),
+              Container(
+                width: horizontal_size*0.8,
+                height: vertical_size*0.05,
+                child:AutoSizeText(korean_word,minFontSize: 20,maxFontSize: 25,style: TextStyle(
+                    fontWeight: FontWeight.bold,fontSize: 23
+                ),),
+              ),
 
-  //정답이면 다른 단어로 넘어가고 아니면 답을 확인하는 함수
-  Widget wrongAnswer_flip(bool change_decision, bool right, bool wrong) {
-    if (right ==false && wrong ==true) {
-      String result = 'wrong';
-      print("답이 틀림");
-      flip_func(change_decision,result);
-    } else {
-      print("답이 맞음");
-      String result = 'right';
-      flip_func(change_decision,result);
-      Timer(Duration(seconds: 2),(){result_right_num++;
-      count++;
-      global_index++;});
-
-    }
+            ],
+          )
+        );
+      }
   }
 
   @override
@@ -304,22 +250,17 @@ class _SentenceTestState extends State<SentenceTest>
 
                 //양 옆으로 밀었을 때 swipe 하는 기능
                 void _onHorizontalDragStartHandler(DragStartDetails details) {
+
                   setState(() {
-                    if (details.globalPosition.dx.floorToDouble() <
-                        horizontal_size * 0.5) {
-                      if (this.index > 0) {
-                        this.index--;
-                        count--;
-                      }
-                    } else {
-                      if (this.index == _total_itemcount - 1) {
+
+                      if (this.index == _total_itemcount - 1 && this.change_decision == true) {
                         alert_backto_lobi(context, this.file_name);
                       }
-                      if (this.index < _total_itemcount - 1) {
+                      if (this.index < _total_itemcount - 1 && this.change_decision == true) {
                         this.index++;
                         count++;
                       }
-                    }
+
                     this.hindi_word = snapshot.data[index][0].toString();
                     this.word_case = snapshot.data[index][1].toString();
                     this.korean_word = snapshot.data[index][2].toString();
@@ -332,34 +273,9 @@ class _SentenceTestState extends State<SentenceTest>
                   });
                 }
 
-                void _onVerticalDragStartHandler(DragStartDetails details) {
-                  setState(() {
-                    if (details.globalPosition.dy.floorToDouble() >
-                        vertical_size * 0.3) {
-                      unMemory_words(
-                        snapshot.data[index][0].toString(),
-                        snapshot.data[index][1].toString(),
-                        snapshot.data[index][2].toString(),
-                        snapshot.data[index][3].toString(),
-                        snapshot.data[index][4].toString(),
-                      );
 
-                      var snackbar = SnackBar(
-                        backgroundColor: Colors.white,
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          "미암기 단어장에 해당 단어가 추가되었습니다.",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        action: SnackBarAction(
-                          label: "확인",
-                          onPressed: () {},
-                        ),
-                      );
-                      Scaffold.of(context).showSnackBar(snackbar);
-                    }
-                  });
-                }
+
+
 
                 return SafeArea(
                   child: Scaffold(
@@ -412,6 +328,7 @@ class _SentenceTestState extends State<SentenceTest>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                //페이지 이름
                                 Container(
                                   width: horizontal_size * 0.4,
                                   height: vertical_size * 0.05,
@@ -427,6 +344,7 @@ class _SentenceTestState extends State<SentenceTest>
                                     ),
                                   ),
                                 ),
+                                //단어 갯수
                                 Container(
                                   width: horizontal_size * 0.32,
                                   height: vertical_size * 0.05,
@@ -449,19 +367,133 @@ class _SentenceTestState extends State<SentenceTest>
                           SizedBox(
                             height: vertical_size * 0.02,
                           ),
-                          Container(
-                            height: vertical_size * 0.77,
-                            width: horizontal_size,
-                            alignment: Alignment.center,
-                            child: Center(
-                              // ignore: missing_return
-                              child: wrongAnswer_flip(change_decision, check_decision_right, check_decision_wrong),
-                            ),
-                          ),
+                          GestureDetector(
+                            onTap: (){
+                              setState(() {
+                                if(this.change_decision==false)
+                                  warning_Tap();
+                                else
+                                  _onHorizontalDragStartHandler;
+                              });
+                            },
+                            child: Container(
+
+                              width: horizontal_size*0.8,
+                              height: vertical_size*0.7,
+                              child: Center(
+                                child:
+
+
+
+
+                                    Container(
+
+                                      decoration: BoxDecoration(
+                                          color: Color.fromARGB(240, 112, 126, 250),
+                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                          boxShadow: [
+                                            new BoxShadow(
+                                                color: Colors.black26,
+                                                offset: new Offset(10.0, 10.0),
+                                                blurRadius: 20.0,
+                                                spreadRadius: 0.0)
+                                          ]),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                                            children: [
+                                              Container(
+                                                width: horizontal_size*0.2,
+                                                height: vertical_size*0.1,
+                                                padding: EdgeInsets.symmetric(vertical: vertical_size*0.01),
+                                                child: Text(
+                                                  "진행: "+count.toString()+"/"+_total_itemcount.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white70,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 17
+                                                  ),
+
+                                                ),
+                                              ),
+
+                                              Container(
+                                                width: horizontal_size*0.2,
+                                                height: vertical_size*0.1,
+                                                padding: EdgeInsets.symmetric(vertical: vertical_size*0.01),
+                                                child: Text(
+                                                  "점수: "+result_right_num.toString()+"/"+_total_itemcount.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white70,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 17
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: horizontal_size*0.2,
+                                                height: vertical_size*0.1,
+                                                padding: EdgeInsets.symmetric(vertical: vertical_size*0.01),
+                                                child: AnimatedOpacity(
+                                                  opacity: change_decision? 0.0 : 1.0,
+                                                  duration: Duration(microseconds: 500),
+                                                  child: decision_Icon(check_right,change_decision),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          //힌디어 문장
+                                          Container(
+                                            width: horizontal_size*0.8,
+                                            height: vertical_size*0.1,
+                                            alignment: Alignment.center,
+                                            child: AutoSizeText(hindi_example,minFontSize: 15,maxFontSize: 40,style: TextStyle(
+                                                fontSize: 30, fontWeight: FontWeight.bold
+                                            ),),
+                                          ),
+                                          //한국어 문장 문제
+                                          Container(
+                                            width: horizontal_size*0.8,
+                                            height: vertical_size*0.1,
+                                            alignment: Alignment.center,
+                                            child: AutoSizeText(korean_wrong_example,minFontSize: 15,maxFontSize: 25,style: TextStyle(
+                                                fontSize: 20, fontWeight: FontWeight.bold
+                                            ),
+                                            ),
+                                          ),
+                                      Container(
+                                        width: horizontal_size*0.2,
+                                        height: vertical_size*0.4,
+                                        padding: EdgeInsets.symmetric(vertical: vertical_size*0.01),
+                                        child: AnimatedOpacity(
+                                          opacity: change_decision? 0.0 : 1.0,
+                                          duration: Duration(microseconds: 500),
+                                          child: largesize_meaning(change_decision,horizontal_size,vertical_size),
+                                        ),)
+
+                                        ],
+                                      ),
+
+                                    ),
+
+
+
+
+                                  ),
+                              ),
+
+                              ),
+
+
+
                           Divider(
                             height: vertical_size * 0.005,
                           ),
                           Expanded(
+                            //width: horizontal_size,
+                              //height: vertical_size*0.15,
                               child: Container(
                             padding:
                                 EdgeInsets.only(bottom: vertical_size * 0.01),
@@ -488,26 +520,17 @@ class _SentenceTestState extends State<SentenceTest>
                                     ),
                                     onTap: () {
                                       setState(() {
+                                        this.count++;
+                                        this.change_decision = true;
                                         if (right_num.compareTo('1') == 0) {
-                                          this.change_desicion = false;
-                                          this.check_decision_right = true;
-                                          this.check_decision_wrong = false;
-                                          wrongAnswer_flip(this.change_desicion,
-                                              this.check_decision_right,this.check_decision_wrong);
+
+                                          this.result_right_num++;
+                                          this.check_right = 1;
+
+
                                         } else {
-                                          this.change_desicion = false;
-                                          this.check_decision_right = false;
-                                          this.check_decision_wrong = true;
 
-                                          wrongAnswer_flip(this.change_desicion,this.check_decision_right,
-                                              this.check_decision_wrong);
-                                          // wrong_hindi_words.add(snapshot
-                                          //     .data[global_index][0]
-                                          //     .toString());
-                                          // wrong_korean_words.add(snapshot
-                                          //     .data[global_index][2]
-                                          //     .toString());
-
+                                          this.check_right = 0;
                                         }
                                       });
                                     }),
@@ -532,26 +555,20 @@ class _SentenceTestState extends State<SentenceTest>
                                     ),
                                   ),
                                   onTap: () {
-                                    setState(() {
-                                      if (right_num.compareTo('0') == 0) {
-                                        this.change_desicion = false;
-                                        this.check_decision_right = true;
-                                        this.check_decision_wrong = false;
-                                        wrongAnswer_flip(this.change_desicion,
-                                            this.check_decision_right,this.check_decision_wrong);
-                                      } else {
-                                        change_desicion = false;
-                                        this.check_decision_right = false;
-                                        this.check_decision_wrong = true;
 
-                                        wrongAnswer_flip(this.change_desicion,this.check_decision_right,
-                                            this.check_decision_wrong);
-                                        // wrong_hindi_words.add(snapshot
-                                        //     .data[global_index][0]
-                                        //     .toString());
-                                        // wrong_korean_words.add(snapshot
-                                        //     .data[global_index][2]
-                                        //     .toString());
+                                    setState(() {
+                                      this.change_decision = true;
+                                      this.count++;
+                                      if (right_num.compareTo('0') == 0) {
+
+                                        this.result_right_num++;
+                                        this.check_right = 1;
+                                      } else {
+
+
+                                        this.check_right = 0;
+
+
 
                                       }
                                     });
@@ -569,466 +586,5 @@ class _SentenceTestState extends State<SentenceTest>
                 return Text("한 개당 보여주는 단어장 로딩 Failed");
             }),
         onWillPop: () async => false);
-  }
-}
-
-class CustomCard_Front extends StatelessWidget {
-  String _hindi_sentence;
-  String _korean_question;
-  Color color;
-  int count;
-  String total_count;
-  int right_count;
-  String right_or_wrong;
-
-  CustomCard_Front(String _hindi_sentence, String _korean_question, int count,
-      int total_count, int right_count,String right_or_wrong, Color color) {
-    this._hindi_sentence = _hindi_sentence;
-    this._korean_question = _korean_question;
-    this.color = color;
-    this.count = count;
-    this.right_count = right_count;
-    this.right_or_wrong = right_or_wrong;
-    this.total_count = total_count.toString();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
-    return Container(
-        decoration: BoxDecoration(
-            color: this.color,
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            boxShadow: [
-              new BoxShadow(
-                  color: Colors.black26,
-                  offset: new Offset(10.0, 10.0),
-                  blurRadius: 20.0,
-                  spreadRadius: 0.0)
-            ]),
-        width: horizontal_size * 0.8,
-        height: vertical_size * 0.6,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: horizontal_size * 0.35,
-                  height: vertical_size * 0.05,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                      child: AutoSizeText(
-                        "진행: " +
-                            this.count.toString() +
-                            "/" +
-                            total_count.toString(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black38),
-                        maxLines: 1,
-                        minFontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: horizontal_size * 0.35,
-                  height: vertical_size * 0.05,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                      child: AutoSizeText(
-                        "점수: " +
-                            right_count.toString() +
-                            "/" +
-                            total_count.toString(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black38),
-                        maxLines: 1,
-                        minFontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: horizontal_size * 0.6,
-              height: vertical_size * 0.2,
-              child: Container(
-                alignment: Alignment.center,
-                child: AutoSizeText(
-                  this._hindi_sentence,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
-                  maxLines: 2,
-                  minFontSize: 20,
-                ),
-              ),
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Divider(
-                  thickness: 1,
-                  color: Colors.white,
-                ),
-                Container(
-                  width: horizontal_size * 0.2,
-                  height: vertical_size * 0.05,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: horizontal_size * 0.64,
-                      height: vertical_size * 0.05,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      ),
-                      child: AutoSizeText(
-                        "문제",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 3),
-                        maxLines: 1,
-                        minFontSize: 12,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: horizontal_size * 0.6,
-              height: vertical_size * 0.25,
-              child: Container(
-                alignment: Alignment.center,
-                child: AutoSizeText(
-                  this._korean_question,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
-                  maxLines: 2,
-                  minFontSize: 18,
-                ),
-              ),
-            ),
-          ],
-        ));
-  }
-}
-
-class CustomCard_Behind extends StatelessWidget {
-  String _korean_word;
-  String _hindi_word;
-  String _word_class;
-  String _hindi_example;
-  String _korean_question;
-  String _korean_right_answer;
-
-  //인덱스
-  int count;
-
-  //총 단어 갯수
-  int total_count;
-  Color color;
-
-  //정답 갯수
-  int right_count;
-
-  //맞으면 정답 표시 뜨게 하는 것
-  String right_or_wrong;
-
-  CustomCard_Behind(
-      String _hindi_word,
-      String _korean_word,
-      String _word_class,
-      String _hindi_example,
-      String _korean_question,
-      String _korean_right_answer,
-
-      int count,
-      int total_count,
-      int right_count,
-      String right_or_wrong,
-      Color color) {
-    this._hindi_word = _hindi_word;
-    this._korean_word = _korean_word;
-    this._word_class = _word_class;
-    this._hindi_example = _hindi_example;
-    this._korean_question = _korean_question;
-    this._korean_right_answer = _korean_right_answer;
-    this.count = count;
-    this.total_count = total_count;
-    this.right_count = right_count;
-    this.right_or_wrong = right_or_wrong;
-    this.color = color;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = (MediaQuery.of(context).size.height -
-        AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
-    return Container(
-        decoration: BoxDecoration(
-            color: this.color,
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            boxShadow: [
-              new BoxShadow(
-                  color: Colors.black26,
-                  offset: new Offset(10.0, 10.0),
-                  blurRadius: 20.0,
-                  spreadRadius: 0.0)
-            ]),
-        width: horizontal_size * 0.8,
-        height: vertical_size * 0.65,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: horizontal_size * 0.28,
-                  height: vertical_size * 0.05,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                      child: AutoSizeText(
-                        "진행: " +
-                            this.count.toString() +
-                            "/" +
-                            total_count.toString(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white70),
-                        maxLines: 1,
-                        minFontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: horizontal_size * 0.28,
-                  height: vertical_size * 0.05,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                      child: AutoSizeText(
-                        "점수: " +
-                            right_count.toString() +
-                            "/" +
-                            total_count.toString(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white70),
-                        maxLines: 1,
-                        minFontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                OpacityAnimatedWidget.tween(
-                    opacityEnabled: 1,
-                    opacityDisabled: 0,
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      height: vertical_size * 0.05,
-                      width: horizontal_size * 0.14,
-                      child: Icon(
-                        Icons.done_outline,
-                        color: Colors.white,
-                      ),
-                    ))
-              ],
-            ),
-            SizedBox(height: vertical_size * 0.03),
-            Container(
-              width: horizontal_size * 0.7,
-              height: vertical_size * 0.07,
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
-                child: AutoSizeText(
-                  this._hindi_word,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'hufsfontMedium'),
-                  maxLines: 3,
-                  presetFontSizes: [35, 25, 21],
-                ),
-              ),
-            ),
-            Container(
-              width: horizontal_size * 0.7,
-              height: vertical_size * 0.07,
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                child: AutoSizeText(
-                  this._korean_word,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500),
-                  maxLines: 3,
-                  minFontSize: 10,
-                ),
-              ),
-            ),
-            SizedBox(height: vertical_size * 0.04),
-            Container(
-              width: horizontal_size * 0.7,
-              height: vertical_size * 0.35,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  boxShadow: [
-                    new BoxShadow(
-                        color: Colors.black26,
-                        offset: new Offset(5.0, 5.0),
-                        blurRadius: 5.0,
-                        spreadRadius: 0.0)
-                  ]),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: horizontal_size * 0.7,
-                    height: vertical_size * 0.035,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: horizontal_size * 0.64,
-                        height: vertical_size * 0.05,
-                        decoration: BoxDecoration(
-                          color: Colors.white10,
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        ),
-                        child: AutoSizeText(
-                          "예제",
-                          style: TextStyle(
-                              color: Colors.black38,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 3),
-                          maxLines: 1,
-                          minFontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: horizontal_size * 0.7,
-                    height: vertical_size * 0.08,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 3, horizontal: 16),
-                      child: AutoSizeText(
-                        this._hindi_example,
-                        style: TextStyle(fontWeight: FontWeight.w300),
-                        maxLines: 3,
-                        presetFontSizes: [25, 18, 15],
-                        minFontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: horizontal_size * 0.64,
-                      height: vertical_size * 0.02,
-                      decoration: BoxDecoration(
-                        color: Colors.white10,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      ),
-                      child: AutoSizeText(
-                        "문제",
-                        style: TextStyle(
-                            color: Colors.black38,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 3),
-                        maxLines: 1,
-                        minFontSize: 12,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: vertical_size * 0.07,
-                    width: horizontal_size * 0.7,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 16),
-                      child: AutoSizeText(
-                        this._korean_question,
-                        style: TextStyle(fontWeight: FontWeight.w300),
-                        maxLines: 3,
-                        minFontSize: 8,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: horizontal_size * 0.64,
-                      height: vertical_size * 0.02,
-                      decoration: BoxDecoration(
-                        color: Colors.white10,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      ),
-                      child: AutoSizeText(
-                        "정답",
-                        style: TextStyle(
-                            color: Colors.black38,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 3),
-                        maxLines: 1,
-                        minFontSize: 12,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: vertical_size * 0.07,
-                    width: horizontal_size * 0.7,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 16),
-                      child: AutoSizeText(
-                        this._korean_right_answer,
-                        style: TextStyle(fontWeight: FontWeight.w300),
-                        maxLines: 3,
-                        minFontSize: 8,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ));
   }
 }
