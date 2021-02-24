@@ -9,6 +9,7 @@ import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view_sentence.dart';
+import 'package:hindivocabulary/word_list_page/words.dart';
 
 class hindiCommonVocaSentence extends StatelessWidget {
   @override
