@@ -235,12 +235,25 @@ class _TestVocaState extends State<TestVoca> {
               this.hindi_word = snapshot.data[global_index][0].toString();
 
               this.korean_word = snapshot.data[global_index][2].toString();
-            } else {
-              if (global_index < _total_itemcount) {
-                this.hindi_word = snapshot.data[global_index][0].toString();
 
-                this.korean_word = snapshot.data[global_index][2].toString();
-              } else {
+            }
+
+            else {
+              try{
+                if (global_index < _total_itemcount&&count<=_total_itemcount) {
+                  this.hindi_word = snapshot.data[global_index][0].toString();
+
+                  this.korean_word = snapshot.data[global_index][2].toString();
+
+                } else {
+                  move_page(
+                      context,
+                      this.page_name,
+                      this._total_itemcount,
+                      this.correct,
+                      wrong_hindi_words,wrong_korean_words);
+                }
+              } on Exception catch(_){
                 move_page(
                     context,
                     this.page_name,
@@ -248,7 +261,9 @@ class _TestVocaState extends State<TestVoca> {
                     this.correct,
                     wrong_hindi_words,wrong_korean_words);
               }
+
             }
+
 
             List<String> hindi_wrong_word = [];
             List<String> korean_wrong_word = [];

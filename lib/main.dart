@@ -8,7 +8,7 @@ import 'package:hindivocabulary/setting.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
 import 'package:hindivocabulary/home.dart';
 import 'package:hindivocabulary/myVoca.dart';
-import 'package:hindivocabulary/rememberZone.dart';
+import 'package:hindivocabulary/mySentence.dart';
 import 'package:hindivocabulary/makeTestSheet.dart';
 import 'dart:ui';
 import 'dart:io';
@@ -215,7 +215,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   size: 20,
                 ),
                 title: Text(
-                  '나의 기억상자',
+                  '나의 문장 복습',
                   style: TextStyle(
                     fontSize: 17,
                     fontFamily: 'hufsfontLight',
@@ -228,7 +228,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     CupertinoPageRoute(
-                        builder: (BuildContext context) => rememberZone()),
+                        builder: (BuildContext context) => mySentence()),
                   );
                 },
               ),

@@ -1,7 +1,6 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
-
-import 'package:hindivocabulary/word_list_page/Sentence_Test.dart';
+import 'package:hindivocabulary/word_list_page/sentenceTest.dart';
 
 import '../main.dart';
 
@@ -114,7 +113,7 @@ class level_SentenceState extends State<level_Sentence> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => new Sentence_Test(
+                                  builder: (context) => new sentenceTest(
                                       this_page_start_num,
                                       this_page_end_num,
                                       wordlist[index],

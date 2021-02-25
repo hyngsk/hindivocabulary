@@ -230,6 +230,14 @@ class _SentenceTestState extends State<SentenceTest> {
         },
       ),
       body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(240, 10, 15, 64),
+                  Color.fromARGB(240, 108, 121, 240)
+                ])),
         width: horizontal_size,
         height: vertical_size,
         child: PageTurn(
@@ -357,62 +365,55 @@ class _SentenceTestState extends State<SentenceTest> {
                   ),
                   //힌디어 지문
                   Container(
+                    alignment: Alignment.center,
                     width: horizontal_size*0.8,
                     height: vertical_size*0.1,
-                    child: AutoSizeText(hindiSentence),
+                    child: AutoSizeText(hindiSentence, minFontSize: 20, maxFontSize: 35,maxLines: 3,
+                    style: TextStyle(fontSize: 30,color: Colors.black,fontWeight: FontWeight.bold),),
                   ),
 
                   //문제 부분
                   Container(
+                    alignment: Alignment.center,
                     width: horizontal_size*0.8,
                     height: vertical_size*0.1,
-                    child: AutoSizeText(korean_Wrong_Sentence),
+                    child: AutoSizeText(korean_Wrong_Sentence,minFontSize: 20, maxFontSize: 30,maxLines: 3,
+                      style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
                   ),
                   Stack(
                     alignment: Alignment.center,
                     children: [
                       Divider(height: vertical_size*0.003,color: Colors.white,),
                       Container(decoration: BoxDecoration(
-                          color: Colors.indigo,
+                          color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          boxShadow: [
-                            new BoxShadow(
-                                color: Colors.black26,
-                                offset: new Offset(10.0, 10.0),
-                                blurRadius: 20.0,
-                                spreadRadius: 10.0)
-                          ]),
-                        width: horizontal_size*0.05,
-                        height: horizontal_size*0.03,
-                        child: AutoSizeText("문장"),
+                          ),
+                        width: horizontal_size*0.12,
+                        height: horizontal_size*0.06,
+                        child: Container(alignment: Alignment.center,
+                            child: AutoSizeText("문장",style: TextStyle(color:Colors.black),),)
                       ),
                     ],
                   ),
-                  //정답
-                  Container(
-                    width: horizontal_size*0.8,
-                    height: vertical_size*0.05,
-                    child: AutoSizeText("정답:"+ right),
-                  ),
-                  //한국어 정답
-                  Container(
-                    width: horizontal_size*0.8,
-                    height: vertical_size*0.1,
-                    child: AutoSizeText(korean_Right_Sentence),
+                  GestureDetector(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: horizontal_size*0.8,
+                      height: vertical_size*0.4,
 
+                      child: AutoSizeText("Tap Here", style: TextStyle(fontSize:40,fontWeight:FontWeight.bold,
+                          color: Colors.black12),
+                      maxFontSize: 50,minFontSize: 35,),
+                    ),
+                    onTap: (){
+
+
+                        rightAnswer(horizontal_size, vertical_size,right, korean_Right_Sentence, hindi_word, korean_word);
+
+                    },
                   ),
-                  //힌디어 단어
-                  Container(
-                    width: horizontal_size*0.8,
-                    height: vertical_size*0.05,
-                    child: AutoSizeText(hindi_word),
-                  ),
-                  //한국어 뜻
-                  Container(
-                    width: horizontal_size*0.8,
-                    height: vertical_size*0.05,
-                    child: AutoSizeText(korean_word),
-                  )
+                  //정답
+
                 ],
               ),
             ),
@@ -422,5 +423,49 @@ class _SentenceTestState extends State<SentenceTest> {
       )
     );
   }
+Widget rightAnswer(double horizontal_size, double vertical_size,String right,String korean_Right_Sentence,
+    String hindi_word,String korean_word)
+{
+  return Container(
+    child: Column(
+      children: [
+        SizedBox(height: vertical_size*0.05,),
+        Container(
+          alignment: Alignment.center,
+          width: horizontal_size*0.8,
+          height: vertical_size*0.05,
+          child: AutoSizeText("정답:"+ right,minFontSize: 15, maxFontSize: 30,maxLines: 3,
+            style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.bold),),
+        ),
+        //한국어 정답
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: horizontal_size*0.01),
+          alignment: Alignment.center,
+          width: horizontal_size*0.8,
+          height: vertical_size*0.1,
+          child: AutoSizeText(korean_Right_Sentence,minFontSize: 15, maxFontSize: 30,maxLines: 3,
+            style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.bold),),
 
+        ),
+        //힌디어 단어
+        Container(
+          alignment: Alignment.center,
+          width: horizontal_size*0.8,
+          height: vertical_size*0.07,
+          child: AutoSizeText(hindi_word,minFontSize: 15, maxFontSize: 20,maxLines: 3,
+            style: TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.bold),),
+        ),
+        //한국어 뜻
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: horizontal_size*0.01),
+          alignment: Alignment.center,
+          width: horizontal_size*0.8,
+          height: vertical_size*0.07,
+          child: AutoSizeText(korean_word,minFontSize: 15, maxFontSize: 20,maxLines: 3,
+            style: TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.bold),),
+        )
+      ],
+    ),
+  );
+}
 }
