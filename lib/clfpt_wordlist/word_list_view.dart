@@ -53,10 +53,11 @@ class level_State extends State<level_> {
   @override
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     //단어장 보여주는 방식 정하는 alertdialog
     void alert(BuildContext context, int start, int end, String page_title,
@@ -93,10 +94,12 @@ class level_State extends State<level_> {
         ),
         content: Builder(
           builder: (context) {
-            var horizontal_size = MediaQuery.of(context).size.width;
+            var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+                -MediaQuery.of(context).padding.right;
             var vertical_size = (MediaQuery.of(context).size.height -
                 AppBar().preferredSize.height -
-                MediaQuery.of(context).padding.top);
+                MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+
             return WillPopScope(
                 child: Container(
                   margin: EdgeInsets.all(10),

@@ -5,74 +5,44 @@ import 'package:hindivocabulary/word_list_page/words.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:hindivocabulary/function/test_result_page.dart';
-/// This is the main application widget.
-class mySentence extends StatelessWidget {
-
+class mySentence extends StatefulWidget {
   int _total_itemcount;
 
-  //엑셀 파일 word list는 비동기 리스트라서 word_mean으로 강제 형 변환시킴
-  Future<List<dynamic>> word_list;
 
   mySentence() {
     Key :key;
     }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  _mySentenceState createState() => _mySentenceState();
+}
 
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
-          shadowColor: Colors.black26,
-          centerTitle: true,
-          backgroundColor: Color.fromARGB(240, 10, 15, 64),
-          title: Text(
-            "HUFS 힌디 단어장",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'hufsfontMedium',
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 2,
-            ),
-          ),
-        ),
-        body: Center(
-          child: mysentence(),
-        ),
-      ),
-    );
+class _mySentenceState extends State<mySentence> {
+
+  _mySentenceState() {
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return sentence();
   }
 }
 
 /// This is the stateful widget that the main application instantiates.
-class mysentence extends StatefulWidget {
-
+class sentence extends StatefulWidget {
   int _total_itemcount;
 
-  mysentence(){
 
-  }
+  sentence(){
+    Key :key;
+     }
   @override
-  _mysentenceState createState() => _mysentenceState();
+  _sentenceState createState() => _sentenceState();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _mysentenceState extends State<mysentence> {
+class _sentenceState extends State<sentence> {
+
 
   int _total_itemcount;
 
@@ -97,14 +67,19 @@ class _mysentenceState extends State<mysentence> {
   int incorrect = 0;
 
 
+  Color hint_color;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   //이번 해당 장에 틀린 힌디어 단어 리스트
   List<String> wrong_hindi_words = new List<String>();
   List<String> wrong_korean_words = new List<String>();
 
 
   _sentenceState() {
-    this._total_itemcount = unMemory_sentence.list_sentence.length;
 
+    this._total_itemcount = unMemory_sentence.list_sentence.length;
+    this.hint_color = Colors.white;
   }
 
   @override
@@ -141,14 +116,15 @@ class _mysentenceState extends State<mysentence> {
           else {
             try{
               if (index < _total_itemcount&&count<=_total_itemcount) {
-                this.hindi_word = unMemory_sentence.list_sentence[index]['힌디어'];
-                this.word_case = unMemory_sentence.list_sentence[index]['품사'];
-                this.korean_word = unMemory_sentence.list_sentence[index]['의미'];
-                this.hindi_example = unMemory_sentence.list_sentence[index]['힌디어 예시'];
-                this.korean_example = unMemory_sentence.list_sentence[index]['한국어 예시'];
-                this.korean_wrong_example =unMemory_sentence.list_sentence[index]['한국어 문제'];
-                this.right_num = unMemory_sentence.list_sentence[index]['정답'];
+                this.hindi_word = unMemory_sentence.list_sentence[index]['힌디어'].toString();
+                this.word_case = unMemory_sentence.list_sentence[index]['품사'].toString();
+                this.korean_word = unMemory_sentence.list_sentence[index]['의미'].toString();
+                this.hindi_example = unMemory_sentence.list_sentence[index]['힌디어 예시'].toString();
+                this.korean_example = unMemory_sentence.list_sentence[index]['한국어 예시'].toString();
+                this.korean_wrong_example =unMemory_sentence.list_sentence[index]['한국어 문제'].toString();
+                this.right_num = unMemory_sentence.list_sentence[index]['정답'].toString();
               } else {
+
                 move_page(
                     context,
                     "재복습 추천 문장",
@@ -171,6 +147,35 @@ class _mysentenceState extends State<mysentence> {
 
 
           return SafeArea(child: Scaffold(
+              appBar: AppBar(
+                leading: Builder(
+                  builder: (BuildContext context) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.keyboard_arrow_left,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  },
+                ),
+                shadowColor: Colors.black26,
+                centerTitle: true,
+                backgroundColor: Color.fromARGB(240, 10, 15, 64),
+                title: Text(
+                  "HUFS 힌디 단어장",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'hufsfontMedium',
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ),
             body: Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -184,54 +189,7 @@ class _mysentenceState extends State<mysentence> {
               height: vertical_size,
               child: Column(
                 children: [
-                  //단원 이름, 문제
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    width: horizontal_size,
-                    height: vertical_size * 0.06,
-                    decoration:
-                    BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 2,
-                        offset: Offset(1.5, 0),
-                      )
-                    ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: horizontal_size * 0.4,
-                          height: vertical_size * 0.05,
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.only(left: 0.5),
-                          child: Text(
-                            "복습 문장 갯수:",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'hufsfontMedium',
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 3,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: horizontal_size * 0.32,
-                          height: vertical_size * 0.05,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "단어 수: " + _total_itemcount.toString() + "개",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'hufsfontMedium',
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 3,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
                   SizedBox(height: vertical_size * 0.02),
                   //틀린 문제, 맞은 문제
                   Container(
@@ -306,6 +264,7 @@ class _mysentenceState extends State<mysentence> {
                     ),
                   ),
                   //문제 카드
+                  SizedBox(height: vertical_size*0.03,),
                   Container(
                     alignment: Alignment.center,
                     height: vertical_size * 0.7,
@@ -366,37 +325,41 @@ class _mysentenceState extends State<mysentence> {
                         Container(
                             alignment: Alignment.center,
                             width: horizontal_size * 0.9,
-                            height: vertical_size * 0.05,
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              // width: horizontal_size*0.3,
-                              // height: vertical_size*0.05,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: horizontal_size * 0.02),
-                              child: OutlineButton(onPressed: () {
-                                showAlertDialog(BuildContext context)
-                                {
-                                  AlertDialog alert = AlertDialog(
-                                    title: AutoSizeText(
-                                      "단어 의미", minFontSize: 10, maxFontSize: 20,
-                                      style: TextStyle(fontSize: 15,
-                                          fontWeight: FontWeight.bold),),
-                                    content: AutoSizeText(
-                                        "단어 " + hindi_word + " 의 의미는 " +
-                                            korean_word + "입니다."),
-                                    actions: [
-                                      FlatButton(onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                          child: Text("확인"))
-                                    ],);
-                                }
+                            height: vertical_size * 0.1,
+                            child: Row(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  width: horizontal_size*0.2,
+                                  height: vertical_size*0.1,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: horizontal_size * 0.02),
+                                  child: OutlineButton(onPressed: () {
+                                    setState(() {
+                                      hint_color = Colors.black;
+                                    });
+                                    //HintDialog(context,hindi_word,korean_word);
 
-                              }, hoverColor: Colors.black12,
 
-                                child: AutoSizeText(
-                                  "힌트", style: TextStyle(fontSize: 10,
-                                    color: Colors.black),),),
-                            )
+                                  }, hoverColor: Colors.black12,
+
+                                    child: AutoSizeText(
+                                      "힌트", style: TextStyle(fontSize: 12,
+                                        color: Colors.black),),),
+                                ),
+                                Container(
+                                  width: horizontal_size*0.5,
+                                  height: vertical_size*0.1,
+                                  alignment: Alignment.topCenter,
+                                  child: AutoSizeText(
+                                    hindi_word+"의 뜻은 "+korean_word+" 입니다.",minFontSize: 10,maxFontSize: 20,
+                                    style: TextStyle(fontSize: 15,color: hint_color),
+                                  ),
+
+                                )
+
+                              ],
+                            ),
 
                         ),
                         Expanded(
@@ -412,33 +375,42 @@ class _mysentenceState extends State<mysentence> {
                                     Icons.panorama_fish_eye, size: 50,),
                                 ),
                                 onTap: () {
+                                  if(count==_total_itemcount){
+                                    move_page(
+                                        context,
+                                        "재복습 추천 문장",
+                                        this._total_itemcount,
+                                        this.correct,
+                                        wrong_hindi_words,wrong_korean_words);
+                                  }
                                   setState(() {
                                     count++;
                                     index++;
+                                    hint_color = Colors.white;
                                     if (right_num.compareTo('1') == 0) {
                                       correct++;
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('힌디어');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('품사');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('의미');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('힌디어 예시');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('한국어 예시');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('한국어 문제');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('정답');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('힌디어');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('품사');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('의미');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('힌디어 예시');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('한국어 예시');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('한국어 문제');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('정답');
 
                                     }
                                     else
                                     {
 
                                       incorrect++;
-                                      wrong_hindi_words.add(unMemory_sentence.list_sentence[index]['힌디어']);
-                                      wrong_korean_words.add(unMemory_sentence.list_sentence[index]['의미']);
+                                      wrong_hindi_words.add(hindi_word);
+                                      wrong_korean_words.add(korean_word);
                                     }
 
                                   });
@@ -453,31 +425,40 @@ class _mysentenceState extends State<mysentence> {
                                 ),
                                 onTap: () {
                                   setState(() {
+                                    if(count==_total_itemcount){
+                                      move_page(
+                                          context,
+                                          "재복습 추천 문장",
+                                          this._total_itemcount,
+                                          this.correct,
+                                          wrong_hindi_words,wrong_korean_words);
+                                    }
                                     count++;
+                                    hint_color = Colors.white;
                                     index++;
                                     if (right_num.compareTo('0') == 0)
                                       {correct++;
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('힌디어');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('품사');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('의미');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('힌디어 예시');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('한국어 예시');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('한국어 문제');
-                                      unMemory_sentence.list_sentence[index]
-                                          .remove('정답');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('힌디어');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('품사');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('의미');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('힌디어 예시');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('한국어 예시');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('한국어 문제');
+                                      // unMemory_sentence.list_sentence[index]
+                                      //     .remove('정답');
 
                                       }
                                     else
                                     {
                                       incorrect++;
-                                      wrong_hindi_words.add(unMemory_sentence.list_sentence[index]['힌디어']);
-                                      wrong_korean_words.add(unMemory_sentence.list_sentence[index]['의미']);
+                                      wrong_hindi_words.add(hindi_word);
+                                      wrong_korean_words.add(korean_word);
 
                                     }
 
@@ -499,8 +480,47 @@ class _mysentenceState extends State<mysentence> {
           );
         }
         else{
-          return Text("저장된 복습 문장이 없습니다.",style: TextStyle(fontWeight: FontWeight.bold,
-          color: Colors.black26, fontSize: 40),);
+
+          return SafeArea(child: Scaffold(
+              appBar: AppBar(
+              leading: Builder(
+              builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            );
+          },
+        ),
+        shadowColor: Colors.black26,
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(240, 10, 15, 64),
+        title: Text(
+        "HUFS 힌디 단어장",
+        style: TextStyle(
+        color: Colors.white,
+        fontFamily: 'hufsfontMedium',
+        fontSize: 20.0,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 2,
+        ),
+        ),
+        ),
+        body:
+
+            Container(
+            width: horizontal_size,
+            height: vertical_size,
+            alignment: Alignment.center,
+            color: Colors.white70,
+            child: Text("저장된 복습 문장이 없습니다.\n문장 학습 후 복습 문장을 확인하세요.",style: TextStyle(fontWeight: FontWeight.bold,
+                color: Colors.black26, fontSize: 20),)
+          ),));
         }
       },
       ),

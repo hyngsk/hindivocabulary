@@ -222,10 +222,11 @@ class _TestVocaState extends State<TestVoca> {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return WillPopScope(child: new FutureBuilder(
         future: make_word_list(_start_word_num, _finish_word_num, file_name),
@@ -310,9 +311,8 @@ class _TestVocaState extends State<TestVoca> {
                       ),
                     ),
                   ),
-                  bottomNavigationBar: SizedBox(
-                    height: vertical_size * 0.07,
-                    width: horizontal_size,
+                  bottomNavigationBar: Container(
+
                     child: BottomNavigationBar(
                       type: BottomNavigationBarType.fixed,
                       currentIndex: _selectedIndex,
@@ -432,7 +432,7 @@ class _TestVocaState extends State<TestVoca> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 8,
+                                      height: vertical_size*0.002,
                                     ),
                                     Container(
                                       width: horizontal_size * 0.4,
@@ -472,210 +472,26 @@ class _TestVocaState extends State<TestVoca> {
                           ),
                         ),
                         //단어 보이기 카드 형식
-                        Container(
-                          margin:
-                          EdgeInsets.symmetric(vertical: 22, horizontal: 15),
-                          width: horizontal_size * 0.95,
-                          height: vertical_size * 0.65,
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(240, 242, 242, 242),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              boxShadow: [
-                                new BoxShadow(
-                                    color: Colors.black12,
-                                    offset: new Offset(3.0, 3.0),
-                                    blurRadius: 10.0,
-                                    spreadRadius: 0.0)
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                alignment: Alignment.center,
-                                width: horizontal_size * 0.84,
-                                height: vertical_size * 0.23,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                    boxShadow: [
-                                      new BoxShadow(
-                                          color: Colors.black12,
-                                          offset: new Offset(3.0, 3.0),
-                                          blurRadius: 10.0,
-                                          spreadRadius: 0.0)
-                                    ]),
+                        Expanded(
 
-                                //color: Colors.white,
-                                child: AutoSizeText(question['main_word'],maxFontSize: 30,minFontSize: 12,softWrap: true,style: TextStyle(
-                                    fontSize: 25
-                                ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: vertical_size*0.025,
-                              ),
-                              InkWell(
-                                  child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    width: horizontal_size * 0.84,
-                                    height: vertical_size * 0.065,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                        boxShadow: [
-                                          new BoxShadow(
-                                              color: Colors.black12,
-                                              offset: new Offset(3.0, 3.0),
-                                              blurRadius: 10.0,
-                                              spreadRadius: 0.0)
-                                        ]),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 13),
-                                      child:AutoSizeText("1.   "+question['wrong_word'][0],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                          fontSize: 18
-                                      ),),),
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-
-                                      if (question['correct_number'] == 0) {
-                                        correct++;
-                                        count++;
-                                        global_index++;
-                                      } else {
-                                        unMemory_words(
-                                            snapshot.data[global_index][0]
-                                                .toString(),
-                                            snapshot.data[global_index][1]
-                                                .toString(),
-                                            snapshot.data[global_index][2]
-                                                .toString(),
-                                            snapshot.data[global_index][3]
-                                                .toString(),
-                                            snapshot.data[global_index][4]
-                                                .toString());
-                                        wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                        wrong_korean_words.add(snapshot.data[global_index][2].toString());
-                                        incorrect++;
-                                        count++;
-                                        global_index++;
-                                      }
-                                    });
-                                  }),
-                              SizedBox(
-                                height: vertical_size*0.015,
-                              ),
-                              InkWell(
-                                  child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    width: horizontal_size * 0.84,
-                                    height: vertical_size * 0.065,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                        boxShadow: [
-                                          new BoxShadow(
-                                              color: Colors.black12,
-                                              offset: new Offset(3.0, 3.0),
-                                              blurRadius: 10.0,
-                                              spreadRadius: 0.0)
-                                        ]),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 13),
-                                      child:AutoSizeText("2.   "+question['wrong_word'][1],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                          fontSize: 18
-                                      ),),),
-                                  ),
-                                  onTap: () {
-
-                                    setState(() {
-                                      if (question['correct_number'] == 1) {
-                                        correct++;
-                                        count++;
-                                        global_index++;
-                                      } else {
-                                        unMemory_words(
-                                            snapshot.data[global_index][0]
-                                                .toString(),
-                                            snapshot.data[global_index][1]
-                                                .toString(),
-                                            snapshot.data[global_index][2]
-                                                .toString(),
-                                            snapshot.data[global_index][3]
-                                                .toString(),
-                                            snapshot.data[global_index][4]
-                                                .toString());
-                                        wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                        wrong_korean_words.add(snapshot.data[global_index][2].toString());
-                                        incorrect++;
-                                        count++;
-                                        global_index++;
-                                      }
-                                    });
-                                  }),
-                              SizedBox(
-                                height: vertical_size*0.015,
-                              ),
-                              InkWell(
-                                  child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    width: horizontal_size * 0.84,
-                                    height: vertical_size * 0.065,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                        boxShadow: [
-                                          new BoxShadow(
-                                              color: Colors.black12,
-                                              offset: new Offset(3.0, 3.0),
-                                              blurRadius: 10.0,
-                                              spreadRadius: 0.0)
-                                        ]),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 13),
-                                      child:AutoSizeText("3.   "+question['wrong_word'][2],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                          fontSize: 18
-                                      ),),),
-                                  ),
-                                  onTap: () {
-
-                                    setState(() {
-                                      if (question['correct_number'] == 2) {
-                                        correct++;
-                                        count++;
-                                        global_index++;
-                                      } else {
-                                        unMemory_words(
-                                            snapshot.data[global_index][0]
-                                                .toString(),
-                                            snapshot.data[global_index][1]
-                                                .toString(),
-                                            snapshot.data[global_index][2]
-                                                .toString(),
-                                            snapshot.data[global_index][3]
-                                                .toString(),
-                                            snapshot.data[global_index][4]
-                                                .toString());
-                                        wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                        wrong_korean_words.add(snapshot.data[global_index][2].toString());
-                                        incorrect++;
-                                        count++;
-                                        global_index++;
-                                      }
-                                    });
-                                  }),
-                              SizedBox(
-                                height: vertical_size*0.015,
-                              ),
-                              InkWell(
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
+                          child: Container(
+                            width: horizontal_size*0.9,
+                            decoration: BoxDecoration(
+                                  color: Color.fromARGB(240, 242, 242, 242),
+                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  boxShadow: [
+                                    new BoxShadow(
+                                        color: Colors.black12,
+                                        offset: new Offset(3.0, 3.0),
+                                        blurRadius: 10.0,
+                                        spreadRadius: 0.0),]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
                                   width: horizontal_size * 0.84,
-                                  height: vertical_size * 0.065,
+                                  height: vertical_size * 0.23,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
@@ -687,36 +503,217 @@ class _TestVocaState extends State<TestVoca> {
                                             blurRadius: 10.0,
                                             spreadRadius: 0.0)
                                       ]),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 13),
-                                    child:AutoSizeText("4.   "+question['wrong_word'][3],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                        fontSize: 18
-                                    ),),),
+                                  child: AutoSizeText(question['main_word'],maxFontSize: 30,minFontSize: 12,softWrap: true,style: TextStyle(
+                                      fontSize: 25
+                                  ),
+                                  ),
                                 ),
-                                onTap: () {
-                                  setState(() {
+                                SizedBox(
+                                  height: vertical_size*0.025,
+                                ),
+                                InkWell(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      width: horizontal_size * 0.84,
+                                      height: vertical_size * 0.065,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(10.0)),
+                                          boxShadow: [
+                                            new BoxShadow(
+                                                color: Colors.black12,
+                                                offset: new Offset(3.0, 3.0),
+                                                blurRadius: 10.0,
+                                                spreadRadius: 0.0)
+                                          ]),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 13),
+                                        child:AutoSizeText("1.   "+question['wrong_word'][0],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                            fontSize: 18
+                                        ),),),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
 
-                                    if (question['correct_number'] == 3) {
-                                      correct++;
-                                      count++;
-                                      global_index++;
-                                    } else {
-                                      unMemory_words(
-                                          snapshot.data[global_index][0].toString(),
-                                          snapshot.data[global_index][1].toString(),
-                                          snapshot.data[global_index][2].toString(),
-                                          snapshot.data[global_index][3].toString(),
-                                          snapshot.data[global_index][4].toString());
-                                      wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                      wrong_korean_words.add(snapshot.data[global_index][2].toString());
-                                      incorrect++;
-                                      count++;
-                                      global_index++;
-                                    }
-                                  });
-                                },
-                              ),
-                            ],
+                                        if (question['correct_number'] == 0) {
+                                          correct++;
+                                          count++;
+                                          global_index++;
+                                        } else {
+                                          unMemory_words(
+                                              snapshot.data[global_index][0]
+                                                  .toString(),
+                                              snapshot.data[global_index][1]
+                                                  .toString(),
+                                              snapshot.data[global_index][2]
+                                                  .toString(),
+                                              snapshot.data[global_index][3]
+                                                  .toString(),
+                                              snapshot.data[global_index][4]
+                                                  .toString());
+                                          wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                          wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                          incorrect++;
+                                          count++;
+                                          global_index++;
+                                        }
+                                      });
+                                    }),
+                                SizedBox(
+                                  height: vertical_size*0.015,
+                                ),
+                                InkWell(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      width: horizontal_size * 0.84,
+                                      height: vertical_size * 0.065,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(10.0)),
+                                          boxShadow: [
+                                            new BoxShadow(
+                                                color: Colors.black12,
+                                                offset: new Offset(3.0, 3.0),
+                                                blurRadius: 10.0,
+                                                spreadRadius: 0.0)
+                                          ]),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 13),
+                                        child:AutoSizeText("2.   "+question['wrong_word'][1],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                            fontSize: 18
+                                        ),),),
+                                    ),
+                                    onTap: () {
+
+                                      setState(() {
+                                        if (question['correct_number'] == 1) {
+                                          correct++;
+                                          count++;
+                                          global_index++;
+                                        } else {
+                                          unMemory_words(
+                                              snapshot.data[global_index][0]
+                                                  .toString(),
+                                              snapshot.data[global_index][1]
+                                                  .toString(),
+                                              snapshot.data[global_index][2]
+                                                  .toString(),
+                                              snapshot.data[global_index][3]
+                                                  .toString(),
+                                              snapshot.data[global_index][4]
+                                                  .toString());
+                                          wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                          wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                          incorrect++;
+                                          count++;
+                                          global_index++;
+                                        }
+                                      });
+                                    }),
+                                SizedBox(
+                                  height: vertical_size*0.015,
+                                ),
+                                InkWell(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      width: horizontal_size * 0.84,
+                                      height: vertical_size * 0.065,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(10.0)),
+                                          boxShadow: [
+                                            new BoxShadow(
+                                                color: Colors.black12,
+                                                offset: new Offset(3.0, 3.0),
+                                                blurRadius: 10.0,
+                                                spreadRadius: 0.0)
+                                          ]),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 13),
+                                        child:AutoSizeText("3.   "+question['wrong_word'][2],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                            fontSize: 18
+                                        ),),),
+                                    ),
+                                    onTap: () {
+
+                                      setState(() {
+                                        if (question['correct_number'] == 2) {
+                                          correct++;
+                                          count++;
+                                          global_index++;
+                                        } else {
+                                          unMemory_words(
+                                              snapshot.data[global_index][0]
+                                                  .toString(),
+                                              snapshot.data[global_index][1]
+                                                  .toString(),
+                                              snapshot.data[global_index][2]
+                                                  .toString(),
+                                              snapshot.data[global_index][3]
+                                                  .toString(),
+                                              snapshot.data[global_index][4]
+                                                  .toString());
+                                          wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                          wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                          incorrect++;
+                                          count++;
+                                          global_index++;
+                                        }
+                                      });
+                                    }),
+                                SizedBox(
+                                  height: vertical_size*0.015,
+                                ),
+                                InkWell(
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    width: horizontal_size * 0.84,
+                                    height: vertical_size * 0.065,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                        boxShadow: [
+                                          new BoxShadow(
+                                              color: Colors.black12,
+                                              offset: new Offset(3.0, 3.0),
+                                              blurRadius: 10.0,
+                                              spreadRadius: 0.0)
+                                        ]),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 13),
+                                      child:AutoSizeText("4.   "+question['wrong_word'][3],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
+                                          fontSize: 18
+                                      ),),),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+
+                                      if (question['correct_number'] == 3) {
+                                        correct++;
+                                        count++;
+                                        global_index++;
+                                      } else {
+                                        unMemory_words(
+                                            snapshot.data[global_index][0].toString(),
+                                            snapshot.data[global_index][1].toString(),
+                                            snapshot.data[global_index][2].toString(),
+                                            snapshot.data[global_index][3].toString(),
+                                            snapshot.data[global_index][4].toString());
+                                        wrong_hindi_words.add(snapshot.data[global_index][0].toString());
+                                        wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                        incorrect++;
+                                        count++;
+                                        global_index++;
+                                      }
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],

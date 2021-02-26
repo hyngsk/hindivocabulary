@@ -132,11 +132,12 @@ class _SentenceTestState extends State<SentenceTest> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+
     return WillPopScope(child: new FutureBuilder(
         future:
         make_word_list(_start_word_num, _finish_word_num, file_name),

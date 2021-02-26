@@ -73,10 +73,11 @@ class _test_resultState extends State<test_result> {
 
   @override
   Widget build(BuildContext context) {
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
-    var horizontal_size = MediaQuery.of(context).size.width;
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return WillPopScope(child: SafeArea(
       child: Scaffold(

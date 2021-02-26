@@ -188,7 +188,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
               ),
               ListTile(
                 title: Text(
-                  '내 단어',
+                  '나의 단어 복습',
                   style: TextStyle(
                     fontSize: 17,
                     fontFamily: 'hufsfontLight',
@@ -197,7 +197,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   ),
                 ),
                 leading: Icon(
-                  Icons.assignment,
+                  Icons.spellcheck,
                   size: 20,
                 ),
                 selectedTileColor: Colors.white54,
@@ -211,7 +211,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.loop,
+                  Icons.sort_by_alpha,
                   size: 20,
                 ),
                 title: Text(
@@ -232,29 +232,29 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   );
                 },
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.print,
-                  size: 20,
-                ),
-                title: Text(
-                  '단어 내보내기',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: 'hufsfontLight',
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                selectedTileColor: Colors.white70,
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    CupertinoPageRoute(
-                        builder: (BuildContext context) => majorVoca()),
-                  );
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(
+              //     Icons.print,
+              //     size: 20,
+              //   ),
+              //   title: Text(
+              //     '학과 단어 학습하',
+              //     style: TextStyle(
+              //       fontSize: 17,
+              //       fontFamily: 'hufsfontLight',
+              //       color: Colors.black,
+              //       fontWeight: FontWeight.w600,
+              //     ),
+              //   ),
+              //   selectedTileColor: Colors.white70,
+              //   onTap: () {
+              //     Navigator.of(context).pop();
+              //     Navigator.of(context).push(
+              //       CupertinoPageRoute(
+              //           builder: (BuildContext context) => majorVoca()),
+              //     );
+              //   },
+              // ),
             ],
           )),
         ),

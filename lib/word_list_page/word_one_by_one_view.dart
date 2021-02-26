@@ -151,10 +151,11 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return WillPopScope(child: new FutureBuilder(
         future: make_word_list(_start_word_num, _finish_word_num, file_name),
@@ -393,8 +394,12 @@ class CustomCard_Front extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
-    var vertical_size = MediaQuery.of(context).size.height;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
+    var vertical_size = (MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+
     return Container(
         decoration: BoxDecoration(
             color: this.color,
@@ -472,10 +477,12 @@ class CustomCard_Behind extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+
     return Container(
         decoration: BoxDecoration(
             color: this.color,
@@ -521,6 +528,7 @@ class CustomCard_Behind extends StatelessWidget {
                 child: AutoSizeText(
                   this._korean_word,
                   style: TextStyle(
+                    color: Colors.black,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'hufsfontMedium'),
                   maxLines: 3,
@@ -536,7 +544,9 @@ class CustomCard_Behind extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 child: AutoSizeText(
                   this._word_class,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+
+                  style: TextStyle(color:Colors.black,fontSize: 15, fontWeight: FontWeight.w500),
+
                   maxLines: 3,
                   minFontSize: 10,
                 ),
@@ -545,7 +555,7 @@ class CustomCard_Behind extends StatelessWidget {
             SizedBox(height: vertical_size * 0.023),
             Container(
               width: horizontal_size * 0.7,
-              height: vertical_size * 0.27,
+              height: vertical_size * 0.28,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -561,7 +571,7 @@ class CustomCard_Behind extends StatelessWidget {
                 children: [
                   Container(
                     width: horizontal_size * 0.7,
-                    height: vertical_size * 0.04,
+                    height: vertical_size * 0.07,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       child: Container(
@@ -595,7 +605,7 @@ class CustomCard_Behind extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                       child: AutoSizeText(
                         this._hindi_example,
-                        style: TextStyle(fontWeight: FontWeight.w300),
+                        style: TextStyle(color:Colors.black,fontWeight: FontWeight.w300),
                         maxLines: 3,
                         presetFontSizes: [25, 18, 15],
                         minFontSize: 15,
@@ -612,7 +622,7 @@ class CustomCard_Behind extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 5, horizontal: 16),
                       child: AutoSizeText(
                         this._korean_example,
-                        style: TextStyle(fontWeight: FontWeight.w300),
+                        style: TextStyle(color:Colors.black,fontWeight: FontWeight.w300),
                         maxLines: 3,
                         minFontSize: 8,
                         presetFontSizes: [16, 12, 8],

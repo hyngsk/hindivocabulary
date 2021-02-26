@@ -45,7 +45,7 @@ class setting extends StatelessWidget {
             onTap: () => alert(
                 context,
                 '앱 정보',
-                '▶ 앱 기획 및 제작자\n한국외국어대학교 인도학과 15학번 구태훈\n\n▶ 단어 총괄 담당\n 한국외국어대학교 인도학과 18학번 김기훈\n\n▶ 아이콘 및 배너 디자인 총괄 담당\n (UI Design)\n Park SoJiung, 구태훈\n\n▶ 앱 소유권\n 한국외국어대학교 특수외국어진흥원(CFL)  ',
+                '▶ 앱 기획 및 제작자\n한국외국어대학교 인도학과 15학번 구태훈\n\n▶ 아이콘 및 배너 디자인 총괄 담당\n (UI Design)\n Park SoJiung, 구태훈\n\n▶ 앱 소유권\n 한국외국어대학교 특수외국어진흥원(CFL)  ',
                 15),
           ),
           ListTile(

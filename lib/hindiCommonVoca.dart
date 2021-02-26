@@ -1,10 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hindivocabulary/clfpt_wordlist/A0.dart';
-import 'package:hindivocabulary/clfpt_wordlist/A1.dart';
-import 'package:hindivocabulary/clfpt_wordlist/A2.dart';
-import 'package:hindivocabulary/clfpt_wordlist/B1.dart';
-import 'package:hindivocabulary/clfpt_wordlist/B2.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
@@ -36,10 +31,11 @@ class hindiCommonVoca extends StatelessWidget {
 
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return Scaffold(
       backgroundColor: Colors.grey[200],

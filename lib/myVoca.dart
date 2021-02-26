@@ -75,7 +75,7 @@ class _myVocaState extends State<myVoca> {
     var horizontal_size = MediaQuery.of(context).size.width;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     // TODO: implement build
     return new Builder(
@@ -114,9 +114,9 @@ class _myVocaState extends State<myVoca> {
                       ),
                     ),
                   ),
-                  bottomNavigationBar: SizedBox(
-                    height: vertical_size * 0.07,
-                    width: horizontal_size,
+                  bottomNavigationBar: Container(
+                    // height: vertical_size * 0.07,
+                    // width: horizontal_size,
                     child: BottomNavigationBar(
                       type: BottomNavigationBarType.fixed,
                       currentIndex: _selectedIndex,
@@ -198,8 +198,6 @@ class _myVocaState extends State<myVoca> {
                     ),
                   ),
                   body: Container(
-                    width: horizontal_size,
-                    height: vertical_size,
                     child: Column(
                       children: [
                         Container(
@@ -247,6 +245,7 @@ class _myVocaState extends State<myVoca> {
                             ],
                           ),
                         ),
+
                         Expanded(
                           child: ListView.separated(
                               itemBuilder: (BuildContext context, int index) {
@@ -258,7 +257,7 @@ class _myVocaState extends State<myVoca> {
                                     actionExtentRatio: 0.17,
                                     actions: <Widget>[
                                       IconSlideAction(
-                                        caption: '삭',
+                                        caption: '삭제',
                                         color: Colors.red,
                                         icon: Icons.archive,
                                         onTap: () => setState(() {
@@ -267,7 +266,7 @@ class _myVocaState extends State<myVoca> {
                                           var snackbar = SnackBar(
                                             behavior: SnackBarBehavior.floating,
                                             content:
-                                            Text("해당 단어는 기억상자에서 확인할 수 있습니다."),
+                                            Text("해당 단어는 삭제되었습니다."),
 
                                             action: SnackBarAction(
                                               label: "확인",

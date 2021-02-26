@@ -97,10 +97,11 @@ class _word_list_vocaState extends State<word_list_voca> {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     // TODO: implement build
     return WillPopScope(child: new FutureBuilder(
@@ -139,9 +140,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                       ),
                     ),
                   ),
-                  bottomNavigationBar: SizedBox(
-                    height: vertical_size * 0.07,
-                    width: horizontal_size,
+                  bottomNavigationBar: Container(
+
                     child: BottomNavigationBar(
                       type: BottomNavigationBarType.fixed,
                       currentIndex: _selectedIndex,

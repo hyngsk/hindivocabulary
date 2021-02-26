@@ -40,10 +40,11 @@ class level_SentenceState extends State<level_Sentence> {
   @override
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return WillPopScope(
         child: SafeArea(

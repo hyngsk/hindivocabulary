@@ -5,8 +5,8 @@ import 'package:hindivocabulary/word_list_page/words.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:hindivocabulary/function/test_result_page.dart';
-/// This is the main application widget.
-class sentenceTest extends StatelessWidget {
+
+class sentenceTest extends StatefulWidget {
   //단어 레벨 타이틀
   String page_name;
   String file_name;
@@ -31,44 +31,36 @@ class sentenceTest extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  _sentenceTestState createState() => _sentenceTestState(_start_word_num,_finish_word_num, page_name, file_name);
+}
 
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
-          shadowColor: Colors.black26,
-          centerTitle: true,
-          backgroundColor: Color.fromARGB(240, 10, 15, 64),
-          title: Text(
-            "HUFS 힌디 단어장",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'hufsfontMedium',
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 2,
-            ),
-          ),
-        ),
-        body: Center(
-          child: sentence(this._start_word_num, this._finish_word_num, this.page_name, this.file_name),
-        ),
-      ),
-    );
+class _sentenceTestState extends State<sentenceTest> {
+  //단어 레벨 타이틀
+  String page_name;
+  String file_name;
+
+  //단계별로 총 단어 수를 원하는 부분 별로 자르기 위한 변수
+  int _start_word_num;
+  int _finish_word_num;
+  int _total_itemcount;
+
+  //엑셀 파일 word list는 비동기 리스트라서 word_mean으로 강제 형 변환시킴
+  Future<List<dynamic>> word_list;
+
+  _sentenceTestState(int start_word_num, int finish_word_num, String page_name,
+      String file_name) {
+
+    this._start_word_num = start_word_num;
+    this._finish_word_num = finish_word_num;
+    this.word_list = make_word_list(start_word_num, finish_word_num, file_name);
+    this.page_name = page_name;
+    this.file_name = file_name;
+    this._total_itemcount = finish_word_num - start_word_num + 1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return sentence(this._start_word_num, this._finish_word_num, this.page_name, this.file_name);
   }
 }
 
@@ -136,6 +128,10 @@ class _sentenceState extends State<sentence> {
   int incorrect = 0;
 
 
+  Color hint_color;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   //이번 해당 장에 틀린 힌디어 단어 리스트
   List<String> wrong_hindi_words = new List<String>();
   List<String> wrong_korean_words = new List<String>();
@@ -152,6 +148,7 @@ class _sentenceState extends State<sentence> {
     this.page_name = page_name;
     this.file_name = file_name;
     this._total_itemcount = finish_word_num - start_word_num + 1;
+    this.hint_color = Colors.white;
   }
 
   @override
@@ -174,6 +171,7 @@ class _sentenceState extends State<sentence> {
 
 
         if (snapshot.hasData) {
+          //hint_color = Colors.white;
           if (index == 0 && count == 1) {
             this.hindi_word = snapshot.data[index][0].toString();
             this.word_case = snapshot.data[index][1].toString();
@@ -219,6 +217,37 @@ class _sentenceState extends State<sentence> {
 
 
           return SafeArea(child: Scaffold(
+            key: _scaffoldKey,
+
+            appBar: AppBar(
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.keyboard_arrow_left,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+              ),
+              shadowColor: Colors.black26,
+              centerTitle: true,
+              backgroundColor: Color.fromARGB(240, 10, 15, 64),
+              title: Text(
+                "HUFS 힌디 단어장",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'hufsfontMedium',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 2,
+                ),
+              ),
+            ),
             body: Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -414,37 +443,41 @@ class _sentenceState extends State<sentence> {
                         Container(
                             alignment: Alignment.center,
                             width: horizontal_size * 0.9,
-                            height: vertical_size * 0.05,
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              // width: horizontal_size*0.3,
-                              // height: vertical_size*0.05,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: horizontal_size * 0.02),
-                              child: OutlineButton(onPressed: () {
-                                showAlertDialog(BuildContext context)
-                                {
-                                  AlertDialog alert = AlertDialog(
-                                    title: AutoSizeText(
-                                      "단어 의미", minFontSize: 10, maxFontSize: 20,
-                                      style: TextStyle(fontSize: 15,
-                                          fontWeight: FontWeight.bold),),
-                                    content: AutoSizeText(
-                                        "단어 " + hindi_word + " 의 의미는 " +
-                                            korean_word + "입니다."),
-                                    actions: [
-                                      FlatButton(onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                          child: Text("확인"))
-                                    ],);
-                                }
+                            height: vertical_size * 0.1,
+                            child: Row(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                   width: horizontal_size*0.2,
+                                   height: vertical_size*0.1,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: horizontal_size * 0.02),
+                                  child: OutlineButton(onPressed: () {
+                                    setState(() {
+                                      hint_color = Colors.black;
+                                    });
+                                    //HintDialog(context,hindi_word,korean_word);
 
-                              }, hoverColor: Colors.black12,
 
-                                child: AutoSizeText(
-                                  "힌트", style: TextStyle(fontSize: 10,
-                                    color: Colors.black),),),
-                            )
+                                  }, hoverColor: Colors.black12,
+
+                                    child: AutoSizeText(
+                                      "힌트", style: TextStyle(fontSize: 12,
+                                        color: Colors.black),),),
+                                ),
+                                Container(
+                                  width: horizontal_size*0.5,
+                                  height: vertical_size*0.1,
+                                  alignment: Alignment.topCenter,
+                                  child: AutoSizeText(
+                                    hindi_word+"의 뜻은 "+korean_word+" 입니다.",minFontSize: 10,maxFontSize: 20,
+                                    style: TextStyle(fontSize: 15,color: hint_color),
+                                  ),
+
+                                )
+
+                              ],
+                            ),
 
                         ),
                         Expanded(
@@ -460,9 +493,19 @@ class _sentenceState extends State<sentence> {
                                     Icons.panorama_fish_eye, size: 50,),
                                 ),
                                 onTap: () {
+                                  if(_total_itemcount==count)
+                                    {
+                                      move_page(
+                                          context,
+                                          this.page_name,
+                                          this._total_itemcount,
+                                          this.correct,
+                                          wrong_hindi_words,wrong_korean_words);
+                                    }
                                   setState(() {
                                     count++;
                                     index++;
+                                    hint_color = Colors.white;
                                     if (right_num.compareTo('1') == 0)
                                       correct++;
 
@@ -500,7 +543,17 @@ class _sentenceState extends State<sentence> {
 
                                 ),
                                 onTap: () {
+                                  if(_total_itemcount==count)
+                                    {
+                                      move_page(
+                                          context,
+                                          this.page_name,
+                                          this._total_itemcount,
+                                          this.correct,
+                                          wrong_hindi_words,wrong_korean_words);
+                                    }
                                   setState(() {
+                                    hint_color = Colors.white;
                                     count++;
                                     index++;
                                     if (right_num.compareTo('0') == 0)
@@ -554,8 +607,30 @@ class _sentenceState extends State<sentence> {
       make_word_list(_start_word_num, _finish_word_num, file_name),),
         onWillPop: () async => false);
   }
-
-  //페이지 이동
+  HintDialog(BuildContext context,String hindi_word,String korea_word) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("확인"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("단어 힌트"),
+      content: Text(hindi_word+"의 뜻은 "+korean_word+"입니다."),
+      actions: [
+        okButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: _scaffoldKey.currentContext,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }  //페이지 이동
   void move_page(BuildContext context, String page_name, int _total_itemcount,
       int correct, List<String> wrong_hindi_words,
       List<String> wrong_korean_words) {

@@ -58,17 +58,12 @@ class _mainfunction extends State<home> {
   @override
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
-    var horizontal_size = MediaQuery.of(context).size.width;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
-    // var tapbar_height = (TabBar().preferredSize.height);
-    print("전체 높이:"+MediaQuery.of(context).size.height.toString());
-    print("앱바 높이:"+AppBar().preferredSize.height.toString());
-    print("패딩 탑 높이:"+MediaQuery.of(context).padding.top.toString());
-    print("앱바 높이/전체 높이:"+((AppBar().preferredSize.height)/(MediaQuery.of(context).size.height)).toString());
-    //print("탭바 높이:"+ tapbar_height.toString());
     return Scaffold(
       backgroundColor: Colors.white10,
       body: Column(
@@ -145,9 +140,6 @@ class _mainfunction extends State<home> {
           //***공지사항 컨테이너***
           Expanded(child: Container(
             width: horizontal_size,
-            //height: vertical_size * 0.39,
-
-            //padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
