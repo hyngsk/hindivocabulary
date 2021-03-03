@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
+import 'package:hindivocabulary/introductionScreen.dart';
 
 class setting extends StatelessWidget {
   @override
@@ -16,15 +18,20 @@ class setting extends StatelessWidget {
             leading: Text('일반'),
           ),
           ListTile(
-            leading: Icon(Icons.share),
-            title: Text('공유하기'),
+            leading: Icon(Icons.photo_filter),
+            title: Text('듀토리얼'),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => Share.share(
-              '한국외국어대학교 힌디어 단어장',
-              subject: '학과 중간 기말, 졸업 시험, 인증 시험 모두 여기서!',
-            ),
+            onTap: () {
+              Navigator.of(context).push(
+
+                CupertinoPageRoute(
+                    builder: (BuildContext context) => onboardingpage()),
+
+              );
+            }
             //Share.share(text:'한국외국어대학교 힌디어 단어장', subject:'학과 중간 기말, 졸업 시험, 인증 시험 모두 여기서!'),
           ),
+
           ListTile(
             leading: Icon(Icons.home),
             title: Text('홈페이지'),
@@ -172,48 +179,48 @@ class faqList extends StatelessWidget {
                     context: context,
                     tiles: [
                       ListTile(
-                        title: Text('기억상자는 무엇인가요?'),
+                        title: Text('나의 단어 복습은 무엇인가요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
-                            '기억상자',
-                            '기억상자는 단어장에서 모름 혹은 x로 표시된 단어를 단기적으로 모아둔 단어입니다. 기억상자에서 모르는 단어를 모아서 외운 후 여기서 모르는 단어들은 내 단어 리스트로 이동하게 됩니다.',
+                            '나의 단어 복습',
+                            '이 기능은 단어장에서 저장한 단어 혹은 테스트에서 틀린 단어를 모아둔 단어입니다. 암기가 완료된 단어는 삭제할 수 있습니다.',
                             14),
                       ),
                       ListTile(
-                        title: Text('내 단어와 기억상자의 차이는 무엇인가요?'),
+                        title: Text('나의 문장 복습은 무엇인가요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
-                            '내 단어',
-                            '내 단어는 기억상자에서 못 외운 단어들을 따로 뽑아 외울 수 있도록 만든 기능입니다. 단어 외우는 과정에서 반복이 중요한 만큼 기억 상자를 거쳐 가장 안 외워지는 단어 리스트를 여기서 확인 할 수 있습니다.',
+                            '나의 문장 복습',
+                            '이 기능은 문장 학습에서 저장한 문장을 모아둔 기능입니다. 문장 학습과 같이 특정 문장을 퀴즈를 볼 수 있습니다.',
                             14),
                       ),
                       ListTile(
-                        title: Text('학과 단어랑 시험 단어 차이가 무엇인가요?'),
+                        title: Text('학과 단어는 언제 출시되나요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
-                            '시험 단어',
-                            '학과 단어는 한국외국어대학교 인도학과, 인도어과에서 사용한 교재에 있는 단어들을 참조하여 만들었습니다. 책에 나온 단어들을 외워 학교 시험에 도움을 주는 것에 초점을 맞추어 제작하였습니다.',
+                            '학과 단어',
+                            '학과 단어는 한국외국어대학교 인도학과, 인도어과에서 사용한 교재에 있는 단어들을 참조하여 만들 예정입니다. 책에 나온 단어들을 외워 학교 시험에 도움을 주는 것에 초점을 맞추어 제작 예정입니다.',
                             14),
                       ),
                       ListTile(
-                        title: Text('단어 내보내기는 무엇인가요?'),
+                        title: Text('문장 학습에서 문제는 어떤 근거로 만들었나요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
-                            '단어 내보내기',
-                            '단어 내보내기 기능은 학생들이 원하는 단원을 선택하면 랜덤으로 단어 시험지를 pdf 형식으로 만들어 저장 및 인쇄할 수 있습니다. 핸드폰에 시험지를 저장하여 실제 모의고사 시험지를 만들어 풀어보세요! ',
+                            '문장 학습',
+                            '문장 학습에서 틀린 문장은 CFLPT 단어 부분을 참고했습니다. 해당 문장은 CFLPT 단어장에 해당하는 예시 문장을 근거로 제작되었습니다',
                             14),
                       ),
                       ListTile(
-                        title: Text('앱에서 단어 퀴즈를 볼 때 제한 시간 조절 가능한가요?'),
+                        title: Text('왜 안드로이드 사용자는 뒤로가기 버튼을 사용하지 못하나요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
-                            '제한 시간 수정',
-                            '각 단어당 15초를 기준으로 하고 있습니다. 이는 학교 시험에서 보는 시험의 제한시간을 근거하여 세팅한 숫자입니다. 따라서 임의로 변경은 불가능합니다. 해당 단어장 파트를 단어장이 아닌 테스트 버튼을 누르면 제한시간 안에 문제를 풀 수 있습니다.',
+                            '뒤로가기 버튼',
+                            '암기 중에 학습을 중지하는 것을 최대한 방지하기 위해 이 버튼 사용을 제한하였습니다. 또한 이를 제외한 다른 페이지에서 뒤로가기 버튼을 사용할시 제작자가 의도한 부분으로 이동할 수 있게 제작했습니다.',
                             14),
                       ),
                       ListTile(
@@ -222,16 +229,16 @@ class faqList extends StatelessWidget {
                         onTap: () => alert(
                             context,
                             '단원당 단어 수',
-                            '한 파트당 단어 40개를 기준으로 하고 있습니다. 이 앱의 목적 중 하나가 출퇴근등 자투리 시간을 단어 암기에 이용하는 것입니다. 따라서 10~15분 동안 한 단원을 볼 수 있게 만들었습니다.',
+                            '한 파트당 단어 40개를 기준으로 하고 있습니다. 이 앱의 목적 중 하나가 출퇴근 시간등 남는 시간을 이용하여 단어 암기를 하는 것을 목표로 두고 있습니다. 따라서 10~15분 동안 한 단원을 볼 수 있게 만들었습니다.',
                             14),
                       ),
                       ListTile(
-                        title: Text('단어장 보는 방식을 도중에 바꾸었는데 기억상자에 저장될까요?'),
+                        title: Text('단어장 보는 방식을 도중에 바꾸었는데 나만의 단어장에 저장될까요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
-                            '기억상자 저장',
-                            '단어장을 보는 방식은 리스트 형식, OX 형식 두 가지가 있습니다. 중간에 바꾸셔도 기억상자에는 중복 없이 저장이 됩니다.',
+                            '임시 저장',
+                            '도중에 단어 암기 혹은 테스트를 정지해도 나만의 단어, 문장에 저장이 됩니다.',
                             14),
                       ),
                       ListTile(
@@ -244,16 +251,18 @@ class faqList extends StatelessWidget {
                             14),
                       ),
                       ListTile(
-                        title: Text('이 앱은 초.중 힌디어 강독, 문법 책 중 무엇을 참고했나요?'),
+                        title: Text('학과 단어는 어떤 책을 참고했나요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () => alert(
                             context,
                             '참고 도서',
-                            '▶초급, 중급 힌디어 문법\n초급 힌디어 문법, 중급 힌디어 문법\t최종찬,김용정 지음. Huine 출판\n\n▶초급 힌디어 강독\n'
-                                '힌디어 첫걸음\t김우조,이동원 지음. HUINE 출판\n\n▶FLEX 힌디어\nFLEX UP 힌디어\t김우조,김용정 지음. HUINE 출판\n\n'
+                            '▶초급, 중급 힌디어 문법\n초급 힌디어 문법, 중급 힌디어 문법\t최종찬,김용정 지음. Huine 출판\n\n'
+                                '▶FLEX 힌디어\nFLEX UP 힌디어\t김우조,김용정 지음. HUINE 출판\n\n'
                                 '▶힌디어 표준교제 A0,A1\t한국외국어대학교 인도어과, 인도학과 지음. 한국외국어대학교 지식출판콘테츠원 출판\n\n'
                                 '▶힌디어 표준교체 A2,B0,B1,B2(출판 예정)\t한국외국어대학교 인도어과, 인도학과 지음. 한국외국어대학교 지식출판콘테츠원 출판',
                             13),
+                        //▶초급 힌디어 강독\n'
+                        //                                 '힌디어 첫걸음\t김우조,이동원 지음. HUINE 출판\n\n
                       ),
                       ListTile(
                         title: Text('앱 여기서 오류가 생겨요. 어떻게하면 좋죠?'),
@@ -270,15 +279,10 @@ class faqList extends StatelessWidget {
                         onTap: () => alert(
                             context,
                             '수정 사항',
-                            '업데이트는 앱에 문제가 있을 시, 새로운 단어 리스트가 추가될 시, CFL에서하는 행사 및 공지사항이 수정되리 이루어집니다. 주로 CFL 공지사항 수정을 위해 업데이트가 이루어집니다.',
+                            '업데이트는 앱에 문제가 있을 시, 새로운 단어 리스트가 추가될 시, CFL에서 진행하는 행사 및 공지사항 변경이 있을 때 업데이트가 이루어집니다. 주로 CFL 공지사항 수정을 위해 업데이트가 이루어집니다.',
                             14),
                       ),
-                      ListTile(
-                        title: Text('앱 배경화면을 어둡게 하고 싶어요. 어떻게하면 되나요? '),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () => alert(context, '앱 테마 설정',
-                            '추후 업데이트때 단어장 태마색을 변경할 수 있는 기능을 넣을 예정입니다.', 14),
-                      ),
+
                     ],
                   ).toList(),
                 ))),

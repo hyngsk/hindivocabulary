@@ -52,7 +52,7 @@ class hindiCommonVocaSentence extends StatelessWidget {
               border: Border.all(width: 0.1, color: Colors.black87),
             ),
             child: Image.asset(
-              'pictures/etc/level_banner.jpg',
+              'pictures/etc/sentence_banner.jpg',
               fit: BoxFit.fitHeight,
               height: vertical_size * 0.144,
               width: horizontal_size,

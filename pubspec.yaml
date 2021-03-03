@@ -32,6 +32,7 @@ dependencies:
   animated_widgets: ^1.0.6
   page_turn: ^1.0.1
   dotted_line: ^2.0.2
+  introduction_screen: ^1.0.7
 
 
   #앱 아이콘, 이름 의존성 설정
@@ -66,6 +67,20 @@ flutter:
     - assets/A2.xlsx
     - assets/B1.xlsx
 
+    #초기 기능 설명
+    - pictures/introduction/delete_my_word.jpg
+    - pictures/introduction/list_form_word_example.jpg
+    - pictures/introduction/back_ban.jpg
+    - pictures/introduction/list_form_word_hide_korean.jpg
+    - pictures/introduction/list_form_word_save.jpg
+    - pictures/introduction/my_voca_and_my_sentence.jpg
+    - pictures/introduction/one_by_one_word.jpg
+    - pictures/introduction/sentence_test.jpg
+    - pictures/introduction/voca_test_hindi.jpg
+    - pictures/introduction/voca_test_korean.jpg
+    - pictures/introduction/wrong_words_result.jpg
+    - pictures/introduction/main.jpg
+
     #Main 배너 책 광고
     - pictures/informed_pictures/flex_book_picture.png
     - pictures/informed_pictures/hindi_rootberb_voca_book_picture.png
@@ -99,6 +114,7 @@ flutter:
     - pictures/etc/level_banner.jpg
     - pictures/etc/major_banner.jpg
     - pictures/etc/temp_major_banner.jpg
+    - pictures/etc/sentence_banner.jpg
 
     #CFLPT 단계별 로고
     - pictures/CFLPT_Logo/CFLPT_A0.jpg

@@ -10,14 +10,17 @@ import 'package:hindivocabulary/home.dart';
 import 'package:hindivocabulary/myVoca.dart';
 import 'package:hindivocabulary/mySentence.dart';
 import 'package:hindivocabulary/makeTestSheet.dart';
+import 'package:hindivocabulary/introductionScreen.dart';
 import 'dart:ui';
 import 'dart:io';
 
+var first_experience =false;
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
+
 
 
   @override
@@ -27,9 +30,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
 
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    if(first_experience==false)
+      return onboardingpage();
+    else
+      return WillPopScope(
 
         onWillPop: () async => showDialog(
         context: context,
@@ -69,7 +76,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
   @override
   Widget build(BuildContext context) {
 
-    print("전체 높이0:"+MediaQuery.of(context).size.height.toString());
+
     return
        SafeArea(
         key:_scaffoldKey,
