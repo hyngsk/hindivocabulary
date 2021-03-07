@@ -2,11 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-
-
-
-
-
 //안 외워진 단어 저장하는 리스트
 class unMemory_words {
   String words;
@@ -16,10 +11,7 @@ class unMemory_words {
   String example_korean;
   Map<String, String> _saved_word_list;
 
-
-
   static List<Map<String, String>> list = new List<Map<String, String>>();
-
 
   unMemory_words(String words, String word_class, String mean,
       String example_hindi, String example_korean) {
@@ -37,7 +29,6 @@ class unMemory_words {
       "한국어 예시": this.example_korean
     };
     list.add(_saved_word_list);
-
   }
 }
 

@@ -237,7 +237,52 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
                           size: 30,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          if (file_name == 'assets/A0.xlsx') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => level_(A0_word_list_page,
+                                    A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
+                              ),
+                            );
+                          } else if (file_name == 'assets/A1.xlsx') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => level_(A1_word_list_page,
+                                    A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
+                              ),
+                            );
+                          } else if (file_name == 'assets/A2.xlsx') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => level_(A2_word_list_page,
+                                    A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
+                              ),
+                            );
+                          } else if (file_name == 'assets/B1.xlsx') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => level_(B1_word_list_page,
+                                    B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                              ),
+                            );
+                          } else if (file_name == 'assets/B2.xlsx') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => level_(B1_word_list_page,
+                                    B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => MyApp()),
+                            );
+                          }
                         },
                       );
                     },

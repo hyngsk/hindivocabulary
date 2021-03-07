@@ -9,6 +9,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:hindivocabulary/function/finish_alert_function.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
+import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
+import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
+import 'package:hindivocabulary/main.dart';
 
 class TestVoca extends StatefulWidget {
   //단어 레벨 타이틀
@@ -292,7 +295,52 @@ class _TestVocaState extends State<TestVoca> {
                             size: 30,
                           ),
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            if (file_name == 'assets/A0.xlsx') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => level_(A0_word_list_page,
+                                      A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
+                                ),
+                              );
+                            } else if (file_name == 'assets/A1.xlsx') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => level_(A1_word_list_page,
+                                      A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
+                                ),
+                              );
+                            } else if (file_name == 'assets/A2.xlsx') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => level_(A2_word_list_page,
+                                      A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
+                                ),
+                              );
+                            } else if (file_name == 'assets/B1.xlsx') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => level_(B1_word_list_page,
+                                      B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                                ),
+                              );
+                            } else if (file_name == 'assets/B2.xlsx') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => level_(B1_word_list_page,
+                                      B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MyApp()),
+                              );
+                            }
                           },
                         );
                       },

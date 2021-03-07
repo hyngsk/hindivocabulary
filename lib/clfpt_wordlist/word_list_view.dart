@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hindivocabulary/word_list_page/Test_voca.dart';
 import 'package:hindivocabulary/word_list_page/list_voca.dart';
 import 'package:hindivocabulary/word_list_page/word_one_by_one_view.dart';
-
+import 'package:hindivocabulary/function/unmemory_list.dart';
 import '../main.dart';
+
 
 //단어 외우는 방식 정할 때 나오는 사진, 문자
 final List<Map> select_icon_for_word = [
@@ -42,6 +43,7 @@ class level_State extends State<level_> {
   List<List> start_end_num;
   String file_name;
 
+
   level_State(List<String> wordlist, List<List> start_end_num,
       String chapter_list, String file_name) {
     this.chapter_list = chapter_list;
@@ -51,7 +53,14 @@ class level_State extends State<level_> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    loading = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     //화면별 넓이 비율 자동 조절 변수
     var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
         -MediaQuery.of(context).padding.right;
@@ -94,6 +103,7 @@ class level_State extends State<level_> {
         ),
         content: Builder(
           builder: (context) {
+            loading =false;
             var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
                 -MediaQuery.of(context).padding.right;
             var vertical_size = (MediaQuery.of(context).size.height -
@@ -132,7 +142,11 @@ class level_State extends State<level_> {
                             ],
                           ),
                         ),
-                        onTap: () => Navigator.push(
+                        onTap: () {
+                          setState(() {
+                            loading=true;
+                          });
+                          Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => new word_list_voca(
@@ -142,7 +156,9 @@ class level_State extends State<level_> {
                               file_name: file_name,
                             ),
                           ),
-                        ),
+                        );
+
+          }
                       ),
                       InkWell(
                         child: Container(
@@ -166,7 +182,11 @@ class level_State extends State<level_> {
                             ],
                           ),
                         ),
-                        onTap: () => Navigator.push(
+                        onTap: () {
+                          setState(() {
+                            loading =true;
+                          });
+                          Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => new word_one_by_one_view(
@@ -176,7 +196,9 @@ class level_State extends State<level_> {
                               file_name: file_name,
                             ),
                           ),
-                        ),
+                        );
+
+          }
                       ),
                       InkWell(
                         child: Container(
@@ -199,17 +221,25 @@ class level_State extends State<level_> {
                             ],
                           ),
                         ),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => new TestVoca(
-                              start_word_num: start,
-                              finish_word_num: end,
-                              page_name: page_title,
-                              file_name: file_name,
+                        onTap: () {
+                          setState(() {
+                            loading=true;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                              new TestVoca(
+                                start_word_num: start,
+                                finish_word_num: end,
+                                page_name: page_title,
+                                file_name: file_name,
+                              ),
                             ),
-                          ),
-                        ),
+
+                          );
+
+                        }
                       ),
                     ],
                   ),
@@ -279,6 +309,7 @@ class level_State extends State<level_> {
                     ),
                   ),
                 ),
+                loadingAnimation(loading, vertical_size*0.01, horizontal_size),
                 Expanded(
                   child: ListView.separated(
                       padding:
@@ -308,5 +339,20 @@ class level_State extends State<level_> {
           ),
         ),
         onWillPop: () async => false);
+  }
+}
+
+Widget loadingAnimation(bool loading,double vertical_size, double horizontal_size)
+{
+  if(loading)
+    {
+      return LinearProgressIndicator();
+    }
+  else{
+    return Divider(
+      color: Colors.white,
+      height: vertical_size,
+
+    );
   }
 }

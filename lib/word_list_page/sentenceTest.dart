@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:hindivocabulary/clfpt_wordlist/word_list_view_sentence.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:hindivocabulary/function/test_result_page.dart';
+import 'package:hindivocabulary/main.dart';
+import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 
 class sentenceTest extends StatefulWidget {
   //단어 레벨 타이틀
@@ -228,8 +231,54 @@ class _sentenceState extends State<sentence> {
                       color: Colors.white,
                       size: 30,
                     ),
+                    //목차로 이동하기
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      if (file_name == 'assets/A0.xlsx') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => level_Sentence(A0_word_list_page,
+                                A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
+                          ),
+                        );
+                      } else if (file_name == 'assets/A1.xlsx') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => level_Sentence(A1_word_list_page,
+                                A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
+                          ),
+                        );
+                      } else if (file_name == 'assets/A2.xlsx') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => level_Sentence(A2_word_list_page,
+                                A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
+                          ),
+                        );
+                      } else if (file_name == 'assets/B1.xlsx') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => level_Sentence(B1_word_list_page,
+                                B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                          ),
+                        );
+                      } else if (file_name == 'assets/B2.xlsx') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => level_Sentence(B1_word_list_page,
+                                B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                        );
+                      }
                     },
                   );
                 },
