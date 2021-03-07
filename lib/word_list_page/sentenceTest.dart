@@ -464,6 +464,7 @@ class _sentenceState extends State<sentence> {
 
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(horizontal: horizontal_size*0.01),
                           alignment: Alignment.center,
                           width: horizontal_size * 0.9,
                           height: vertical_size * 0.15,
@@ -474,6 +475,7 @@ class _sentenceState extends State<sentence> {
 
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(horizontal: horizontal_size*0.01),
                           alignment: Alignment.center,
                           width: horizontal_size * 0.9,
                           height: vertical_size * 0.15,

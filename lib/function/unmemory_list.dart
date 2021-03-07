@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
+
+bool loading =false;
 //안 외워진 단어 저장하는 리스트
 class unMemory_words {
   String words;

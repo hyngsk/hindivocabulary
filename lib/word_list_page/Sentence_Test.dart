@@ -366,8 +366,9 @@ class _SentenceTestState extends State<SentenceTest> {
                   ),
                   //힌디어 지문
                   Container(
+                    padding: EdgeInsets.symmetric(horizontal: horizontal_size*0.03),
                     alignment: Alignment.center,
-                    width: horizontal_size*0.8,
+                    width: horizontal_size*0.78,
                     height: vertical_size*0.1,
                     child: AutoSizeText(hindiSentence, minFontSize: 20, maxFontSize: 35,maxLines: 3,
                     style: TextStyle(fontSize: 30,color: Colors.black,fontWeight: FontWeight.bold),),
@@ -375,8 +376,9 @@ class _SentenceTestState extends State<SentenceTest> {
 
                   //문제 부분
                   Container(
+                    margin: EdgeInsets.symmetric(horizontal: horizontal_size*0.1),
                     alignment: Alignment.center,
-                    width: horizontal_size*0.8,
+                    width: horizontal_size*0.78,
                     height: vertical_size*0.1,
                     child: AutoSizeText(korean_Wrong_Sentence,minFontSize: 20, maxFontSize: 30,maxLines: 3,
                       style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
