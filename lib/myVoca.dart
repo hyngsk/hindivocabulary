@@ -263,6 +263,7 @@ class _myVocaState extends State<myVoca> {
                                         onTap: () => setState(() {
 
 
+                                          my_Voca_list.removeAt(index);
                                           var snackbar = SnackBar(
                                             behavior: SnackBarBehavior.floating,
                                             content:

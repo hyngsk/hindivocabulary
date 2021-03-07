@@ -1,7 +1,7 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/word_list_page/sentenceTest.dart';
-
+import 'package:hindivocabulary/function/unmemory_list.dart';
 import '../main.dart';
 
 class level_Sentence extends StatefulWidget {
@@ -17,6 +17,7 @@ class level_Sentence extends StatefulWidget {
     this.start_end_num = start_end_num;
     this.file_name = file_name;
   }
+
 
   @override
   level_SentenceState createState() => level_SentenceState(
@@ -37,6 +38,11 @@ class level_SentenceState extends State<level_Sentence> {
     this.file_name = file_name;
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    loading = false;
+  }
   @override
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
@@ -99,6 +105,8 @@ class level_SentenceState extends State<level_Sentence> {
                     ),
                   ),
                 ),
+                loadingAnimation(loading, vertical_size*0.01, horizontal_size),
+
                 Expanded(
                   child: ListView.separated(
                       padding:
@@ -111,6 +119,9 @@ class level_SentenceState extends State<level_Sentence> {
                             title: Text(wordlist[index]),
                             trailing: Icon(Icons.keyboard_arrow_right),
                             onTap: () {
+                              setState(() {
+                                loading = true;
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -137,5 +148,20 @@ class level_SentenceState extends State<level_Sentence> {
           ),
         ),
         onWillPop: () async => false);
+  }
+}
+
+Widget loadingAnimation(bool loading,double vertical_size, double horizontal_size)
+{
+  if(loading)
+  {
+    return LinearProgressIndicator();
+  }
+  else{
+    return Divider(
+      color: Colors.white,
+      height: vertical_size,
+
+    );
   }
 }

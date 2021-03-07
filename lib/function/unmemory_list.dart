@@ -2,6 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
+//해당 단원을 클릭하면 로딩 에니메이션 실
+bool loading = false;
+
 //안 외워진 단어 저장하는 리스트
 class unMemory_words {
   String words;

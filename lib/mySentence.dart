@@ -283,19 +283,55 @@ class _sentenceState extends State<sentence> {
                       children: [
                         //질문 번호
                         Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: horizontal_size * 0.02),
-                          alignment: Alignment.centerLeft,
-                          width: horizontal_size * 0.9,
-                          height: vertical_size * 0.1,
-                          child: AutoSizeText("Question" + count.toString() +
-                              ".\n아래 문장은 올바른 문장입니까?", minFontSize: 10,
-                            maxFontSize: 20,
-                            style: TextStyle(fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black38),),
+                          alignment: Alignment.center,
+                          width: horizontal_size*0.9,
+                          height: vertical_size*0.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: horizontal_size * 0.02),
+                                alignment: Alignment.centerLeft,
 
+                                child: AutoSizeText("Question" + count.toString() +
+                                    ".\n아래 문장은 올바른 문장입니까?", minFontSize: 10,
+                                  maxFontSize: 20,
+                                  style: TextStyle(fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black38),),
+
+                              ),
+                              OutlineButton(onPressed: () {
+                                setState(() {
+                                  unMemory_sentence.list_sentence.removeAt(index);
+                                  var snackbar = SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content:
+                                    Text("해당 문장은 삭제되었습니다."),
+
+                                    action: SnackBarAction(
+                                      label: "확인",
+                                      onPressed: () {},
+                                    ),
+                                  );
+                                  Scaffold.of(context)
+                                      .showSnackBar(snackbar);
+
+                                });
+                                //HintDialog(context,hindi_word,korean_word);
+
+
+                              }, hoverColor: Colors.redAccent,
+
+                                child: AutoSizeText(
+                                  "삭제", style: TextStyle(fontSize: 12,
+                                    color: Colors.black),),),
+
+                            ],
+                          ),
                         ),
+
                         Container(
                           alignment: Alignment.center,
                           width: horizontal_size * 0.9,
