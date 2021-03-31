@@ -14,6 +14,7 @@ import 'package:hindivocabulary/introductionScreen.dart';
 import 'dart:ui';
 import 'dart:io';
 
+
 var first_experience =false;
 void main() {
   runApp(MyApp());
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     if(first_experience==false)
       return onboardingpage();
     else
