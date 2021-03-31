@@ -32,14 +32,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
 
-
+  SharedPreferences wordlist;
+  int count;
   @override
   void initState() {
     super.initState();
+    _loading();
 
   }
 
   bool first_experience = mainMemory().show_one_time;
+
+
+
+
+
+  void _loading ()async{
+    wordlist = await SharedPreferences.getInstance();
+  }
 
 
   @override
@@ -85,6 +95,9 @@ class Main_AppBar extends StatefulWidget {
 class _Main_AppBarState extends State<Main_AppBar> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+
+
 
   @override
   Widget build(BuildContext context) {

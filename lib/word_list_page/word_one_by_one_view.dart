@@ -200,13 +200,15 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
               setState(() {
                 if (details.globalPosition.dy.floorToDouble() >
                     vertical_size * 0.3) {
-                  unMemory_words(
+                  setState(() {
+                    unMemory_words(
 
-                      snapshot.data[index][0].toString(),
-                      snapshot.data[index][1].toString(),
-                      snapshot.data[index][2].toString(),
-                      snapshot.data[index][3].toString(),
-                      snapshot.data[index][4].toString());
+                        snapshot.data[index][0].toString(),
+                        snapshot.data[index][1].toString(),
+                        snapshot.data[index][2].toString(),
+                        snapshot.data[index][3].toString(),
+                        snapshot.data[index][4].toString());
+                  });
 
                   var snackbar = SnackBar(
                     backgroundColor: Colors.white,

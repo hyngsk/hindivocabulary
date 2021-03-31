@@ -13,10 +13,16 @@ class unMemory_words {
   String mean;
   String example_hindi;
   String example_korean;
-  int count =0;
-  Map<String, String> _saved_word_list;
-  SharedPreferences wordlist;
 
+  Map<String, String> _saved_word_list;
+
+
+  @override
+  void initState() {
+
+        _loading();
+
+  }
   unMemory_words(String words, String word_class, String mean,
       String example_hindi, String example_korean) {
     this.words = words;
@@ -24,20 +30,49 @@ class unMemory_words {
     this.mean = mean;
     this.example_hindi = example_hindi;
     this.example_korean = example_korean;
-    this.count++;
 
-    change_mylist_to_eternity_word(this.count, this.words, this.word_class, this.mean, this.example_hindi, this.example_korean);
+
+
+    change_mylist_to_eternity_word(this.words, this.word_class, this.mean, this.example_hindi, this.example_korean);
 
   }
-  void change_mylist_to_eternity_word(int count,String word,String word_class,String mean,String example_hindi,String example_korean) async
+
+  void _loading ()async{
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+
+  }
+  void change_mylist_to_eternity_word(String word,String word_class,String mean,String example_hindi,String example_korean) async
 
   {
-    wordlist.setString("w_word"+count.toString(), word);
-    wordlist.setString("w_word_class"+count.toString(), word_class);
-    wordlist.setString("w_mean"+count.toString(), mean);
-    wordlist.setString("w_example_hindi"+count.toString(), example_hindi);
-    wordlist.setString('w_example_korean'+count.toString(), example_korean);
-    wordlist.setInt('count_word', count);
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+    int count;
+
+    if((wordlist.getInt('count_num')??0)==0)
+      {
+        (wordlist.setInt('count_num', 1));
+        print("1이 저장되었을까?"+wordlist.getInt('count_num').toString());
+        count = (wordlist.getInt('count_num'));
+      }
+    else
+      {
+        count = (wordlist.getInt('count_num'));
+        count= count+1;
+        wordlist.setInt('count_num', count);
+        print("저장된 값은:"+count.toString());
+      }
+
+
+
+    wordlist.setString("w_word"+(count.toString()), word);
+    wordlist.setString("w_word_class"+(count.toString()), word_class);
+    wordlist.setString("w_mean"+(count.toString()), mean);
+    wordlist.setString("w_example_hindi"+(count.toString()), example_hindi);
+    wordlist.setString('w_example_korean'+(count.toString()), example_korean);
+
+    if(count!=0){
+      print("제대로 저장됨");
+    }
+
   }
 
 
