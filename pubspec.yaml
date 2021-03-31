@@ -33,6 +33,7 @@ dependencies:
   page_turn: ^1.0.1
   dotted_line: ^2.0.2
   introduction_screen: ^1.0.7
+  shared_preferences: ^0.5.3+4
 
 
   #앱 아이콘, 이름 의존성 설정

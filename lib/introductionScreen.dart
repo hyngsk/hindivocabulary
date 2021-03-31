@@ -1,10 +1,11 @@
 import 'dart:io';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:hindivocabulary/main.dart';
+import 'package:hindivocabulary/main_memory.dart';
 
 class onboardingpage extends StatefulWidget {
   @override
@@ -12,6 +13,19 @@ class onboardingpage extends StatefulWidget {
 }
 
 class _onboardingpageState extends State<onboardingpage> {
+  SharedPreferences _preference;
+  @override
+  initState() {
+    // 부모의 initState호출
+    super.initState();
+
+
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+  }
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -47,9 +61,15 @@ class OnBoardingPage extends StatefulWidget {
 class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
+  var _standard_show = mainMemory();
 
-  void _onIntroEnd(context) {
-    first_experience=true;
+
+
+
+
+  _onIntroEnd(context) {
+
+    _standard_show.setBool();
     Navigator.of(context).push(
 
         CupertinoPageRoute(

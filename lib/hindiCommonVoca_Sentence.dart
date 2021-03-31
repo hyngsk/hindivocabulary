@@ -17,7 +17,7 @@ class hindiCommonVocaSentence extends StatelessWidget {
     {'id': 1, 'image': 'pictures/CFLPT_Logo/CFLPT_A1_Sentence.png', 'title': 'CLFPT A1'},
     {'id': 2, 'image': 'pictures/CFLPT_Logo/CFLPT_A2_Sentence.png', 'title': 'CLFPT A2'},
     {'id': 3, 'image': 'pictures/CFLPT_Logo/CFLPT_B1_Sentence.png', 'title': 'CLFPT B1'},
-    {'id': 4, 'image': 'pictures/CFLPT_Logo/CFLPT_B2_Sentence.png', 'title': 'CLFPT B2'},
+    //{'id': 4, 'image': 'pictures/CFLPT_Logo/CFLPT_B2_Sentence.png', 'title': 'CLFPT B2'},
     //{'id': 5, 'image': 'pictures/CFLPT_Logo/CFLPT_C1_Sentence.png', 'title': 'CLFPT C1'},
     //{'id': 6, 'image': 'pictures/CFLPT_Logo/CFLPT_C2_Sentence.png', 'title': 'CLFPT C2'},
   ];
@@ -28,8 +28,8 @@ class hindiCommonVocaSentence extends StatelessWidget {
     level_Sentence(A1_word_list_page, A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
     level_Sentence(A2_word_list_page, A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
     level_Sentence(B1_word_list_page, B1_word_list_scale, "B1 단어장", "assets/B1.xlsx"),
-    level_Sentence(B1_word_list_page, B1_word_list_scale, "B2 단어장", "assets/B1.xlsx"),
-  ]; // C1,C2는 아직 안 만들어졌음
+    //level_Sentence(B1_word_list_page, B1_word_list_scale, "B2 단어장", "assets/B1.xlsx"),
+  ]; //B2, C1,C2는 아직 안 만들어졌음
 
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수

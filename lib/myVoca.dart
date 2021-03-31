@@ -6,25 +6,21 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class myVoca extends StatefulWidget {
+
 
   //미암기 단어들 모음
   List<Map<String, String>> my_Voca_list;
 
+  SharedPreferences mywordlist;
 
 
 
-  //생성자 , 첫 번째 범위, 두 번째, 세 번째 단원을 나누는 범위
-  myVoca(
-      List<Map<String, String>>
-
-        my_Voca_list) {
-    this.my_Voca_list = my_Voca_list;
 
 
-  }
+
 
   @override
   _myVocaState createState() => _myVocaState(
@@ -35,6 +31,7 @@ class _myVocaState extends State<myVoca> {
   //미암기 단어 리스트
   List<Map<String, String>> my_Voca_list;
 
+  SharedPreferences wordlist;
 
   //힌디어 단어 가리기
   int alpha_hindi = 255;
@@ -69,6 +66,8 @@ class _myVocaState extends State<myVoca> {
 
   bool zoom_in_example = false;
   bool isPlaying = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +291,7 @@ class _myVocaState extends State<myVoca> {
                                           padding: EdgeInsets.symmetric(
                                               vertical: 1, horizontal: 0.8),
                                           child: AutoSizeText(
-                                            my_Voca_list[index]['힌디어'],
+                                            wordlist.getString("w_word"+index.toString()),
                                             style: TextStyle(
                                               fontSize: font_size_hindi,
                                               fontWeight: FontWeight.w400,
@@ -307,7 +306,7 @@ class _myVocaState extends State<myVoca> {
                                           ),
                                         ),
                                         subtitle: AutoSizeText(
-                                          my_Voca_list[index]['품사'],
+                                          wordlist.getString("w_word_class"+index.toString()),
                                           style: TextStyle(
                                             fontSize: font_size_korean,
                                             fontWeight: FontWeight.w100,
@@ -325,7 +324,7 @@ class _myVocaState extends State<myVoca> {
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 5, horizontal: 16),
                                             child: AutoSizeText(
-                                              my_Voca_list[index]['의미'],
+                                              wordlist.getString("w_mean"+index.toString()),
                                               style: TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w300),
@@ -337,7 +336,7 @@ class _myVocaState extends State<myVoca> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 16, vertical: 6),
                                             child: AutoSizeText(
-                                              my_Voca_list[index]['힌디어 예시'],
+                                              wordlist.getString("w_example_hindi"+index.toString()),
                                               style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w500),
@@ -349,7 +348,7 @@ class _myVocaState extends State<myVoca> {
                                             padding:
                                             EdgeInsets.fromLTRB(16, 5, 16, 10),
                                             child: AutoSizeText(
-                                                my_Voca_list[index]['한국어 예시'],
+                                              wordlist.getString("w_example_korean"+index.toString()),
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w100),
@@ -369,7 +368,7 @@ class _myVocaState extends State<myVoca> {
                               separatorBuilder: (context, index) => Divider(
                                 color: Colors.black26,
                               ),
-                              itemCount: my_Voca_list.length),
+                              itemCount:wordlist.getInt("count_word")),
                         ),
                       ],
                     ),

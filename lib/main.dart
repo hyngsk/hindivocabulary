@@ -13,9 +13,10 @@ import 'package:hindivocabulary/makeTestSheet.dart';
 import 'package:hindivocabulary/introductionScreen.dart';
 import 'dart:ui';
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hindivocabulary/main_memory.dart';
 
 
-var first_experience =false;
 void main() {
   runApp(MyApp());
 }
@@ -30,6 +31,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
+  bool first_experience = mainMemory().show_one_time;
 
 
   @override
@@ -75,6 +85,7 @@ class Main_AppBar extends StatefulWidget {
 class _Main_AppBarState extends State<Main_AppBar> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
 
@@ -214,7 +225,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     CupertinoPageRoute(
-                        builder: (BuildContext context) => myVoca(unMemory_words.list)),
+                        builder: (BuildContext context) => myVoca()),
                   );
                 },
               ),

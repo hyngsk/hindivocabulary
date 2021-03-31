@@ -15,7 +15,7 @@ class hindiCommonVoca extends StatelessWidget {
     {'id': 1, 'image': 'pictures/CFLPT_Logo/CFLPT_A1.jpg', 'title': 'CLFPT A1'},
     {'id': 2, 'image': 'pictures/CFLPT_Logo/CFLPT_A2.jpg', 'title': 'CLFPT A2'},
     {'id': 3, 'image': 'pictures/CFLPT_Logo/CFLPT_B1.jpg', 'title': 'CLFPT B1'},
-    {'id': 4, 'image': 'pictures/CFLPT_Logo/CFLPT_B2.jpg', 'title': 'CLFPT B2'},
+    //{'id': 4, 'image': 'pictures/CFLPT_Logo/CFLPT_B2.jpg', 'title': 'CLFPT B2'},
     //{'id': 5, 'image': 'pictures/CFLPT_Logo/CFLPT_C1.jpg', 'title': 'CLFPT C1'},
     //{'id': 6, 'image': 'pictures/CFLPT_Logo/CFLPT_C2.jpg', 'title': 'CLFPT C2'},
   ];
@@ -26,7 +26,7 @@ class hindiCommonVoca extends StatelessWidget {
     level_(A1_word_list_page, A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
     level_(A2_word_list_page, A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
     level_(B1_word_list_page, B1_word_list_scale, "B1 단어장", "assets/B1.xlsx"),
-    level_(B1_word_list_page, B1_word_list_scale, "B2 단어장", "assets/B1.xlsx"),
+    //level_(B1_word_list_page, B1_word_list_scale, "B2 단어장", "assets/B1.xlsx"),
   ]; // B2는 아직 안 만들어졌음
 
   Widget build(BuildContext context) {

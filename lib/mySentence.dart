@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:hindivocabulary/function/test_result_page.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class mySentence extends StatefulWidget {
   int _total_itemcount;
 
@@ -52,6 +54,7 @@ class _sentenceState extends State<sentence> {
   var hindi_example = '';
   var korean_wrong_example = '';
 
+
   //정답 번호
   var right_num = '';
 
@@ -72,10 +75,11 @@ class _sentenceState extends State<sentence> {
   List<String> wrong_korean_words = new List<String>();
 
   _sentenceState() {
-    this._total_itemcount = unMemory_sentence.list_sentence.length;
+    this._total_itemcount = sentence.getInt("count_sentence");
     this.hint_color = Colors.white;
   }
 
+  SharedPreferences sentence;
   @override
   Widget build(BuildContext context) {
     var horizontal_size = MediaQuery.of(context).size.width;
@@ -85,39 +89,32 @@ class _sentenceState extends State<sentence> {
     return WillPopScope(
         child: new Builder(
           builder: (context) {
-            if (unMemory_sentence.list_sentence.length != 0) {
+            if (sentence.getInt('count_sentence')!=0) {
               if (index == 0 && count == 1) {
-                this.hindi_word = unMemory_sentence.list_sentence[index]['힌디어'];
-                this.word_case = unMemory_sentence.list_sentence[index]['품사'];
-                this.korean_word = unMemory_sentence.list_sentence[index]['의미'];
+                this.hindi_word = sentence.getString('s_word'+index.toString());
+                this.word_case = sentence.getString('s_word_class'+index.toString());
+                this.korean_word = sentence.getString('s_mean'+index.toString());
                 this.hindi_example =
-                    unMemory_sentence.list_sentence[index]['힌디어 예시'];
+                    sentence.getString('s_example_hindi'+index.toString());
                 this.korean_example =
-                    unMemory_sentence.list_sentence[index]['한국어 예시'];
+                    sentence.getString('s_example_korean'+index.toString());
                 this.korean_wrong_example =
-                    unMemory_sentence.list_sentence[index]['한국어 문제'];
-                this.right_num = unMemory_sentence.list_sentence[index]['정답'];
+                    sentence.getString("s_example_wrong_korean"+index.toString());
+                this.right_num=sentence.getString("s_example_wrong_korean"+index.toString());
               } else {
                 try {
                   if (index < _total_itemcount && count <= _total_itemcount) {
-                    this.hindi_word = unMemory_sentence.list_sentence[index]
-                            ['힌디어']
-                        .toString();
-                    this.word_case =
-                        unMemory_sentence.list_sentence[index]['품사'].toString();
-                    this.korean_word =
-                        unMemory_sentence.list_sentence[index]['의미'].toString();
-                    this.hindi_example = unMemory_sentence.list_sentence[index]
-                            ['힌디어 예시']
-                        .toString();
-                    this.korean_example = unMemory_sentence.list_sentence[index]
-                            ['한국어 예시']
-                        .toString();
-                    this.korean_wrong_example = unMemory_sentence
-                        .list_sentence[index]['한국어 문제']
-                        .toString();
-                    this.right_num =
-                        unMemory_sentence.list_sentence[index]['정답'].toString();
+                    this.hindi_word = sentence.getString('s_word'+index.toString());
+                    this.word_case = sentence.getString('s_word_class'+index.toString());
+                    this.korean_word = sentence.getString('s_mean'+index.toString());
+                    this.hindi_example =
+                        sentence.getString('s_example_hindi'+index.toString());
+                    this.korean_example =
+                        sentence.getString('s_example_korean'+index.toString());
+                    this.korean_wrong_example =
+                        sentence.getString("s_example_wrong_korean"+index.toString());
+                    this.right_num=sentence.getString("s_example_wrong_korean"+index.toString());
+
                   } else {
                     move_page(context, "재복습 추천 문장", this._total_itemcount,
                         this.correct, wrong_hindi_words, wrong_korean_words);
