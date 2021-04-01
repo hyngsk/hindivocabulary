@@ -50,7 +50,7 @@ class unMemory_words {
     if((wordlist.getInt('count_num')??0)==0)
       {
         (wordlist.setInt('count_num', 1));
-        print("1이 저장되었을까?"+wordlist.getInt('count_num').toString());
+
         count = (wordlist.getInt('count_num'));
       }
     else
@@ -58,7 +58,7 @@ class unMemory_words {
         count = (wordlist.getInt('count_num'));
         count= count+1;
         wordlist.setInt('count_num', count);
-        print("저장된 값은:"+count.toString());
+
       }
 
 
@@ -69,18 +69,14 @@ class unMemory_words {
     wordlist.setString("w_example_hindi"+(count.toString()), example_hindi);
     wordlist.setString('w_example_korean'+(count.toString()), example_korean);
 
-    if(count!=0){
-      print("제대로 저장됨");
-    }
+
 
   }
 
 
 }
 
-
-
-//안 외워진 단어 저장하는 리스트
+//안 외워진 문 저장하는 리스트
 class unMemory_sentence {
   String words;
   String word_class;
@@ -89,10 +85,15 @@ class unMemory_sentence {
   String example_korean;
   String example_wrong_korean;
   String right;
-  int count;
   Map<String, String> _saved_word_list;
-  SharedPreferences sentencelist;
 
+
+  @override
+  void initState() {
+
+    _loading();
+
+  }
   unMemory_sentence(String words, String word_class, String mean,
       String example_hindi, String example_korean,String example_wrong_korean,String right) {
     this.words = words;
@@ -102,26 +103,55 @@ class unMemory_sentence {
     this.example_korean = example_korean;
     this.example_wrong_korean = example_wrong_korean;
     this.right = right;
-    this.count++;
 
-    change_mylist_to_eternity_sentence(this.count, this.words, this.word_class, this.mean, this.example_hindi, this.example_korean,
-        this.example_wrong_korean, this.right);
+
+    change_mylist_to_eternity_word(this.words, this.word_class, this.mean, this.example_hindi,
+        this.example_korean,this.example_wrong_korean,this.right);
+
   }
-  void change_mylist_to_eternity_sentence(int count,String word,String word_class,String mean,
-      String example_hindi,String example_korean,String example_wrong_korean,String right) async
+
+  void _loading ()async{
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+
+  }
+  void change_mylist_to_eternity_word(String word,String word_class,String mean,String example_hindi,
+      String example_korean,String example_wrong_korean,String right) async
 
   {
-    sentencelist.setInt("count_sentence", count);
-    sentencelist.setString("s_word"+count.toString(), word);
-    sentencelist.setString("s_word_class"+count.toString(), word_class);
-    sentencelist.setString("s_mean"+count.toString(), mean);
-    sentencelist.setString("s_example_hindi"+count.toString(), example_hindi);
-    sentencelist.setString('s_example_korean'+count.toString(), example_korean);
-    sentencelist.setString("s_example_wrong_korean"+count.toString(),example_wrong_korean);
-    sentencelist.setString("s_right"+count.toString(), right);
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+    int count;
+
+    if((wordlist.getInt('count_num')??0)==0)
+    {
+      (wordlist.setInt('count_num', 1));
+
+      count = (wordlist.getInt('count_num'));
+    }
+    else
+    {
+      count = (wordlist.getInt('count_num'));
+      count= count+1;
+      wordlist.setInt('count_num', count);
+
+    }
+
+
+
+    wordlist.setString("s_word"+(count.toString()), word);
+    wordlist.setString("s_word_class"+(count.toString()), word_class);
+    wordlist.setString("s_mean"+(count.toString()), mean);
+    wordlist.setString("s_example_hindi"+(count.toString()), example_hindi);
+    wordlist.setString('s_example_korean'+(count.toString()), example_korean);
+    wordlist.setString('s_example_wrong_korean'+(count.toString()), example_wrong_korean);
+    wordlist.setString('s_right'+(count.toString()), right);
+
+
 
   }
+
+
 }
+
 //안 외워진 단어 저장하는 리스트
 class temp_unMemory_words {
   String words;
@@ -148,19 +178,3 @@ class temp_unMemory_words {
 
   }
 }
-
-// //리스트형 안 외워지는 단어를 set형으로 변환시키는 함수
-// Set convertList(List<Map<String, String>> list)
-// {
-//   HashSet<Map<String,String>> setList =new HashSet();
-//
-//   for(int i =0; i<list.length; i++)
-//     {
-//       setList.add(list[i]);
-//     }
-//   for(HashSet i in setList['힌디'])
-//     {
-//       print(i);
-//     }
-//   return setList;어
-// }

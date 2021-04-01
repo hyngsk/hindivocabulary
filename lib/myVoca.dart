@@ -43,7 +43,7 @@ class _myVocaState extends State<myVoca> {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     setState(() {
       this.count_num = (wordlist.getInt('count_num') ?? 0);
-      print("제대로 count_num에 왔음,count_num은:"+count_num.toString());
+
     });
 
   }
