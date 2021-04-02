@@ -85,7 +85,6 @@ class unMemory_sentence {
   String example_korean;
   String example_wrong_korean;
   String right;
-  Map<String, String> _saved_word_list;
 
 
   @override
@@ -121,17 +120,17 @@ class unMemory_sentence {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     int count;
 
-    if((wordlist.getInt('count_num')??0)==0)
+    if((wordlist.getInt('count_num_sen')??0)==0)
     {
-      (wordlist.setInt('count_num', 1));
+      (wordlist.setInt('count_num_sen', 1));
 
-      count = (wordlist.getInt('count_num'));
+      count = (wordlist.getInt('count_num_sen'));
     }
     else
     {
-      count = (wordlist.getInt('count_num'));
+      count = (wordlist.getInt('count_num_sen'));
       count= count+1;
-      wordlist.setInt('count_num', count);
+      wordlist.setInt('count_num_sen', count);
 
     }
 

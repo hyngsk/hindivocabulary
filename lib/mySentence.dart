@@ -31,7 +31,9 @@ class _mySentenceState extends State<mySentence> {
 
 /// This is the stateful widget that the main application instantiates.
 class sentence extends StatefulWidget {
-  int _total_itemcount;
+
+
+
 
   sentence() {
     Key:
@@ -44,20 +46,24 @@ class sentence extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _sentenceState extends State<sentence> {
+
+  @override
+  void initState() {
+    super.initState();
+    _loading();
+        }
   int _total_itemcount;
-  String hindi_word ='';
-  String word_class='';
-  String korean_word='';
-  String hindi_example='';
-  String korean_example='';
-  String korean_wrong_example='';
-  String right_num='';
-
-
+  String hindi_word = '';
+  String word_class = '';
+  String korean_word = '';
+  String hindi_example = '';
+  String korean_example = '';
+  String korean_wrong_example = '';
+  String right_num = '';
 
   //단어 리스트에 있는 인덱스와 한 번 만 초기화하기 위한 count 변수
-  int index =0;
-  int count = 1;
+  int index = 0;
+  int count = 0;
 
   //맞은 갯수, 틀린 갯수
   int correct = 0;
@@ -71,20 +77,30 @@ class _sentenceState extends State<sentence> {
   List<String> wrong_hindi_words = new List<String>();
   List<String> wrong_korean_words = new List<String>();
 
-
-
   SharedPreferences wordlist;
 
   _sentenceState() {
-    _loading();
+
+
+
     _extractString();
   }
 
   _loading() async {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
-    setState(() {
-      this.count= (wordlist.getInt('count') ?? 0);
 
+    setState(() {
+      if((wordlist.getInt('count_num_sen'))==null)
+      {
+        (wordlist.setInt('count_num_sen', 0));
+
+        this.count = (wordlist.getInt('count_num_sen'));
+
+      }
+      else{
+        this.count = (wordlist.getInt('count_num_sen') ?? 0);
+
+      }
     });
 
   }
@@ -98,39 +114,39 @@ class _sentenceState extends State<sentence> {
   List<String> sentence_right = [];
 
   _extractString() async {
-
     SharedPreferences wordlist = await SharedPreferences.getInstance();
-    int tindex = wordlist.getInt('count');
+    int temp_count;
 
-    if(tindex==0)
-    {
-      print("입력 값 0");
-    }
-    else{
-      for (int i = 1; i < tindex+1; i++) {
+    setState(() {
+      temp_count = wordlist.getInt('count_num_sen');
+    });
 
-
+    if (temp_count != 0) {
+      for (int i = 1; i < temp_count+1; i++) {
         setState(() {
           String temp;
-          temp =  wordlist.getString("s_word"+(i.toString()));
-          print(temp);
+          temp = wordlist.getString("s_word" + (i.toString()));
+
           this.sentences.add(temp);
 
           this
               .sentence_class
-              .add(wordlist.getString("s_word_class"+(i.toString())));
+              .add(wordlist.getString("s_word_class" + (i.toString())));
 
-          this.sentence_mean.add(wordlist.getString("s_mean"+(i.toString())));
+          this.sentence_mean.add(wordlist.getString("s_mean" + (i.toString())));
 
           this
               .sentence_example_hindi
-              .add(wordlist.getString("s_example_hindi"+(i.toString())));
+              .add(wordlist.getString("s_example_hindi" + (i.toString())));
 
           this
               .sentence_example_korean
-              .add(wordlist.getString("s_example_korean"+(i.toString())));
-          this.sentence_wrong_example_korean.add(wordlist.getString('s_example_wrong_korean')+(i.toString()));
-          this.sentence_right.add(wordlist.getString('s_right')+(i.toString()));
+              .add(wordlist.getString("s_example_korean" + (i.toString())));
+          this.sentence_wrong_example_korean.add(
+              wordlist.getString('s_example_wrong_korean' + (i.toString())));
+          this
+              .sentence_right
+              .add(wordlist.getString('s_right' + (i.toString())));
         });
       }
     }
@@ -138,10 +154,9 @@ class _sentenceState extends State<sentence> {
 
   }
 
-
-  SharedPreferences sentence;
   @override
   Widget build(BuildContext context) {
+
     var horizontal_size = MediaQuery.of(context).size.width;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
@@ -149,39 +164,34 @@ class _sentenceState extends State<sentence> {
     return WillPopScope(
         child: new Builder(
           builder: (context) {
-            if (this.count!=0) {
-              if (index == 0 && count == 1) {
+            if (this.count != 0) {
+              if (index == 0 && this.count == 1) {
                 this.hindi_word = sentences[index];
                 this.word_class = sentence_class[index];
                 this.korean_word = sentence_mean[index];
-                this.hindi_example =
-                    sentence_example_hindi[index];
-                this.korean_example =
-                    sentence_example_korean[index];
+                this.hindi_example = sentence_example_hindi[index];
+                this.korean_example = sentence_example_korean[index];
                 this.korean_wrong_example =
                     sentence_wrong_example_korean[index];
-                this.right_num=sentence_right[index];
+                this.right_num = sentence_right[index];
               } else {
                 try {
-                  if (index < this.count ) {
+                  if (index < this.count) {
                     this.hindi_word = sentences[index];
                     this.word_class = sentence_class[index];
                     this.korean_word = sentence_mean[index];
-                    this.hindi_example =
-                    sentence_example_hindi[index];
-                    this.korean_example =
-                    sentence_example_korean[index];
+                    this.hindi_example = sentence_example_hindi[index];
+                    this.korean_example = sentence_example_korean[index];
                     this.korean_wrong_example =
-                    sentence_wrong_example_korean[index];
-                    this.right_num=sentence_right[index];
-
+                        sentence_wrong_example_korean[index];
+                    this.right_num = sentence_right[index];
                   } else {
-                    move_page(context, "재복습 추천 문장", this.count,
-                        this.correct, wrong_hindi_words, wrong_korean_words);
+                    move_page(context, "재복습 추천 문장", this.count, this.correct,
+                        wrong_hindi_words, wrong_korean_words);
                   }
                 } on Exception catch (_) {
-                  move_page(context, "재복습 추천 문장", this.count,
-                      this.correct, wrong_hindi_words, wrong_korean_words);
+                  move_page(context, "재복습 추천 문장", this.count, this.correct,
+                      wrong_hindi_words, wrong_korean_words);
                 }
               }
 
@@ -290,7 +300,7 @@ class _sentenceState extends State<sentence> {
                                     "진행: " +
                                         index.toString() +
                                         "/" +
-                                        count.toString(),
+                                        this.count.toString(),
                                     style: TextStyle(
                                       fontSize: 17,
                                       letterSpacing: 2,
@@ -335,7 +345,7 @@ class _sentenceState extends State<sentence> {
                                   alignment: Alignment.centerLeft,
                                   child: AutoSizeText(
                                     "Question" +
-                                        (index+1).toString() +
+                                        (index + 1).toString() +
                                         ".\n아래 문장은 올바른 문장입니까?",
                                     minFontSize: 10,
                                     maxFontSize: 20,
@@ -411,9 +421,9 @@ class _sentenceState extends State<sentence> {
                                       height: vertical_size * 0.1,
                                       alignment: Alignment.topCenter,
                                       child: AutoSizeText(
-                                        hindi_word +
+                                        this.hindi_word +
                                             "의 뜻은 " +
-                                            korean_word +
+                                            this.korean_word +
                                             " 입니다.",
                                         minFontSize: 10,
                                         maxFontSize: 20,
@@ -438,23 +448,21 @@ class _sentenceState extends State<sentence> {
                                         ),
                                       ),
                                       onTap: () {
-                                        if (count == _total_itemcount) {
+                                        if (count == index) {
                                           move_page(
                                               context,
-                                              "재복습 추천 문장",
+                                              "재복습 추천 단어",
                                               this.count,
                                               this.correct,
-                                              wrong_hindi_words,
-                                              wrong_korean_words);
+                                              this.wrong_hindi_words,
+                                              this.wrong_korean_words);
                                         }
                                         setState(() {
-                                          count++;
                                           index++;
                                           hint_color = Colors.white;
-                                          if (right_num.compareTo('1') == 0) {
+                                          if (this.right_num.compareTo('1') ==
+                                              0) {
                                             correct++;
-
-
                                           } else {
                                             incorrect++;
                                             wrong_hindi_words.add(hindi_word);
@@ -479,15 +487,14 @@ class _sentenceState extends State<sentence> {
                                                 "재복습 추천 문장",
                                                 this.count,
                                                 this.correct,
-                                                wrong_hindi_words,
-                                                wrong_korean_words);
+                                                this.wrong_hindi_words,
+                                                this.wrong_korean_words);
                                           }
 
                                           hint_color = Colors.white;
                                           index++;
                                           if (right_num.compareTo('0') == 0) {
                                             correct++;
-
                                           } else {
                                             incorrect++;
                                             wrong_hindi_words.add(hindi_word);
