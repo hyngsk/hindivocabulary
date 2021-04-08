@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
-import 'package:hindivocabulary/word_list_page/words.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:hindivocabulary/function/test_result_page.dart';
@@ -9,8 +8,6 @@ import 'package:hindivocabulary/function/test_result_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class mySentence extends StatefulWidget {
-  int _total_itemcount;
-
   mySentence() {
     Key:
     key;
@@ -31,10 +28,6 @@ class _mySentenceState extends State<mySentence> {
 
 /// This is the stateful widget that the main application instantiates.
 class sentence extends StatefulWidget {
-
-
-
-
   sentence() {
     Key:
     key;
@@ -46,13 +39,12 @@ class sentence extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _sentenceState extends State<sentence> {
-
   @override
   void initState() {
     super.initState();
     _loading();
-        }
-  int _total_itemcount;
+  }
+
   String hindi_word = '';
   String word_class = '';
   String korean_word = '';
@@ -69,7 +61,7 @@ class _sentenceState extends State<sentence> {
   int correct = 0;
   int incorrect = 0;
 
-  Color hint_color;
+  Color hint_color = Colors.white;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -80,9 +72,7 @@ class _sentenceState extends State<sentence> {
   SharedPreferences wordlist;
 
   _sentenceState() {
-
-
-
+    _loading();
     _extractString();
   }
 
@@ -90,19 +80,14 @@ class _sentenceState extends State<sentence> {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
 
     setState(() {
-      if((wordlist.getInt('count_num_sen'))==null)
-      {
+      if ((wordlist.getInt('count_num_sen')) == null) {
         (wordlist.setInt('count_num_sen', 0));
 
         this.count = (wordlist.getInt('count_num_sen'));
-
-      }
-      else{
+      } else {
         this.count = (wordlist.getInt('count_num_sen') ?? 0);
-
       }
     });
-
   }
 
   List<String> sentences = [];
@@ -121,14 +106,14 @@ class _sentenceState extends State<sentence> {
       temp_count = wordlist.getInt('count_num_sen');
     });
 
+
+
     if (temp_count != 0) {
-      for (int i = 1; i < temp_count+1; i++) {
+      for (int i = 1; i < temp_count + 1; i++) {
         setState(() {
-          String temp;
-          temp = wordlist.getString("s_word" + (i.toString()));
-
-          this.sentences.add(temp);
-
+          print("저장중");
+          this.sentences.add(wordlist.getString("s_word" + (i.toString())));
+          print("s_word의 값은:"+this.sentences[i]);
           this
               .sentence_class
               .add(wordlist.getString("s_word_class" + (i.toString())));
@@ -150,19 +135,119 @@ class _sentenceState extends State<sentence> {
         });
       }
     }
+  }
 
+  //해당 단어 리스트와 데이터 베이스에 저장된 인덱스 모두 삭제하기
+  _removeSentence(int find_index) async {
+    int count_sen;
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+    count_sen = wordlist.getInt('count_num_sen');
+    for (int i = 1; i < count_sen + 1; i++) {
 
+        if (this
+            .sentences[find_index]
+            .compareTo(wordlist.getString('s_word' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_word' + (i.toString()));
+          this.sentences.removeAt(find_index);
+
+        }
+
+        if (this
+            .sentence_class[find_index]
+            .compareTo(wordlist.getString('s_word_class' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_word_class' + (i.toString()));
+          this.sentence_class.removeAt(find_index);
+        }
+        if (this
+            .sentence_mean[find_index]
+            .compareTo(wordlist.getString('s_mean' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_mean' + (i.toString()));
+          this.sentence_mean.removeAt(find_index);
+        }
+        if (this.sentence_example_hindi[find_index].compareTo(
+            wordlist.getString('s_example_hindi' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_example_hindi' + (i.toString()));
+          this.sentence_example_hindi.removeAt(find_index);
+        }
+        if (this.sentence_example_korean[find_index].compareTo(
+            wordlist.getString('s_example_korean' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_example_korean' + (i.toString()));
+          this.sentence_example_korean.removeAt(find_index);
+        }
+        if (this.sentence_wrong_example_korean[find_index].compareTo(
+            wordlist.getString('s_example_wrong_korean' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_example_wrong_korean' + (i.toString()));
+          this.sentence_wrong_example_korean.removeAt(find_index);
+        }
+        if (this
+            .sentence_right[find_index]
+            .compareTo(wordlist.getString('s_right' + (i.toString()))) ==
+            0) {
+          wordlist.remove('s_right' + (i.toString()));
+          this.sentence_right.removeAt(find_index);
+        }
+
+    }
+    count_sen--;
+    wordlist.setInt('count_num_sen', count_sen);
+    this.count = count_sen;
+
+    String next_sentence = '';
+    String next_sentence_class = '';
+    String next_sentence_mean = '';
+    String next_sentence_example_hindi = '';
+    String next_sentence_example_korean = '';
+    String next_sentence_example_wrong_korean = '';
+    String next_sentence_right = '';
+    for (int i = find_index + 1; i < count_sen + 1; i++) {
+      next_sentence = wordlist.getString('s_word' + ((i + 1).toString()));
+      next_sentence_class =
+          wordlist.getString('s_word_class' + ((i + 1).toString()));
+      next_sentence_mean = wordlist.getString('s_mean' + ((i + 1).toString()));
+      next_sentence_example_hindi =
+          wordlist.getString('s_example_hindi' + ((i + 1).toString()));
+      next_sentence_example_korean =
+          wordlist.getString('s_example_korean' + ((i + 1).toString()));
+      next_sentence_example_wrong_korean =
+          wordlist.getString('s_example_wrong_korean' + ((i + 1).toString()));
+      next_sentence_right =
+          wordlist.getString('s_right' + ((i + 1).toString()));
+
+      wordlist.setString('s_word' + (i.toString()), next_sentence);
+      this.sentences[i] = next_sentence;
+      wordlist.setString('s_word_class' + (i.toString()), next_sentence_class);
+      this.sentence_class[i] = next_sentence_class;
+      wordlist.setString('s_mean' + (i.toString()), next_sentence_mean);
+      this.sentence_mean[i] = next_sentence_mean;
+      wordlist.setString(
+          's_example_hindi' + (i.toString()), next_sentence_example_hindi);
+      this.sentence_example_hindi[i] = next_sentence_example_hindi;
+      wordlist.setString(
+          's_example_korean' + (i.toString()), next_sentence_example_korean);
+      this.sentence_example_korean[i] = next_sentence_example_korean;
+      wordlist.setString('s_example_wrong_korean' + (i.toString()),
+          next_sentence_example_wrong_korean);
+      this.sentence_wrong_example_korean[i] =
+          next_sentence_example_wrong_korean;
+      wordlist.setString('s_right' + (i.toString()), next_sentence_right);
+      this.sentence_right[i] = next_sentence_right;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-
     var horizontal_size = MediaQuery.of(context).size.width;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top);
     return WillPopScope(
-        child: new Builder(
+        child:  Builder(
           builder: (context) {
             if (this.count != 0) {
               if (index == 0 && this.count == 1) {
@@ -185,6 +270,7 @@ class _sentenceState extends State<sentence> {
                     this.korean_wrong_example =
                         sentence_wrong_example_korean[index];
                     this.right_num = sentence_right[index];
+
                   } else {
                     move_page(context, "재복습 추천 문장", this.count, this.correct,
                         wrong_hindi_words, wrong_korean_words);
@@ -458,15 +544,19 @@ class _sentenceState extends State<sentence> {
                                               this.wrong_korean_words);
                                         }
                                         setState(() {
-                                          index++;
                                           hint_color = Colors.white;
                                           if (this.right_num.compareTo('1') ==
                                               0) {
+                                            _removeSentence(index);
+                                            index++;
                                             correct++;
                                           } else {
-                                            incorrect++;
                                             wrong_hindi_words.add(hindi_word);
                                             wrong_korean_words.add(korean_word);
+
+                                            index++;
+
+                                            incorrect++;
                                           }
                                         });
                                       },
@@ -492,13 +582,17 @@ class _sentenceState extends State<sentence> {
                                           }
 
                                           hint_color = Colors.white;
-                                          index++;
+
                                           if (right_num.compareTo('0') == 0) {
+                                            _removeSentence(index);
+                                            index++;
                                             correct++;
                                           } else {
-                                            incorrect++;
                                             wrong_hindi_words.add(hindi_word);
                                             wrong_korean_words.add(korean_word);
+
+                                            index++;
+                                            incorrect++;
                                           }
                                         });
                                       },

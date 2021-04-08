@@ -14,7 +14,6 @@ import 'package:hindivocabulary/introductionScreen.dart';
 import 'dart:ui';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hindivocabulary/main_memory.dart';
 
 
 void main() {
@@ -31,32 +30,34 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-
-  SharedPreferences wordlist;
-  int count;
-  @override
-  void initState() {
-    super.initState();
-    _loading();
-
-  }
-
-  bool first_experience = mainMemory().show_one_time;
-
-
+  //instancememory는 초기 시작 때 튜토리얼을 확인했는지 확인하기 위한 변수이다.
+  SharedPreferences _instancememory;
+  //show one time은 만약 튜토리얼 확인을 했으면 안 보이게 결정할 수 있는 변수이다.
+  bool show_one_time =false;
+  //_makeInstance는 튜토리얼 관련 인스턴스 생성 및 default면 show one time을 true로 놓아 처음 이 앱을 쓴다는 것을 확인
+  makeInstance() async {
+    // SharedPreferences의 인스턴스를 필드에 저장
+    this._instancememory = await SharedPreferences.getInstance();
+    setState(() {
+      this.show_one_time = (_instancememory.getBool('first_experience')??false);
+    });
 
 
 
-  void _loading ()async{
-    wordlist = await SharedPreferences.getInstance();
   }
 
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    if(first_experience==false)
-      return onboardingpage();
+    makeInstance();
+    if(this.show_one_time==false)
+      {
+
+        return onboardingpage();
+      }
+
+
     else
       return WillPopScope(
 

@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'package:hindivocabulary/main_memory.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
@@ -93,6 +93,8 @@ class unMemory_sentence {
     _loading();
 
   }
+
+
   unMemory_sentence(String words, String word_class, String mean,
       String example_hindi, String example_korean,String example_wrong_korean,String right) {
     this.words = words;

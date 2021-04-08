@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:hindivocabulary/main.dart';
-import 'package:hindivocabulary/main_memory.dart';
+
 
 class onboardingpage extends StatefulWidget {
   @override
@@ -61,15 +61,27 @@ class OnBoardingPage extends StatefulWidget {
 class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  var _standard_show = mainMemory();
+
+  //instancememory는 초기 시작 때 튜토리얼을 확인했는지 확인하기 위한 변수이다.
+  SharedPreferences _instance;
+
+  changeIntroDecision() async {
+    // SharedPreferences의 인스턴스를 필드에 저장
+    this._instance= await SharedPreferences.getInstance();
+    setState(() {
+
+      this._instance.setBool('first_experience', true);
+    });
 
 
-
-
+  }
 
   _onIntroEnd(context) {
+    changeIntroDecision();
 
-    _standard_show.setBool();
+
+
+
     Navigator.of(context).push(
 
         CupertinoPageRoute(
