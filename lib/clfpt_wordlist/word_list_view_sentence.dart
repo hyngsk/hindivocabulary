@@ -1,4 +1,4 @@
-import 'package:excel/excel.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/word_list_page/sentenceTest.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
@@ -77,7 +77,7 @@ class level_SentenceState extends State<level_Sentence> {
               centerTitle: true,
               backgroundColor: Color.fromARGB(240, 10, 15, 64),
               title: const Text(
-                'HUFS 힌디 단어장',
+                'HUFS 힌디어 학습 도우미',
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'hufsfontMedium',

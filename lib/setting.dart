@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/main.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:share/share.dart';
-import 'package:hindivocabulary/word_list_page/words.dart';
+
 import 'package:hindivocabulary/introductionScreen.dart';
 
 class setting extends StatelessWidget {
@@ -163,7 +162,7 @@ class faqList extends StatelessWidget {
                   centerTitle: true,
                   backgroundColor: Color.fromARGB(240, 10, 15, 64),
                   title: Text(
-                    "HUFS 힌디 단어장",
+                    "HUFS 힌디어 학습 도우미",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'hufsfontMedium',
@@ -184,7 +183,7 @@ class faqList extends StatelessWidget {
                         onTap: () => alert(
                             context,
                             '나의 단어 복습',
-                            '이 기능은 단어장에서 저장한 단어 혹은 테스트에서 틀린 단어를 모아둔 단어입니다. 암기가 완료된 단어는 삭제할 수 있습니다.',
+                            '이 기능은 단어 학습에서 저장한 단어 혹은 테스트에서 틀린 단어를 모아둔 단어입니다. 암기가 완료된 단어는 삭제할 수 있습니다.',
                             14),
                       ),
                       ListTile(
@@ -202,7 +201,7 @@ class faqList extends StatelessWidget {
                         onTap: () => alert(
                             context,
                             '학과 단어',
-                            '학과 단어는 한국외국어대학교 인도학과, 인도어과에서 사용한 교재에 있는 단어들을 참조하여 만들 예정입니다. 책에 나온 단어들을 외워 학교 시험에 도움을 주는 것에 초점을 맞추어 제작 예정입니다.',
+                            '학과 단어는 한국외국어대학교 인도학과, 인도어과에서 사용한 교재에 있는 단어들을 참조하여 다른 앱으로 만들 예정입니다. 책에 나온 단어들을 외워 학교 시험에 도움을 주는 것에 초점을 맞추어 제작 예정입니다.',
                             14),
                       ),
                       ListTile(
@@ -211,7 +210,7 @@ class faqList extends StatelessWidget {
                         onTap: () => alert(
                             context,
                             '문장 학습',
-                            '문장 학습에서 틀린 문장은 CFLPT 단어 부분을 참고했습니다. 해당 문장은 CFLPT 단어장에 해당하는 예시 문장을 근거로 제작되었습니다',
+                            '문장 학습에서 틀린 문장은 CFLPT 단어 부분을 참고했습니다. 해당 문장은 CFLPT 단어장에 있는 예시 문장을 근거로 제작되었습니다',
                             14),
                       ),
                       ListTile(
@@ -250,20 +249,7 @@ class faqList extends StatelessWidget {
                             '한국어 폰트는 한국 외대 폰트를 사용하였습니다. 또한 힌디어는 가장 대중적으로 사용되는 폰트를 사용하였습니다.',
                             14),
                       ),
-                      ListTile(
-                        title: Text('학과 단어는 어떤 책을 참고했나요?'),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () => alert(
-                            context,
-                            '참고 도서',
-                            '▶초급, 중급 힌디어 문법\n초급 힌디어 문법, 중급 힌디어 문법\t최종찬,김용정 지음. Huine 출판\n\n'
-                                '▶FLEX 힌디어\nFLEX UP 힌디어\t김우조,김용정 지음. HUINE 출판\n\n'
-                                '▶힌디어 표준교제 A0,A1\t한국외국어대학교 인도어과, 인도학과 지음. 한국외국어대학교 지식출판콘테츠원 출판\n\n'
-                                '▶힌디어 표준교체 A2,B0,B1,B2(출판 예정)\t한국외국어대학교 인도어과, 인도학과 지음. 한국외국어대학교 지식출판콘테츠원 출판',
-                            13),
-                        //▶초급 힌디어 강독\n'
-                        //                                 '힌디어 첫걸음\t김우조,이동원 지음. HUINE 출판\n\n
-                      ),
+
                       ListTile(
                         title: Text('앱 여기서 오류가 생겨요. 어떻게하면 좋죠?'),
                         trailing: Icon(Icons.keyboard_arrow_right),

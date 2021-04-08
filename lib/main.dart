@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/hindiCommonVoca_Sentence.dart';
 import 'package:hindivocabulary/hindiCommonVoca.dart';
 import 'package:hindivocabulary/setting.dart';
-import 'package:hindivocabulary/function/unmemory_list.dart';
+
 import 'package:hindivocabulary/home.dart';
 import 'package:hindivocabulary/myVoca.dart';
 import 'package:hindivocabulary/mySentence.dart';
-import 'package:hindivocabulary/makeTestSheet.dart';
+
 import 'package:hindivocabulary/introductionScreen.dart';
 import 'dart:ui';
 import 'dart:io';
@@ -29,11 +30,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
+  String current_word = '';
+  String current_sentence = '';
+  int current_score_word =0;
+  int current_score_sentence=0;
   //instancememory는 초기 시작 때 튜토리얼을 확인했는지 확인하기 위한 변수이다.
   SharedPreferences _instancememory;
   //show one time은 만약 튜토리얼 확인을 했으면 안 보이게 결정할 수 있는 변수이다.
   bool show_one_time =false;
+
+
   //_makeInstance는 튜토리얼 관련 인스턴스 생성 및 default면 show one time을 true로 놓아 처음 이 앱을 쓴다는 것을 확인
   makeInstance() async {
     // SharedPreferences의 인스턴스를 필드에 저장
@@ -45,11 +51,19 @@ class _MyAppState extends State<MyApp> {
 
 
   }
+  keep_remember() async{
+    //기존 학습 했던 단어, 문장 부분, 평균 단어 정답률, 평균 문장 정답률
+    this._instancememory = await SharedPreferences.getInstance();
+    setState(() {
+      this.current_word = (_instancememory.getBool('current_w')??'학습 데이터가 없습니다.');
+
+    });
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     makeInstance();
     if(this.show_one_time==false)
       {
@@ -74,7 +88,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () => exit(0)),
             ])),
     child: MaterialApp(
-      title: "힌디 단어장",
+      title: "HUFS 힌디 학습 도우미",
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
@@ -130,7 +144,7 @@ class _Main_AppBarState extends State<Main_AppBar> {
             centerTitle: true,
             backgroundColor: Color.fromARGB(240, 10, 15, 64),
             title: const Text(
-              'HUFS 힌디 단어장',
+              'HUFS 힌디어 학습 도우미',
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'hufsfontMedium',
@@ -266,29 +280,6 @@ class _Main_AppBarState extends State<Main_AppBar> {
                   );
                 },
               ),
-              // ListTile(
-              //   leading: Icon(
-              //     Icons.print,
-              //     size: 20,
-              //   ),
-              //   title: Text(
-              //     '학과 단어 학습하',
-              //     style: TextStyle(
-              //       fontSize: 17,
-              //       fontFamily: 'hufsfontLight',
-              //       color: Colors.black,
-              //       fontWeight: FontWeight.w600,
-              //     ),
-              //   ),
-              //   selectedTileColor: Colors.white70,
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.of(context).push(
-              //       CupertinoPageRoute(
-              //           builder: (BuildContext context) => majorVoca()),
-              //     );
-              //   },
-              // ),
             ],
           )),
         ),

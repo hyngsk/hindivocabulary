@@ -147,7 +147,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "힌디 단어장 외우기",
+          title: "힌디 단어 외우기",
           body:
           "해당 단어를 클릭하면 관련된 예시 문장을 확인할 수 있습니다.",
           image: _buildImage('introduction/list_form_word_example',horizontal_size,vertical_size),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:hindivocabulary/function/unmemory_list.dart';
+
 import 'package:hindivocabulary/main.dart';
 
 //시험 후 틀린 단어 한 번 보고 시험 점수도 알 수 있는 페이지

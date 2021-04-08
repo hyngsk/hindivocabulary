@@ -1,4 +1,4 @@
-import 'package:excel/excel.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
@@ -174,7 +174,7 @@ class _word_list_vocaState extends State<word_list_voca> {
                     centerTitle: true,
                     backgroundColor: Color.fromARGB(240, 10, 15, 64),
                     title: Text(
-                      "HUFS 힌디 단어장",
+                      "HUFS 힌디어 학습 도우미",
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'hufsfontMedium',

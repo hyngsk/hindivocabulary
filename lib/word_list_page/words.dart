@@ -1,6 +1,5 @@
 import 'package:excel/excel.dart';
-import 'dart:io';
-import 'package:path/path.dart';
+
 import 'package:flutter/services.dart' show ByteData, rootBundle;
 
 Future<List<dynamic>> make_word_list(int start_index, int finish_index, String words_level) async {

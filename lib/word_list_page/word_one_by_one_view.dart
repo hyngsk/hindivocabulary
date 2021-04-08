@@ -1,15 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:excel/excel.dart';
+
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/hindiCommonVoca.dart';
 import 'package:hindivocabulary/main.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:swipedetector/swipedetector.dart';
-import 'package:hindivocabulary/word_list_page/list_voca.dart';
-import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
+
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/function/finish_alert_function.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
@@ -293,7 +291,7 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
                   centerTitle: true,
                   backgroundColor: Color.fromARGB(240, 10, 15, 64),
                   title: Text(
-                    "HUFS 힌디 단어장",
+                    "HUFS 힌디어 학습 도우미",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'hufsfontMedium',

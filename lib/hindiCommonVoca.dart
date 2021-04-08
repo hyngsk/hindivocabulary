@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
-import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 
 class hindiCommonVoca extends StatelessWidget {
   @override

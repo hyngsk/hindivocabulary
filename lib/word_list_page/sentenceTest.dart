@@ -287,7 +287,7 @@ class _sentenceState extends State<sentence> {
               centerTitle: true,
               backgroundColor: Color.fromARGB(240, 10, 15, 64),
               title: Text(
-                "HUFS 힌디 단어장",
+                "HUFS 힌디어 학습 도우미",
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'hufsfontMedium',

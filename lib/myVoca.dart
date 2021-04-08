@@ -1,11 +1,10 @@
-import 'package:excel/excel.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hindivocabulary/word_list_page/words.dart';
-import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:hindivocabulary/function/unmemory_list.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class myVoca extends StatefulWidget {
@@ -199,7 +198,7 @@ class _myVocaState extends State<myVoca> {
             centerTitle: true,
             backgroundColor: Color.fromARGB(240, 10, 15, 64),
             title: Text(
-              "HUFS 힌디 단어장",
+              "HUFS 힌디어 학습 도우미",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'hufsfontMedium',

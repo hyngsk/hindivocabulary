@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:hindivocabulary/function/unmemory_list.dart';
+
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:hindivocabulary/function/test_result_page.dart';
@@ -111,9 +111,9 @@ class _sentenceState extends State<sentence> {
     if (temp_count != 0) {
       for (int i = 1; i < temp_count + 1; i++) {
         setState(() {
-          print("저장중");
+
           this.sentences.add(wordlist.getString("s_word" + (i.toString())));
-          print("s_word의 값은:"+this.sentences[i]);
+
           this
               .sentence_class
               .add(wordlist.getString("s_word_class" + (i.toString())));
@@ -135,6 +135,9 @@ class _sentenceState extends State<sentence> {
         });
       }
     }
+    else{
+      this.count=0;
+    }
   }
 
   //해당 단어 리스트와 데이터 베이스에 저장된 인덱스 모두 삭제하기
@@ -148,49 +151,55 @@ class _sentenceState extends State<sentence> {
             .sentences[find_index]
             .compareTo(wordlist.getString('s_word' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_word' + (i.toString()));
-          this.sentences.removeAt(find_index);
 
+          this.sentences.removeAt(find_index);
+          wordlist.remove('s_word' + (i.toString()));
         }
 
         if (this
             .sentence_class[find_index]
             .compareTo(wordlist.getString('s_word_class' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_word_class' + (i.toString()));
+
           this.sentence_class.removeAt(find_index);
+          wordlist.remove('s_word_class' + (i.toString()));
         }
         if (this
             .sentence_mean[find_index]
             .compareTo(wordlist.getString('s_mean' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_mean' + (i.toString()));
+
           this.sentence_mean.removeAt(find_index);
+          wordlist.remove('s_mean' + (i.toString()));
         }
         if (this.sentence_example_hindi[find_index].compareTo(
             wordlist.getString('s_example_hindi' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_example_hindi' + (i.toString()));
+
           this.sentence_example_hindi.removeAt(find_index);
+          wordlist.remove('s_example_hindi' + (i.toString()));
         }
         if (this.sentence_example_korean[find_index].compareTo(
             wordlist.getString('s_example_korean' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_example_korean' + (i.toString()));
+
           this.sentence_example_korean.removeAt(find_index);
+          wordlist.remove('s_example_korean' + (i.toString()));
         }
         if (this.sentence_wrong_example_korean[find_index].compareTo(
             wordlist.getString('s_example_wrong_korean' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_example_wrong_korean' + (i.toString()));
+
           this.sentence_wrong_example_korean.removeAt(find_index);
+          wordlist.remove('s_example_wrong_korean' + (i.toString()));
         }
         if (this
             .sentence_right[find_index]
             .compareTo(wordlist.getString('s_right' + (i.toString()))) ==
             0) {
-          wordlist.remove('s_right' + (i.toString()));
+
           this.sentence_right.removeAt(find_index);
+          wordlist.remove('s_right' + (i.toString()));
         }
 
     }
@@ -302,7 +311,7 @@ class _sentenceState extends State<sentence> {
                     centerTitle: true,
                     backgroundColor: Color.fromARGB(240, 10, 15, 64),
                     title: Text(
-                      "HUFS 힌디 단어장",
+                      "HUFS 힌디어 학습 도우미",
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'hufsfontMedium',
@@ -630,7 +639,7 @@ class _sentenceState extends State<sentence> {
                   centerTitle: true,
                   backgroundColor: Color.fromARGB(240, 10, 15, 64),
                   title: Text(
-                    "HUFS 힌디 단어장",
+                    "HUFS 힌디어 학습 도우미",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'hufsfontMedium',

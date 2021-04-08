@@ -1,12 +1,9 @@
 import 'package:page_turn/page_turn.dart';
 import 'package:flutter/material.dart';
-import 'package:excel/excel.dart';
-import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
-import 'package:hindivocabulary/hindiCommonVoca.dart';
-import 'package:hindivocabulary/main.dart';
+
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:hindivocabulary/word_list_page/list_voca.dart';
-import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
+
 import 'package:hindivocabulary/word_list_page/words.dart';
 
 class Sentence_Test extends StatelessWidget {
@@ -178,7 +175,7 @@ class _SentenceTestState extends State<SentenceTest> {
         centerTitle: true,
         backgroundColor: Color.fromARGB(240, 10, 15, 64),
         title: Text(
-          "HUFS 힌디 단어장",
+          "HUFS 힌디어 학습 도우미",
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'hufsfontMedium',

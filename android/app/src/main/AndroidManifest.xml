@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="HUFS 힌디어 단어장"
+        android:label="HUFS 힌디어 학습 도우미"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
