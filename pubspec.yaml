@@ -96,6 +96,7 @@ flutter:
     #etc 사진
     - pictures/etc/loading_icon.png
     - pictures/etc/title_share_icon.png
+    - pictures/home_background.jpg
 
     #학과 단어 아이콘 모음
     - pictures/etc/elementary_hindi_reading.png

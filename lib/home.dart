@@ -11,6 +11,20 @@ class home extends StatefulWidget {
 
 class _mainfunction extends State<home> {
   //메인 화면 팜플렛, 책 주소 및 파일
+
+  //총 단어 수
+  int total_word;
+  //총 문장 수
+  int total_sentence;
+
+  //미암기 단어 수
+  int rememorize_word;
+  //미암기 문장 수
+  int rememorize_sentence;
+  //현재 학습 중인 문장 파트
+  String this_part_word = '';
+  String this_part_sentence = '';
+
   final List<Map> images = [
     {
       'id': 0,
@@ -37,8 +51,50 @@ class _mainfunction extends State<home> {
   void initState() {
     super.initState();
     pageController = PageController();
+    _loading();
   }
 
+
+  _loading() async {
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+    setState(() {
+      if ((wordlist.getInt('count_num')) == null) {
+        (wordlist.setInt('count_num', 0));
+
+        this.rememorize_word = (wordlist.getInt('count_num'));
+      }
+      else{
+        this.rememorize_word = (wordlist.getInt('count_num') ?? 0);
+      }
+      if ((wordlist.getInt('count_num_sen')) == null) {
+        (wordlist.setInt('count_num_sen', 0));
+
+        this.rememorize_sentence = (wordlist.getInt('count_num_sen'));
+      }
+      else{
+        this.rememorize_sentence = (wordlist.getInt('count_num_sen') ?? 0);
+      }
+      if ((wordlist.getString('current_word_chapter')) == null) {
+        (wordlist.setString('current_word_chapter', 'A0 part1 (1-30)'));
+
+        this.this_part_word = (wordlist.getString('current_word_chapter'));
+      }
+      else{
+        this.this_part_word = (wordlist.getString('current_word_chapter'));
+      }
+      if ((wordlist.getString('current_sentence_chapter')) == null) {
+        (wordlist.setString('current_sentence_chapter', 'A0 part1 (1-30)'));
+
+        this.this_part_sentence = (wordlist.getString('current_sentence_chapter'));
+      }
+      else{
+        this.this_part_sentence = (wordlist.getString('current_sentence_chapter'));
+      }
+
+
+
+    });
+  }
   @override
   void dispose() {
     pageController.dispose();
@@ -64,553 +120,209 @@ class _mainfunction extends State<home> {
         MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return Scaffold(
-      backgroundColor: Colors.white10,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          //배너 부분 컨테이너
-          Container(
-            height: vertical_size* 0.5,
-            width: horizontal_size,
-            margin: EdgeInsets.symmetric(horizontal: 0.1),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(width: 0.5, color: Colors.white60),
-            ),
-            child: PageView.builder(
-              controller: pageController,
-              pageSnapping: true,
-              physics: BouncingScrollPhysics(),
-              onPageChanged: (selectedPage) {
-                setState(() {
-                  currentPage = selectedPage;
-                });
-              },
-              itemCount: images.length,
-              itemBuilder: (context, position) {
-                return Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    FadeInImage(
-                      placeholder: AssetImage('assets/loading.gif'),
-                      image: AssetImage(images[position]['image']),
-                      fit: BoxFit.scaleDown,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        height: vertical_size*0.01,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: images.map((image) {
-                            return GestureDetector(
-                              onTap: () {
-                                currentPage = image['id'];
-                                pageController.jumpToPage(currentPage);
-                              },
-                              child: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                width: currentPage == image['id'] ? 16 : 10,
-                                height: currentPage == image['id'] ? 16 : 10,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(
-                                        currentPage == image['id'] ? 8 : 5),
-                                    color: Colors.white60),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
 
-          //배너, 공지사항 부분 구분자
-          Divider(
-            color: Colors.black54,
-            height: vertical_size*0.01,
-          ),
-
-          //***공지사항 컨테이너***
-          Expanded(child: Container(
-            width: horizontal_size,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              border: Border.all(width: 1, color: Colors.black12),
-              color: Colors.grey[200],
-            ),
-            child:Column(
-              children: [
-              Container(
-                    margin:EdgeInsets.only(top: vertical_size*0.007),
-                    padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
+      body: Container(
+        width: horizontal_size,
+        height: vertical_size,
+        child: ListView(
+          children: [
+            Container(
+              child: Stack(
+                children: [
+                  Container(
                     width: horizontal_size,
-                    height: vertical_size*0.04,
-                    child:RichText(
-                      softWrap: true,
-                      text: TextSpan(
-                        text: '진행 상황',
-
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.7,
-                          fontFamily: 'hufsfontMedium',
-                          fontSize: 25.0,
-                          color: Colors.black,
-
-                        ),
-                      ),
+                    height: vertical_size * 0.4,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.1, color: Colors.black87),
+                    ),
+                    child: Image.asset(
+                      'pictures/home_background.jpg',
+                      fit: BoxFit.fill,
+                      height: vertical_size * 0.4,
+                      width: horizontal_size,
                     ),
                   ),
-                Container(
-                  margin:EdgeInsets.only(top: vertical_size*0.005),
-                  padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
-                  width: horizontal_size,
-                  height: vertical_size*0.04,
-                  child:Row(
-                    children: [
-                      Container(
-                        child: RichText(
-                          softWrap: true,
-                          text: TextSpan(
-                            text: '학습한 신규 단어',
-
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                              fontFamily: 'hufsfontMedium',
-                              fontSize: 25.0,
-                              color: Colors.black,
-
-                            ),
+                  Container(
+                    width: horizontal_size,
+                    height: vertical_size * 0.4,
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: horizontal_size,
+                          height: vertical_size * 0.2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: horizontal_size*0.6,
+                                      height: vertical_size*0.07,
+                                      child: AutoSizeText("최근 진행한 어 챕터"),
+                                    ),
+                                    Container(
+                                      width: horizontal_size*0.6,
+                                      height: vertical_size*0.13,
+                                      child: AutoSizeText(this.this_part_word),
+                                    )
+                                  ],
+                                ),
+                                width: horizontal_size*0.6,
+                                height: vertical_size*0.2,
+                              ),
+                              // Container(
+                              //   child: Column(
+                              //     children: [
+                              //       Container(
+                              //         width: horizontal_size*0.4,
+                              //         height: vertical_size*0.07,
+                              //         child: AutoSizeText("평균 점수"),
+                              //       ),
+                              //       Container(
+                              //         width: horizontal_size*0.4,
+                              //         height: vertical_size*0.13,
+                              //         child: AutoSizeText("평균 점수는 입니다."),
+                              //       )
+                              //     ],
+                              //   ),
+                              //   width: horizontal_size*0.4,
+                              //   height: vertical_size*0.2,
+                              // )
+                            ],
                           ),
                         ),
-                      ),
-                      Container(
-                        child: RichText(
-                          softWrap: true,
-                          text: TextSpan(
-                            text: '0개',
-
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                              fontFamily: 'hufsfontMedium',
-                              fontSize: 25.0,
-                              color: Colors.black,
-
-                            ),
+                        Container(
+                          width: horizontal_size,
+                          height: vertical_size * 0.2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: horizontal_size*0.6,
+                                      height: vertical_size*0.07,
+                                      child: AutoSizeText("최근 진행한 문장 챕터"),
+                                    ),
+                                    Container(
+                                      width: horizontal_size*0.6,
+                                      height: vertical_size*0.13,
+                                      child: AutoSizeText(this.this_part_sentence),
+                                    )
+                                  ],
+                                ),
+                                width: horizontal_size*0.6,
+                                height: vertical_size*0.2,
+                              ),
+                              // Container(
+                              //   child: Column(
+                              //     children: [
+                              //       Container(
+                              //         width: horizontal_size*0.4,
+                              //         height: vertical_size*0.07,
+                              //         child: AutoSizeText("평균 점수"),
+                              //       ),
+                              //       Container(
+                              //         width: horizontal_size*0.4,
+                              //         height: vertical_size*0.13,
+                              //         child: AutoSizeText("평균 점수는 입니다."),
+                              //       )
+                              //     ],
+                              //   ),
+                              //   width: horizontal_size*0.4,
+                              //   height: vertical_size*0.2,
+                              // )
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
-                ),
-                Container(
-                    margin:EdgeInsets.only(top: vertical_size*0.005),
-                    padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
-                    width: horizontal_size,
-                    height: vertical_size*0.04,
-                    child:Row(
-                      children: [
-                        Container(
-                          child: RichText(
-                            softWrap: true,
-                            text: TextSpan(
-                              text: '복습해야 할 단어 ',
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.5,
-                                fontFamily: 'hufsfontMedium',
-                                fontSize: 25.0,
-                                color: Colors.black,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: RichText(
-                            softWrap: true,
-                            text: TextSpan(
-                              text: '0개',
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.5,
-                                fontFamily: 'hufsfontMedium',
-                                fontSize: 25.0,
-                                color: Colors.black,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                ),
-                Container(
-                    margin:EdgeInsets.only(top: vertical_size*0.005),
-                    padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
-                    width: horizontal_size,
-                    height: vertical_size*0.04,
-                    child:Row(
-                      children: [
-                        Container(
-                          child: RichText(
-                            softWrap: true,
-                            text: TextSpan(
-                              text: '학습한 신규 문장',
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.5,
-                                fontFamily: 'hufsfontMedium',
-                                fontSize: 25.0,
-                                color: Colors.black,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: RichText(
-                            softWrap: true,
-                            text: TextSpan(
-                              text: '0개',
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.5,
-                                fontFamily: 'hufsfontMedium',
-                                fontSize: 25.0,
-                                color: Colors.black,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                ),
-                Container(
-                    margin:EdgeInsets.only(top: vertical_size*0.005),
-                    padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
-                    width: horizontal_size,
-                    height: vertical_size*0.04,
-                    child:Row(
-                      children: [
-                        Container(
-                          child: RichText(
-                            softWrap: true,
-                            text: TextSpan(
-                              text: '복습해야할 문장 갯수',
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.3,
-                                fontFamily: 'hufsfontMedium',
-                                fontSize: 20.0,
-                                color: Colors.black,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: RichText(
-                            softWrap: true,
-                            text: TextSpan(
-                              text: '0개',
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.5,
-                                fontFamily: 'hufsfontMedium',
-                                fontSize: 25.0,
-                                color: Colors.black,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                ),
-
-              ],
+                ],
+              ),
             ),
-            // Column(
-            //   children: [
-            //     Container(
-            //       margin:EdgeInsets.only(top: vertical_size*0.007),
-            //       padding: EdgeInsets.fromLTRB(horizontal_size*0.01, 0,0,0),
-            //       width: horizontal_size,
-            //       height: vertical_size*0.04,
-            //       child:RichText(
-            //         softWrap: true,
-            //         text: TextSpan(
-            //           text: '공지사항',
-            //
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.w900,
-            //             letterSpacing: 1.5,
-            //             fontFamily: 'hufsfontMedium',
-            //             fontSize: 25.0,
-            //             color: Colors.black,
-            //
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     Expanded(child: Container(
-            //       width: horizontal_size,
-            //       height: vertical_size*0.34,
-            //       child: Row(
-            //         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Container(
-            //             width: horizontal_size*0.7,
-            //             height: vertical_size*0.33,
-            //             child: Column(
-            //               mainAxisAlignment: MainAxisAlignment.start,
-            //               mainAxisSize: MainAxisSize.min,
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //
-            //
-            //                 SizedBox(height: vertical_size*0.03),
-            //                 SizedBox(
-            //                   width: horizontal_size*0.7,
-            //                   height: vertical_size*0.032,
-            //                   child: RichText(
-            //                     text: TextSpan(
-            //                       text: '▶ 특수외국어 기초교재 및 사전 이용 안내',
-            //                       style: announcement_text_style,
-            //                       recognizer: TapGestureRecognizer()
-            //                         ..onTap = () async {
-            //                           var url =
-            //                               'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=634&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-            //                           if (await canLaunch(url)) {
-            //                             await launch(url);
-            //                           } else {
-            //                             throw 'Could not launch $url';
-            //                           }
-            //                         },
-            //                     ),
-            //                   ),
-            //                 ),
-            //
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 SizedBox(
-            //                   width: horizontal_size*0.7,
-            //                   height: vertical_size*0.032,
-            //                   child: RichText(
-            //                     text: TextSpan(
-            //                       text: '▶ CFLPT 모의테스트 시행 안내',
-            //                       style: announcement_text_style,
-            //                       recognizer: TapGestureRecognizer()
-            //                         ..onTap = () async {
-            //                           var url =
-            //                               'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=581&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-            //                           if (await canLaunch(url)) {
-            //                             await launch(url);
-            //                           } else {
-            //                             throw 'Could not launch $url';
-            //                           }
-            //                         },
-            //                     ),
-            //                   ),),
-            //
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 SizedBox(
-            //
-            //                   width: horizontal_size*0.7,
-            //                   height: vertical_size*0.032,
-            //                   child: RichText(
-            //
-            //                     text: TextSpan(
-            //                       text: '▶ 취업연계 전략시장 취업역량 캠프 안내',
-            //                       style: announcement_text_style,
-            //                       recognizer: TapGestureRecognizer()
-            //                         ..onTap = () async {
-            //                           var url =
-            //                               'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=579&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-            //                           if (await canLaunch(url)) {
-            //                             await launch(url);
-            //                           } else {
-            //                             throw 'Could not launch $url';
-            //                           }
-            //                         },
-            //                     ),
-            //                   ),),
-            //
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 SizedBox(
-            //                   width: horizontal_size*0.7,
-            //                   height: vertical_size*0.032,
-            //
-            //                   child:RichText(
-            //                     text: TextSpan(
-            //                       text: '▶ 특수외국어학회 CFLLS 회원모집 공고(수정)',
-            //                       style: announcement_text_style,
-            //                       recognizer: TapGestureRecognizer()
-            //                         ..onTap = () async {
-            //                           //URL 수정 부분
-            //                           var url =
-            //                               'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=552&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-            //                           if (await canLaunch(url)) {
-            //                             await launch(url);
-            //                           } else {
-            //                             throw 'Could not launch $url';
-            //                           }
-            //                         },
-            //                     ),
-            //                   ),
-            //                 ),
-            //
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 SizedBox(
-            //                   width: horizontal_size*0.7,
-            //                   height: vertical_size*0.032,
-            //                   child: RichText(
-            //                     text: TextSpan(
-            //                       text: '▶ 제1회 CFLLS 진로 세미나 대학원생편 안내',
-            //                       style: announcement_text_style,
-            //                       recognizer: TapGestureRecognizer()
-            //                         ..onTap = () async {
-            //                           var url =
-            //                               'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=545&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-            //                           if (await canLaunch(url)) {
-            //                             await launch(url);
-            //                           } else {
-            //                             throw 'Could not launch $url';
-            //                           }
-            //                         },
-            //                     ),
-            //                   ),),
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 SizedBox(
-            //                   width: horizontal_size*0.7,
-            //                   height: vertical_size*0.032,
-            //                   child: RichText(
-            //                     text: TextSpan(
-            //                       text: '▶ CFLLS K-POP 번안 노래부르기 공모전 결과 안내',
-            //                       style: announcement_text_style,
-            //                       recognizer: TapGestureRecognizer()
-            //                         ..onTap = () async {
-            //                           var url =
-            //                               'http://cfl.ac.kr/cop/bbs/selectBoardArticle.do?nttNo=535&pageIndex=1&menuId=MNU_0000000000000024&bbsId=BBSMSTR_000000000001';
-            //                           if (await canLaunch(url)) {
-            //                             await launch(url);
-            //                           } else {
-            //                             throw 'Could not launch $url';
-            //                           }
-            //                         },
-            //                     ),
-            //                   ),),
-            //               ],
-            //             ),
-            //           ),
-            //           Container(
-            //             width: horizontal_size*0.25,
-            //             height: vertical_size*0.33,
-            //             alignment: Alignment.centerRight,
-            //             padding: EdgeInsets.only(left: horizontal_size*0.1),
-            //             //margin: EdgeInsets.only(top: vertical_size*0.035),
-            //             child: Column(
-            //               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //               //mainAxisSize: MainAxisSize.min,
-            //               crossAxisAlignment: CrossAxisAlignment.end,
-            //               children: [
-            //                 //공지사항 게시 날짜 수정란
-            //                 SizedBox(height: vertical_size*0.03),
-            //                 //첫 번째 게시물 날짜
-            //                 SizedBox(
-            //                   width: horizontal_size*0.25,
-            //                   height: vertical_size*0.032,
-            //                   child: AutoSizeText(
-            //                     "20.12.15",
-            //                     maxFontSize: 10,
-            //                     minFontSize: 6,
-            //                     style: announcement_text_style,
-            //                   ),),
-            //
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 //두 번째 게시물 날짜
-            //                 SizedBox(
-            //                   width: horizontal_size*0.25,
-            //                   height: vertical_size*0.032,
-            //                   child: AutoSizeText(
-            //                     "20.11.16",
-            //                     maxFontSize: 10,
-            //                     minFontSize: 6,
-            //                     style: announcement_text_style,
-            //                   ),),
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 //세 번째 게시물 날짜
-            //                 SizedBox(
-            //                   width: horizontal_size*0.25,
-            //                   height: vertical_size*0.032,
-            //                   child: AutoSizeText(
-            //                     "20.11.16",
-            //                     maxFontSize: 10,
-            //                     minFontSize: 6,
-            //                     style: announcement_text_style,
-            //                   ),),
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 //네 번째 게시물 날짜
-            //                 SizedBox(
-            //                   width: horizontal_size*0.25,
-            //                   height: vertical_size*0.032,
-            //                   child: AutoSizeText(
-            //                     "20.11.06",
-            //                     maxFontSize: 10,
-            //                     minFontSize: 6,
-            //                     style: announcement_text_style,
-            //                   ),),
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 //다섯 번째 게시물 날짜
-            //                 SizedBox(
-            //                   width: horizontal_size*0.25,
-            //                   height: vertical_size*0.032,
-            //                   child:AutoSizeText(
-            //                     "20.11.04",
-            //                     maxFontSize: 10,
-            //                     minFontSize: 6,
-            //                     style: announcement_text_style,
-            //                   ),),
-            //
-            //                 SizedBox(height: vertical_size*0.005),
-            //                 //여섯 번째 게시물 날짜
-            //                 SizedBox(
-            //                   width: horizontal_size*0.25,
-            //                   height: vertical_size*0.032,
-            //                   child: AutoSizeText(
-            //                     "20.10.30",
-            //                     maxFontSize: 10,
-            //                     minFontSize: 6,
-            //                     style: announcement_text_style,
-            //                   ),),
-            //               ],
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            //     )),
-            //   ],
-            // ),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: AutoSizeText("복습이 필요한 단어"),
+                    subtitle: AutoSizeText("나의 단어 복습 파트에서 내가 틀린 단어를 볼 수 있습니다.\n완전 암기된 단어들은 옆으로 슬라이드해 삭제 해보세요."),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Column(
+                            children: [
+                              AutoSizeText("복습 단어 수"),
+                              AutoSizeText((this.rememorize_word.toString()+"개")),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            children: [
+                              AutoSizeText("복습 문장 수"),
+                              AutoSizeText((this.rememorize_sentence.toString()+"개")),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: AutoSizeText("학습 진도율"),
+                    subtitle: AutoSizeText("총 단어 중에서 한 번이상 본 챕터를 기록합니다.\n학습량을 늘려 100%의 진도율을 완성해 보세요."),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Column(
+                            children: [
+                              AutoSizeText("복습 단어 수"),
+                              AutoSizeText((this.rememorize_word.toString()+"개")),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            children: [
+                              AutoSizeText("복습 문장 수"),
+                              AutoSizeText((this.rememorize_sentence.toString()+"개")),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
 
-          ),),
-        ],
-      ),
+          ],
+        ),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(240, 10, 15, 64),
+                  Color.fromARGB(240, 108, 121, 240)
+                ])),
+      )
     );
   }
 }

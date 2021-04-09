@@ -32,6 +32,7 @@ class level_ extends StatefulWidget {
     this.file_name = file_name;
   }
 
+
   @override
   level_State createState() => level_State(
       this.wordlist, this.start_end_num, this.chapter_list, this.file_name);
@@ -50,8 +51,21 @@ class level_State extends State<level_> {
     this.wordlist = wordlist;
     this.start_end_num = start_end_num;
     this.file_name = file_name;
+    _loading();
   }
 
+  _loading() async {
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+    setState(() {
+      if ((wordlist.getString('current_word_chapter')) == null) {
+        (wordlist.setString('current_word_chapter', 'A0 part1 (1-30)'));
+
+
+      }
+      else
+       (wordlist.setString('current_word_chapter',this.chapter_list));
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState

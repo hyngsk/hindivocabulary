@@ -1,4 +1,4 @@
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/word_list_page/sentenceTest.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
@@ -36,6 +36,20 @@ class level_SentenceState extends State<level_Sentence> {
     this.wordlist = wordlist;
     this.start_end_num = start_end_num;
     this.file_name = file_name;
+  }
+  _loading() async {
+    SharedPreferences wordlist = await SharedPreferences.getInstance();
+    setState(() {
+      if ((wordlist.getString('current_sentence_chapter')) == null) {
+        (wordlist.setString('current_sentence_chapter', 'A0 part1 (1-30)'));
+
+
+      }
+      else{
+        (wordlist.setString('current_sentence_chapter',this.chapter_list));
+      }
+
+    });
   }
 
   @override
