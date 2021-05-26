@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
@@ -9,8 +8,8 @@ import 'package:hindivocabulary/function/unmemory_list.dart';
 import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 import 'package:hindivocabulary/main.dart';
-class word_list_voca extends StatefulWidget {
 
+class word_list_voca extends StatefulWidget {
   //단어 레벨 타이틀
   String page_name;
   String file_name;
@@ -34,7 +33,7 @@ class word_list_voca extends StatefulWidget {
 
     this.page_name = page_name;
     this.file_name = file_name;
-    this._total_itemcount = finish_word_num - start_word_num +1;
+    this._total_itemcount = finish_word_num - start_word_num + 1;
   }
 
   @override
@@ -71,8 +70,6 @@ class _word_list_vocaState extends State<word_list_voca> {
   //엑셀 파일 word list는 비동기 리스트라서 word_mean으로 강제 형 변환시킴
   Future<List<dynamic>> word_list;
 
-
-
   _word_list_vocaState(int start_word_num, int finish_word_num,
       String page_name, String file_name) {
     this._start_word_num = start_word_num;
@@ -80,7 +77,7 @@ class _word_list_vocaState extends State<word_list_voca> {
     this.word_list = make_word_list(start_word_num, finish_word_num, file_name);
     this.page_name = page_name;
     this.file_name = file_name;
-    this._total_itemcount = finish_word_num - start_word_num +1;
+    this._total_itemcount = finish_word_num - start_word_num + 1;
   }
 
   //BottomNavigationBar
@@ -95,20 +92,23 @@ class _word_list_vocaState extends State<word_list_voca> {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
-        -MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
 
     // TODO: implement build
-    return WillPopScope(child: new FutureBuilder(
-        future: make_word_list(_start_word_num, _finish_word_num, file_name),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-
-            return SafeArea(
-                child: Scaffold(
+    return WillPopScope(
+        child: new FutureBuilder(
+            future:
+                make_word_list(_start_word_num, _finish_word_num, file_name),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return SafeArea(
+                    child: Scaffold(
                   appBar: AppBar(
                     leading: Builder(
                       builder: (BuildContext context) {
@@ -124,46 +124,62 @@ class _word_list_vocaState extends State<word_list_voca> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(A0_word_list_page,
-                                      A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
+                                  builder: (context) => level_(
+                                      A0_word_list_page,
+                                      A0_word_list_scale,
+                                      'A0 단어장',
+                                      'assets/A0.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/A1.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(A1_word_list_page,
-                                      A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
+                                  builder: (context) => level_(
+                                      A1_word_list_page,
+                                      A1_word_list_scale,
+                                      'A1 단어장',
+                                      'assets/A1.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/A2.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(A2_word_list_page,
-                                      A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
+                                  builder: (context) => level_(
+                                      A2_word_list_page,
+                                      A2_word_list_scale,
+                                      'A2 단어장',
+                                      'assets/A2.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/B1.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(B1_word_list_page,
-                                      B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                                  builder: (context) => level_(
+                                      B1_word_list_page,
+                                      B1_word_list_scale,
+                                      'B1 단어장',
+                                      'assets/B1.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/B2.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(B1_word_list_page,
-                                      B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                                  builder: (context) => level_(
+                                      B1_word_list_page,
+                                      B1_word_list_scale,
+                                      'B1 단어장',
+                                      'assets/B1.xlsx'),
                                 ),
                               );
                             } else {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => MyApp()),
+                                MaterialPageRoute(
+                                    builder: (context) => MyApp()),
                               );
                             }
                           },
@@ -185,7 +201,6 @@ class _word_list_vocaState extends State<word_list_voca> {
                     ),
                   ),
                   bottomNavigationBar: Container(
-
                     child: BottomNavigationBar(
                       type: BottomNavigationBarType.fixed,
                       currentIndex: _selectedIndex,
@@ -212,7 +227,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                             blue_korean = 0;
                             red_korean = 0;
                             green_korean = 0;
-                          } else if (_selectedcheck_hindi == false && index == 0) {
+                          } else if (_selectedcheck_hindi == false &&
+                              index == 0) {
                             alpha_hindi = 0;
                             blue_hindi = 255;
                             red_hindi = 255;
@@ -221,7 +237,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                             blue_korean = 0;
                             red_korean = 0;
                             green_korean = 0;
-                          } else if (_selectedcheck_korean == true && index == 1) {
+                          } else if (_selectedcheck_korean == true &&
+                              index == 1) {
                             alpha_hindi = 255;
                             blue_hindi = 0;
                             red_hindi = 0;
@@ -230,7 +247,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                             blue_korean = 0;
                             red_korean = 0;
                             green_korean = 0;
-                          } else if (_selectedcheck_korean == false && index == 1) {
+                          } else if (_selectedcheck_korean == false &&
+                              index == 1) {
                             alpha_hindi = 255;
                             blue_hindi = 0;
                             red_hindi = 0;
@@ -247,7 +265,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                           } else if (index == 3) {
                             if (font_size_korean > 10)
                               font_size_korean -= 0.5;
-                            else if (font_size_hindi > 15) font_size_hindi -= 0.5;
+                            else if (font_size_hindi > 15)
+                              font_size_hindi -= 0.5;
                           }
                         });
                       },
@@ -258,7 +277,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                               Icons.format_clear,
                             )),
                         BottomNavigationBarItem(
-                            label: '의미 가림', icon: Icon(Icons.format_strikethrough)),
+                            label: '의미 가림',
+                            icon: Icon(Icons.format_strikethrough)),
                         BottomNavigationBarItem(
                             label: "단어 크게", icon: Icon(Icons.format_size)),
                         BottomNavigationBarItem(
@@ -276,7 +296,7 @@ class _word_list_vocaState extends State<word_list_voca> {
                           width: horizontal_size,
                           height: vertical_size * 0.06,
                           decoration:
-                          BoxDecoration(color: Colors.white, boxShadow: [
+                              BoxDecoration(color: Colors.white, boxShadow: [
                             BoxShadow(
                               color: Colors.black26,
                               blurRadius: 2,
@@ -305,12 +325,14 @@ class _word_list_vocaState extends State<word_list_voca> {
                                 width: horizontal_size * 0.32,
                                 height: vertical_size * 0.05,
                                 alignment: Alignment.center,
-                                child: Text("단어 수: "+_total_itemcount.toString()+"개",style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'hufsfontMedium',
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 3,
-                                ),
+                                child: Text(
+                                  "단어 수: " + _total_itemcount.toString() + "개",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'hufsfontMedium',
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 3,
+                                  ),
                                 ),
                               ),
                             ],
@@ -332,18 +354,21 @@ class _word_list_vocaState extends State<word_list_voca> {
                                         icon: Icons.archive,
                                         onTap: () => setState(() {
                                           unMemory_words(
-
-                                              snapshot.data[index][0].toString(),
-                                              snapshot.data[index][1].toString(),
-                                              snapshot.data[index][2].toString(),
-                                              snapshot.data[index][3].toString(),
-                                              snapshot.data[index][4].toString());
+                                              snapshot.data[index][0]
+                                                  .toString(),
+                                              snapshot.data[index][1]
+                                                  .toString(),
+                                              snapshot.data[index][2]
+                                                  .toString(),
+                                              snapshot.data[index][3]
+                                                  .toString(),
+                                              snapshot.data[index][4]
+                                                  .toString());
 
                                           var snackbar = SnackBar(
                                             behavior: SnackBarBehavior.floating,
-                                            content:
-                                            Text("미암기 단어장에 해당 단어가 추가되었습니다."),
-
+                                            content: Text(
+                                                "미암기 단어장에 해당 단어가 추가되었습니다."),
                                             action: SnackBarAction(
                                               label: "확인",
                                               onPressed: () {},
@@ -360,7 +385,7 @@ class _word_list_vocaState extends State<word_list_voca> {
                                       child: ExpansionTile(
                                         expandedAlignment: Alignment.centerLeft,
                                         expandedCrossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         initiallyExpanded: false,
                                         maintainState: false,
                                         backgroundColor: Colors.white54,
@@ -422,8 +447,8 @@ class _word_list_vocaState extends State<word_list_voca> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                            EdgeInsets.fromLTRB(16, 5, 16, 10),
+                                            padding: EdgeInsets.fromLTRB(
+                                                16, 5, 16, 10),
                                             child: AutoSizeText(
                                               snapshot.data[index][4],
                                               style: TextStyle(
@@ -443,17 +468,18 @@ class _word_list_vocaState extends State<word_list_voca> {
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => Divider(
-                                color: Colors.black26,
-                              ),
+                                    color: Colors.black26,
+                                  ),
                               itemCount: snapshot.data.length),
                         ),
                       ],
                     ),
                   ),
                 ));
-          } else {
-            return Text('Data 로딩 실패');
-          }
-        }), onWillPop: () async => false);
+              } else {
+                return Text('Data 로딩 실패');
+              }
+            }),
+        onWillPop: () async => false);
   }
 }

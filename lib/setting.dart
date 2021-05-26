@@ -17,20 +17,17 @@ class setting extends StatelessWidget {
             leading: Text('일반'),
           ),
           ListTile(
-            leading: Icon(Icons.photo_filter),
-            title: Text('듀토리얼'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.of(context).push(
-
-                CupertinoPageRoute(
-                    builder: (BuildContext context) => onboardingpage()),
-
-              );
-            }
-            //Share.share(text:'한국외국어대학교 힌디어 단어장', subject:'학과 중간 기말, 졸업 시험, 인증 시험 모두 여기서!'),
-          ),
-
+              leading: Icon(Icons.photo_filter),
+              title: Text('듀토리얼'),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.of(context).push(
+                  CupertinoPageRoute(
+                      builder: (BuildContext context) => onboardingpage()),
+                );
+              }
+              //Share.share(text:'한국외국어대학교 힌디어 단어장', subject:'학과 중간 기말, 졸업 시험, 인증 시험 모두 여기서!'),
+              ),
           ListTile(
             leading: Icon(Icons.home),
             title: Text('홈페이지'),
@@ -101,39 +98,37 @@ class setting extends StatelessWidget {
 // 설정부분 알림창 관련 함수
 void alert(BuildContext context, String info_title, String info_text,
     double font_size) {
-  showDialog(context: context,builder: (context){
-    Future.delayed(Duration(seconds: 10),(){
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => MyApp()));
-    });
-    return AlertDialog(
-      title: Text(info_title),
-      content: Text(
-        info_text,
-        overflow: TextOverflow.visible,
-        textAlign: TextAlign.left,
-        style: TextStyle(
-          fontFamily: 'hufsfontLight',
-          fontSize: font_size,
-          wordSpacing: 1.1,
-          height: 1.5,
-          fontWeight: FontWeight.normal,
-          textBaseline: TextBaseline.alphabetic,
-        ),
-      ),
-      actions: [
-        FlatButton(
-            onPressed: () {
-               Navigator.pop(context);
-            },
-            child: Text("확인")),
-      ],
-    );
-  });
-
-
+  showDialog(
+      context: context,
+      builder: (context) {
+        Future.delayed(Duration(seconds: 10), () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+        });
+        return AlertDialog(
+          title: Text(info_title),
+          content: Text(
+            info_text,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontFamily: 'hufsfontLight',
+              fontSize: font_size,
+              wordSpacing: 1.1,
+              height: 1.5,
+              fontWeight: FontWeight.normal,
+              textBaseline: TextBaseline.alphabetic,
+            ),
+          ),
+          actions: [
+            FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("확인")),
+          ],
+        );
+      });
 }
 
 //FAQ 질문들
@@ -234,11 +229,8 @@ class faqList extends StatelessWidget {
                       ListTile(
                         title: Text('단어장 보는 방식을 도중에 바꾸었는데 나만의 단어장에 저장될까요?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () => alert(
-                            context,
-                            '임시 저장',
-                            '도중에 단어 암기 혹은 테스트를 정지해도 나만의 단어, 문장에 저장이 됩니다.',
-                            14),
+                        onTap: () => alert(context, '임시 저장',
+                            '도중에 단어 암기 혹은 테스트를 정지해도 나만의 단어, 문장에 저장이 됩니다.', 14),
                       ),
                       ListTile(
                         title: Text('단어장 글자 폰트는 무엇으로 작성되었나요?'),
@@ -249,7 +241,6 @@ class faqList extends StatelessWidget {
                             '한국어 폰트는 한국 외대 폰트를 사용하였습니다. 또한 힌디어는 가장 대중적으로 사용되는 폰트를 사용하였습니다.',
                             14),
                       ),
-
                       ListTile(
                         title: Text('앱 여기서 오류가 생겨요. 어떻게하면 좋죠?'),
                         trailing: Icon(Icons.keyboard_arrow_right),
@@ -268,7 +259,6 @@ class faqList extends StatelessWidget {
                             '업데이트는 앱에 문제가 있을 시, 새로운 단어 리스트가 추가될 시, CFL에서 진행하는 행사 및 공지사항 변경이 있을 때 업데이트가 이루어집니다. 주로 CFL 공지사항 수정을 위해 업데이트가 이루어집니다.',
                             14),
                       ),
-
                     ],
                   ).toList(),
                 ))),

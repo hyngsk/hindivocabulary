@@ -149,277 +149,299 @@ class _AnimatedFlipCardState extends State<AnimatedFlipCard>
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
-        -MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
 
-    return WillPopScope(child: new FutureBuilder(
-        future: make_word_list(_start_word_num, _finish_word_num, file_name),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            if (index == 0 && count == 1) {
-              this.hindi_word = snapshot.data[index][0].toString();
-              this.word_case = snapshot.data[index][1].toString();
-              this.korean_word = snapshot.data[index][2].toString();
-              this.hindi_example = snapshot.data[index][3].toString();
-              this.korean_example = snapshot.data[index][4].toString();
-            }
-
-            //양 옆으로 밀었을 때 swipe 하는 기능
-            void _onHorizontalDragStartHandler(DragStartDetails details) {
-              setState(() {
-                if (details.globalPosition.dx.floorToDouble() <
-                    horizontal_size * 0.5) {
-                  if (this.index > 0) {
-                    this.index--;
-                    count--;
-                  }
-                } else {
-                  if (this.index == _total_itemcount - 1) {
-                    alert_backto_lobi(context, this.file_name);
-                  }
-                  if (this.index < _total_itemcount - 1) {
-                    this.index++;
-                    count++;
-                  }
+    return WillPopScope(
+        child: new FutureBuilder(
+            future:
+                make_word_list(_start_word_num, _finish_word_num, file_name),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                if (index == 0 && count == 1) {
+                  this.hindi_word = snapshot.data[index][0].toString();
+                  this.word_case = snapshot.data[index][1].toString();
+                  this.korean_word = snapshot.data[index][2].toString();
+                  this.hindi_example = snapshot.data[index][3].toString();
+                  this.korean_example = snapshot.data[index][4].toString();
                 }
-                this.hindi_word = snapshot.data[index][0].toString();
-                this.word_case = snapshot.data[index][1].toString();
-                this.korean_word = snapshot.data[index][2].toString();
-                this.hindi_example = snapshot.data[index][3].toString();
-                this.korean_example = snapshot.data[index][4].toString();
-                this.count = count;
-              });
-            }
 
-            void _onVerticalDragStartHandler(DragStartDetails details) {
-              setState(() {
-                if (details.globalPosition.dy.floorToDouble() >
-                    vertical_size * 0.3) {
+                //양 옆으로 밀었을 때 swipe 하는 기능
+                void _onHorizontalDragStartHandler(DragStartDetails details) {
                   setState(() {
-                    unMemory_words(
-
-                        snapshot.data[index][0].toString(),
-                        snapshot.data[index][1].toString(),
-                        snapshot.data[index][2].toString(),
-                        snapshot.data[index][3].toString(),
-                        snapshot.data[index][4].toString());
+                    if (details.globalPosition.dx.floorToDouble() <
+                        horizontal_size * 0.5) {
+                      if (this.index > 0) {
+                        this.index--;
+                        count--;
+                      }
+                    } else {
+                      if (this.index == _total_itemcount - 1) {
+                        alert_backto_lobi(context, this.file_name);
+                      }
+                      if (this.index < _total_itemcount - 1) {
+                        this.index++;
+                        count++;
+                      }
+                    }
+                    this.hindi_word = snapshot.data[index][0].toString();
+                    this.word_case = snapshot.data[index][1].toString();
+                    this.korean_word = snapshot.data[index][2].toString();
+                    this.hindi_example = snapshot.data[index][3].toString();
+                    this.korean_example = snapshot.data[index][4].toString();
+                    this.count = count;
                   });
-
-                  var snackbar = SnackBar(
-                    backgroundColor: Colors.white,
-                    behavior: SnackBarBehavior.floating,
-                    content: Text(
-                      "미암기 단어장에 해당 단어가 추가되었습니다.",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    action: SnackBarAction(
-                      label: "확인",
-                      onPressed: () {},
-                    ),
-                  );
-                  Scaffold.of(context).showSnackBar(snackbar);
                 }
-              });
-            }
 
-            return SafeArea(
-              child: Scaffold(
-                appBar: AppBar(
-                  leading: Builder(
-                    builder: (BuildContext context) {
-                      return IconButton(
-                        icon: Icon(
-                          Icons.keyboard_arrow_left,
-                          color: Colors.white,
-                          size: 30,
+                void _onVerticalDragStartHandler(DragStartDetails details) {
+                  setState(() {
+                    if (details.globalPosition.dy.floorToDouble() >
+                        vertical_size * 0.3) {
+                      setState(() {
+                        unMemory_words(
+                            snapshot.data[index][0].toString(),
+                            snapshot.data[index][1].toString(),
+                            snapshot.data[index][2].toString(),
+                            snapshot.data[index][3].toString(),
+                            snapshot.data[index][4].toString());
+                      });
+
+                      var snackbar = SnackBar(
+                        backgroundColor: Colors.white,
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          "미암기 단어장에 해당 단어가 추가되었습니다.",
+                          style: TextStyle(color: Colors.black),
                         ),
-                        onPressed: () {
-                          if (file_name == 'assets/A0.xlsx') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => level_(A0_word_list_page,
-                                    A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
-                              ),
-                            );
-                          } else if (file_name == 'assets/A1.xlsx') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => level_(A1_word_list_page,
-                                    A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
-                              ),
-                            );
-                          } else if (file_name == 'assets/A2.xlsx') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => level_(A2_word_list_page,
-                                    A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
-                              ),
-                            );
-                          } else if (file_name == 'assets/B1.xlsx') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => level_(B1_word_list_page,
-                                    B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
-                              ),
-                            );
-                          } else if (file_name == 'assets/B2.xlsx') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => level_(B1_word_list_page,
-                                    B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => MyApp()),
-                            );
-                          }
-                        },
+                        action: SnackBarAction(
+                          label: "확인",
+                          onPressed: () {},
+                        ),
                       );
-                    },
-                  ),
-                  shadowColor: Colors.black26,
-                  centerTitle: true,
-                  backgroundColor: Color.fromARGB(240, 10, 15, 64),
-                  title: Text(
-                    "HUFS 힌디어 학습 도우미",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'hufsfontMedium',
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 2,
+                      Scaffold.of(context).showSnackBar(snackbar);
+                    }
+                  });
+                }
+
+                return SafeArea(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      leading: Builder(
+                        builder: (BuildContext context) {
+                          return IconButton(
+                            icon: Icon(
+                              Icons.keyboard_arrow_left,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              if (file_name == 'assets/A0.xlsx') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => level_(
+                                        A0_word_list_page,
+                                        A0_word_list_scale,
+                                        'A0 단어장',
+                                        'assets/A0.xlsx'),
+                                  ),
+                                );
+                              } else if (file_name == 'assets/A1.xlsx') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => level_(
+                                        A1_word_list_page,
+                                        A1_word_list_scale,
+                                        'A1 단어장',
+                                        'assets/A1.xlsx'),
+                                  ),
+                                );
+                              } else if (file_name == 'assets/A2.xlsx') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => level_(
+                                        A2_word_list_page,
+                                        A2_word_list_scale,
+                                        'A2 단어장',
+                                        'assets/A2.xlsx'),
+                                  ),
+                                );
+                              } else if (file_name == 'assets/B1.xlsx') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => level_(
+                                        B1_word_list_page,
+                                        B1_word_list_scale,
+                                        'B1 단어장',
+                                        'assets/B1.xlsx'),
+                                  ),
+                                );
+                              } else if (file_name == 'assets/B2.xlsx') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => level_(
+                                        B1_word_list_page,
+                                        B1_word_list_scale,
+                                        'B1 단어장',
+                                        'assets/B1.xlsx'),
+                                  ),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyApp()),
+                                );
+                              }
+                            },
+                          );
+                        },
+                      ),
+                      shadowColor: Colors.black26,
+                      centerTitle: true,
+                      backgroundColor: Color.fromARGB(240, 10, 15, 64),
+                      title: Text(
+                        "HUFS 힌디어 학습 도우미",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'hufsfontMedium',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                    ),
+                    body: Container(
+                      width: horizontal_size,
+                      height: vertical_size,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            width: horizontal_size,
+                            height: vertical_size * 0.06,
+                            decoration:
+                                BoxDecoration(color: Colors.white, boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 2,
+                                offset: Offset(1.5, 0),
+                              )
+                            ]),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: horizontal_size * 0.4,
+                                  height: vertical_size * 0.05,
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 0.5),
+                                  child: Text(
+                                    page_name,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'hufsfontMedium',
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 3,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: horizontal_size * 0.32,
+                                  height: vertical_size * 0.05,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "단어 수: " +
+                                        _total_itemcount.toString() +
+                                        "개",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'hufsfontMedium',
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 3,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: vertical_size * 0.81,
+                            width: horizontal_size,
+                            alignment: Alignment.center,
+                            child: Center(
+                              // ignore: missing_return
+                              child: Stack(
+                                children: <Widget>[
+                                  AnimatedBuilder(
+                                      child: GestureDetector(
+                                        child: CustomCard_Behind(
+                                            this.korean_word,
+                                            this.word_case,
+                                            this.hindi_example,
+                                            this.korean_example,
+                                            this.count,
+                                            this._total_itemcount,
+                                            Color.fromARGB(240, 150, 131, 60)),
+                                        onTap: flipCard,
+                                        onHorizontalDragStart:
+                                            _onHorizontalDragStartHandler,
+                                      ),
+                                      animation: _backAnimation,
+                                      builder:
+                                          (BuildContext context, Widget child) {
+                                        return Transform(
+                                          alignment: FractionalOffset.center,
+                                          child: child,
+                                          transform: Matrix4.identity()
+                                            ..rotateY(_backAnimation.value),
+                                        );
+                                      }),
+                                  AnimatedBuilder(
+                                      child: GestureDetector(
+                                        child: CustomCard_Front(
+                                            this.hindi_word,
+                                            this.count,
+                                            this._total_itemcount,
+                                            Color.fromARGB(240, 112, 126, 250)),
+                                        onTap: flipCard,
+                                        onHorizontalDragStart:
+                                            _onHorizontalDragStartHandler,
+                                        onVerticalDragStart:
+                                            _onVerticalDragStartHandler,
+                                      ),
+                                      animation: _frontAnimation,
+                                      builder:
+                                          (BuildContext context, Widget child) {
+                                        return Transform(
+                                          alignment: FractionalOffset.center,
+                                          child: child,
+                                          transform: Matrix4.identity()
+                                            ..rotateY(_frontAnimation.value),
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                body: Container(
-                  width: horizontal_size,
-                  height: vertical_size,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        width: horizontal_size,
-                        height: vertical_size * 0.06,
-                        decoration:
-                        BoxDecoration(color: Colors.white, boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 2,
-                            offset: Offset(1.5, 0),
-                          )
-                        ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: horizontal_size * 0.4,
-                              height: vertical_size * 0.05,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 0.5),
-                              child: Text(
-                                page_name,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'hufsfontMedium',
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 3,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: horizontal_size * 0.32,
-                              height: vertical_size * 0.05,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "단어 수: " + _total_itemcount.toString() + "개",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'hufsfontMedium',
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 3,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: vertical_size * 0.81,
-                        width: horizontal_size,
-                        alignment: Alignment.center,
-                        child: Center(
-                          // ignore: missing_return
-                          child: Stack(
-                            children: <Widget>[
-                              AnimatedBuilder(
-                                  child: GestureDetector(
-                                    child: CustomCard_Behind(
-                                        this.korean_word,
-                                        this.word_case,
-                                        this.hindi_example,
-                                        this.korean_example,
-                                        this.count,
-                                        this._total_itemcount,
-                                        Color.fromARGB(240, 150, 131, 60)),
-                                    onTap: flipCard,
-                                    onHorizontalDragStart:
-                                    _onHorizontalDragStartHandler,
-                                  ),
-                                  animation: _backAnimation,
-                                  builder:
-                                      (BuildContext context, Widget child) {
-                                    return Transform(
-                                      alignment: FractionalOffset.center,
-                                      child: child,
-                                      transform: Matrix4.identity()
-                                        ..rotateY(_backAnimation.value),
-                                    );
-                                  }),
-                              AnimatedBuilder(
-                                  child: GestureDetector(
-                                    child: CustomCard_Front(
-                                        this.hindi_word,
-                                        this.count,
-                                        this._total_itemcount,
-                                        Color.fromARGB(240, 112, 126, 250)),
-                                    onTap: flipCard,
-                                    onHorizontalDragStart:
-                                    _onHorizontalDragStartHandler,
-                                    onVerticalDragStart:
-                                    _onVerticalDragStartHandler,
-                                  ),
-                                  animation: _frontAnimation,
-                                  builder:
-                                      (BuildContext context, Widget child) {
-                                    return Transform(
-                                      alignment: FractionalOffset.center,
-                                      child: child,
-                                      transform: Matrix4.identity()
-                                        ..rotateY(_frontAnimation.value),
-                                    );
-                                  }),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          } else
-            return Text("한 개당 보여주는 단어장 로딩 Failed");
-        }), onWillPop: () async => false);
+                );
+              } else
+                return Text("한 개당 보여주는 단어장 로딩 Failed");
+            }),
+        onWillPop: () async => false);
   }
 }
 
@@ -439,11 +461,13 @@ class CustomCard_Front extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
-        -MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
 
     return Container(
         decoration: BoxDecoration(
@@ -522,11 +546,13 @@ class CustomCard_Behind extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
-        -MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
 
     return Container(
         decoration: BoxDecoration(
@@ -573,7 +599,7 @@ class CustomCard_Behind extends StatelessWidget {
                 child: AutoSizeText(
                   this._korean_word,
                   style: TextStyle(
-                    color: Colors.black,
+                      color: Colors.black,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'hufsfontMedium'),
                   maxLines: 3,
@@ -589,9 +615,10 @@ class CustomCard_Behind extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 child: AutoSizeText(
                   this._word_class,
-
-                  style: TextStyle(color:Colors.black,fontSize: 15, fontWeight: FontWeight.w500),
-
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500),
                   maxLines: 3,
                   minFontSize: 10,
                 ),
@@ -650,7 +677,8 @@ class CustomCard_Behind extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                       child: AutoSizeText(
                         this._hindi_example,
-                        style: TextStyle(color:Colors.black,fontWeight: FontWeight.w300),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w300),
                         maxLines: 3,
                         presetFontSizes: [25, 18, 15],
                         minFontSize: 15,
@@ -667,7 +695,8 @@ class CustomCard_Behind extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 5, horizontal: 16),
                       child: AutoSizeText(
                         this._korean_example,
-                        style: TextStyle(color:Colors.black,fontWeight: FontWeight.w300),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w300),
                         maxLines: 3,
                         minFontSize: 8,
                         presetFontSizes: [16, 12, 8],
