@@ -18,7 +18,7 @@ class setting extends StatelessWidget {
           ),
           ListTile(
               leading: Icon(Icons.photo_filter),
-              title: Text('듀토리얼'),
+              title: Text('튜토리얼'),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.of(context).push(
