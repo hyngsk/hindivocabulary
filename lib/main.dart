@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:hindivocabulary/clfpt_wordlist/word_list_view.dart';
 import 'package:hindivocabulary/hindiCommonVoca_Sentence.dart';
 import 'package:hindivocabulary/hindiCommonVoca.dart';
 import 'package:hindivocabulary/setting.dart';
@@ -10,7 +8,6 @@ import 'package:hindivocabulary/setting.dart';
 import 'package:hindivocabulary/home.dart';
 import 'package:hindivocabulary/myVoca.dart';
 import 'package:hindivocabulary/mySentence.dart';
-
 import 'package:hindivocabulary/introductionScreen.dart';
 import 'dart:ui';
 import 'dart:io';
