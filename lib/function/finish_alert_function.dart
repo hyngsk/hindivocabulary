@@ -121,7 +121,10 @@ void alert_backto_list(BuildContext context) async {
             ),
             FlatButton(
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>MyApp()), (route) => false);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyApp()),
+                      (route) => false);
                 },
                 child: Text("예")),
           ],

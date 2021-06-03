@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +54,6 @@ class _myVocaState extends State<myVoca> {
   List<String> word_example_hindi = [];
   List<String> word_example_korean = [];
 
-
   _extractString() async {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     int index;
@@ -63,7 +61,6 @@ class _myVocaState extends State<myVoca> {
     setState(() {
       index = wordlist.getInt('count_num');
     });
-
 
     if (index != 0) {
       for (int i = 1; i < index + (1); i++) {
@@ -90,70 +87,80 @@ class _myVocaState extends State<myVoca> {
       }
     }
   }
+
   //해당 단어 리스트와 데이터 베이스에 저장된 인덱스 모두 삭제하기
-  _removeString(int find_index) async{
+  _removeString(int find_index) async {
     int count;
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     count = wordlist.getInt('count_num');
-    for(int i=1; i<count+1; i++)
-      {
-        if(this.word[find_index].compareTo(wordlist.getString('w_word'+(i.toString())))==0){
-          wordlist.remove('w_word'+(i.toString()));
-          this.word.removeAt(find_index);
-
-        }
-
-        if(this.word_class[find_index].compareTo(wordlist.getString('w_word_class'+(i.toString())))==0)
-          {
-            wordlist.remove('w_word_class'+(i.toString()));
-            this.word_class.removeAt(find_index);
-          }
-        if(this.word_mean[find_index].compareTo(wordlist.getString('w_mean'+(i.toString())))==0)
-          {
-            wordlist.remove('w_mean'+(i.toString()));
-            this.word_mean.removeAt(find_index);
-          }
-        if(this.word_example_hindi[find_index].compareTo(wordlist.getString('w_example_hindi'+(i.toString())))==0)
-          {
-            wordlist.remove('w_example_hindi'+(i.toString()));
-            this.word_example_hindi.removeAt(find_index);
-          }
-        if(this.word_example_korean[find_index].compareTo(wordlist.getString('w_example_korean'+(i.toString())))==0)
-          {
-            wordlist.remove('w_example_korean'+(i.toString()));
-            this.word_example_korean.removeAt(find_index);
-          }
+    for (int i = 1; i < count + 1; i++) {
+      if (this
+              .word[find_index]
+              .compareTo(wordlist.getString('w_word' + (i.toString()))) ==
+          0) {
+        wordlist.remove('w_word' + (i.toString()));
+        this.word.removeAt(find_index);
       }
+
+      if (this
+              .word_class[find_index]
+              .compareTo(wordlist.getString('w_word_class' + (i.toString()))) ==
+          0) {
+        wordlist.remove('w_word_class' + (i.toString()));
+        this.word_class.removeAt(find_index);
+      }
+      if (this
+              .word_mean[find_index]
+              .compareTo(wordlist.getString('w_mean' + (i.toString()))) ==
+          0) {
+        wordlist.remove('w_mean' + (i.toString()));
+        this.word_mean.removeAt(find_index);
+      }
+      if (this.word_example_hindi[find_index].compareTo(
+              wordlist.getString('w_example_hindi' + (i.toString()))) ==
+          0) {
+        wordlist.remove('w_example_hindi' + (i.toString()));
+        this.word_example_hindi.removeAt(find_index);
+      }
+      if (this.word_example_korean[find_index].compareTo(
+              wordlist.getString('w_example_korean' + (i.toString()))) ==
+          0) {
+        wordlist.remove('w_example_korean' + (i.toString()));
+        this.word_example_korean.removeAt(find_index);
+      }
+    }
     count--;
     wordlist.setInt('count_num', count);
     this.count_num = count;
 
-    String next_word ='';
-    String next_word_class='';
-    String next_word_mean='';
-    String next_word_example_hindi='';
+    String next_word = '';
+    String next_word_class = '';
+    String next_word_mean = '';
+    String next_word_example_hindi = '';
     String next_word_example_korean = '';
-    for(int i = find_index+1; i<count+1; i++)
-      {
-        next_word= wordlist.getString('w_word'+((i+1).toString()));
-        next_word_class = wordlist.getString('w_word_class'+((i+1).toString()));
-        next_word_mean = wordlist.getString('w_mean'+((i+1).toString()));
-        next_word_example_hindi = wordlist.getString('w_example_hindi'+((i+1).toString()));
-        next_word_example_korean = wordlist.getString('w_example_korean'+((i+1).toString()));
+    for (int i = find_index + 1; i < count + 1; i++) {
+      next_word = wordlist.getString('w_word' + ((i + 1).toString()));
+      next_word_class =
+          wordlist.getString('w_word_class' + ((i + 1).toString()));
+      next_word_mean = wordlist.getString('w_mean' + ((i + 1).toString()));
+      next_word_example_hindi =
+          wordlist.getString('w_example_hindi' + ((i + 1).toString()));
+      next_word_example_korean =
+          wordlist.getString('w_example_korean' + ((i + 1).toString()));
 
-        wordlist.setString('w_word'+(i.toString()),next_word);
-        this.word[i] = next_word;
-        wordlist.setString('w_word_class'+(i.toString()),next_word_class);
-        this.word_class[i] = next_word_class;
-        wordlist.setString('w_mean'+(i.toString()),next_word_mean);
-        this.word_mean[i] = next_word_mean;
-        wordlist.setString('w_example_hindi'+(i.toString()),next_word_example_hindi);
-        this.word_example_hindi[i] = next_word_example_hindi;
-        wordlist.setString('w_example_korean'+(i.toString()),next_word_example_korean);
-        this.word_example_korean[i] = next_word_example_korean;
-
-      }
-
+      wordlist.setString('w_word' + (i.toString()), next_word);
+      this.word[i] = next_word;
+      wordlist.setString('w_word_class' + (i.toString()), next_word_class);
+      this.word_class[i] = next_word_class;
+      wordlist.setString('w_mean' + (i.toString()), next_word_mean);
+      this.word_mean[i] = next_word_mean;
+      wordlist.setString(
+          'w_example_hindi' + (i.toString()), next_word_example_hindi);
+      this.word_example_hindi[i] = next_word_example_hindi;
+      wordlist.setString(
+          'w_example_korean' + (i.toString()), next_word_example_korean);
+      this.word_example_korean[i] = next_word_example_korean;
+    }
   }
 
   //BottomNavigationBar
@@ -168,7 +175,6 @@ class _myVocaState extends State<myVoca> {
 
   @override
   Widget build(BuildContext context) {
-
     var horizontal_size = MediaQuery.of(context).size.width;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -

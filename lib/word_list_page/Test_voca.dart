@@ -87,9 +87,6 @@ class _TestVocaState extends State<TestVoca> {
   List<String> wrong_hindi_words = new List<String>();
   List<String> wrong_korean_words = new List<String>();
 
-
-
-
   Map<String, dynamic> make_question(
       bool choice_num,
       String hindi_correct_word,
@@ -225,66 +222,59 @@ class _TestVocaState extends State<TestVoca> {
 
   @override
   Widget build(BuildContext context) {
-    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
-        -MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
 
-    return WillPopScope(child: new FutureBuilder(
-        future: make_word_list(_start_word_num, _finish_word_num, file_name),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            if (global_index == 0 && count == 1) {
-              this.hindi_word = snapshot.data[global_index][0].toString();
-
-              this.korean_word = snapshot.data[global_index][2].toString();
-
-            }
-
-            else {
-              try{
-                if (global_index < _total_itemcount&&count<=_total_itemcount) {
+    return WillPopScope(
+        child: new FutureBuilder(
+            future:
+                make_word_list(_start_word_num, _finish_word_num, file_name),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                if (global_index == 0 && count == 1) {
                   this.hindi_word = snapshot.data[global_index][0].toString();
 
                   this.korean_word = snapshot.data[global_index][2].toString();
-
                 } else {
-                  move_page(
-                      context,
-                      this.page_name,
-                      this._total_itemcount,
-                      this.correct,
-                      wrong_hindi_words,wrong_korean_words);
+                  try {
+                    if (global_index < _total_itemcount &&
+                        count <= _total_itemcount) {
+                      this.hindi_word =
+                          snapshot.data[global_index][0].toString();
+
+                      this.korean_word =
+                          snapshot.data[global_index][2].toString();
+                    } else {
+                      move_page(context, this.page_name, this._total_itemcount,
+                          this.correct, wrong_hindi_words, wrong_korean_words);
+                    }
+                  } on Exception catch (_) {
+                    move_page(context, this.page_name, this._total_itemcount,
+                        this.correct, wrong_hindi_words, wrong_korean_words);
+                  }
                 }
-              } on Exception catch(_){
-                move_page(
-                    context,
-                    this.page_name,
-                    this._total_itemcount,
-                    this.correct,
-                    wrong_hindi_words,wrong_korean_words);
-              }
 
-            }
-
-
-            List<String> hindi_wrong_word = [];
-            List<String> korean_wrong_word = [];
-            for (int i = 0; i < 30; i++) {
-              hindi_wrong_word.add(snapshot.data[i][0].toString());
-            }
-            for (int i = 0; i < 30; i++) {
-              korean_wrong_word.add(snapshot.data[i][2].toString());
-            }
-            Map<String, dynamic> question = make_question(
-                _choice_language,
-                this.hindi_word,
-                this.korean_word,
-                hindi_wrong_word,
-                korean_wrong_word);
-            return SafeArea(
-                child: Scaffold(
+                List<String> hindi_wrong_word = [];
+                List<String> korean_wrong_word = [];
+                for (int i = 0; i < 30; i++) {
+                  hindi_wrong_word.add(snapshot.data[i][0].toString());
+                }
+                for (int i = 0; i < 30; i++) {
+                  korean_wrong_word.add(snapshot.data[i][2].toString());
+                }
+                Map<String, dynamic> question = make_question(
+                    _choice_language,
+                    this.hindi_word,
+                    this.korean_word,
+                    hindi_wrong_word,
+                    korean_wrong_word);
+                return SafeArea(
+                    child: Scaffold(
                   appBar: AppBar(
                     leading: Builder(
                       builder: (BuildContext context) {
@@ -299,46 +289,62 @@ class _TestVocaState extends State<TestVoca> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(A0_word_list_page,
-                                      A0_word_list_scale, 'A0 단어장', 'assets/A0.xlsx'),
+                                  builder: (context) => level_(
+                                      A0_word_list_page,
+                                      A0_word_list_scale,
+                                      'A0 단어장',
+                                      'assets/A0.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/A1.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(A1_word_list_page,
-                                      A1_word_list_scale, 'A1 단어장', 'assets/A1.xlsx'),
+                                  builder: (context) => level_(
+                                      A1_word_list_page,
+                                      A1_word_list_scale,
+                                      'A1 단어장',
+                                      'assets/A1.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/A2.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(A2_word_list_page,
-                                      A2_word_list_scale, 'A2 단어장', 'assets/A2.xlsx'),
+                                  builder: (context) => level_(
+                                      A2_word_list_page,
+                                      A2_word_list_scale,
+                                      'A2 단어장',
+                                      'assets/A2.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/B1.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(B1_word_list_page,
-                                      B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                                  builder: (context) => level_(
+                                      B1_word_list_page,
+                                      B1_word_list_scale,
+                                      'B1 단어장',
+                                      'assets/B1.xlsx'),
                                 ),
                               );
                             } else if (file_name == 'assets/B2.xlsx') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => level_(B1_word_list_page,
-                                      B1_word_list_scale, 'B1 단어장', 'assets/B1.xlsx'),
+                                  builder: (context) => level_(
+                                      B1_word_list_page,
+                                      B1_word_list_scale,
+                                      'B1 단어장',
+                                      'assets/B1.xlsx'),
                                 ),
                               );
                             } else {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => MyApp()),
+                                MaterialPageRoute(
+                                    builder: (context) => MyApp()),
                               );
                             }
                           },
@@ -360,7 +366,6 @@ class _TestVocaState extends State<TestVoca> {
                     ),
                   ),
                   bottomNavigationBar: Container(
-
                     child: BottomNavigationBar(
                       type: BottomNavigationBarType.fixed,
                       currentIndex: _selectedIndex,
@@ -400,9 +405,9 @@ class _TestVocaState extends State<TestVoca> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Color.fromARGB(240, 10, 15, 64),
-                              Color.fromARGB(240, 108, 121, 240)
-                            ])),
+                          Color.fromARGB(240, 10, 15, 64),
+                          Color.fromARGB(240, 108, 121, 240)
+                        ])),
                     child: Column(
                       children: [
                         //파트 이름, 번호, 단어 수
@@ -452,7 +457,7 @@ class _TestVocaState extends State<TestVoca> {
                           alignment: Alignment.centerLeft,
                           height: 80,
                           padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                           margin: EdgeInsets.symmetric(horizontal: 13),
                           width: horizontal_size,
                           child: Row(
@@ -460,7 +465,7 @@ class _TestVocaState extends State<TestVoca> {
                             children: [
                               Container(
                                 alignment: Alignment.center,
-                                height: vertical_size*0.15,
+                                height: vertical_size * 0.15,
                                 width: horizontal_size * 0.4,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -480,7 +485,7 @@ class _TestVocaState extends State<TestVoca> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: vertical_size*0.002,
+                                      height: vertical_size * 0.002,
                                     ),
                                     Container(
                                       width: horizontal_size * 0.4,
@@ -500,7 +505,7 @@ class _TestVocaState extends State<TestVoca> {
                               ),
                               Container(
                                 alignment: Alignment.center,
-                                height: vertical_size*0.15,
+                                height: vertical_size * 0.15,
                                 width: horizontal_size * 0.32,
                                 child: Container(
                                   child: Text(
@@ -521,18 +526,19 @@ class _TestVocaState extends State<TestVoca> {
                         ),
                         //단어 보이기 카드 형식
                         Expanded(
-
                           child: Container(
-                            width: horizontal_size*0.9,
+                            width: horizontal_size * 0.9,
                             decoration: BoxDecoration(
-                                  color: Color.fromARGB(240, 242, 242, 242),
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                  boxShadow: [
-                                    new BoxShadow(
-                                        color: Colors.black12,
-                                        offset: new Offset(3.0, 3.0),
-                                        blurRadius: 10.0,
-                                        spreadRadius: 0.0),]),
+                                color: Color.fromARGB(240, 242, 242, 242),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0)),
+                                boxShadow: [
+                                  new BoxShadow(
+                                      color: Colors.black12,
+                                      offset: new Offset(3.0, 3.0),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 0.0),
+                                ]),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -542,8 +548,8 @@ class _TestVocaState extends State<TestVoca> {
                                   height: vertical_size * 0.23,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
                                       boxShadow: [
                                         new BoxShadow(
                                             color: Colors.black12,
@@ -551,13 +557,16 @@ class _TestVocaState extends State<TestVoca> {
                                             blurRadius: 10.0,
                                             spreadRadius: 0.0)
                                       ]),
-                                  child: AutoSizeText(question['main_word'],maxFontSize: 30,minFontSize: 12,softWrap: true,style: TextStyle(
-                                      fontSize: 25
-                                  ),
+                                  child: AutoSizeText(
+                                    question['main_word'],
+                                    maxFontSize: 30,
+                                    minFontSize: 12,
+                                    softWrap: true,
+                                    style: TextStyle(fontSize: 25),
                                   ),
                                 ),
                                 SizedBox(
-                                  height: vertical_size*0.025,
+                                  height: vertical_size * 0.025,
                                 ),
                                 InkWell(
                                     child: Container(
@@ -566,8 +575,8 @@ class _TestVocaState extends State<TestVoca> {
                                       height: vertical_size * 0.065,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(10.0)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
                                           boxShadow: [
                                             new BoxShadow(
                                                 color: Colors.black12,
@@ -576,14 +585,19 @@ class _TestVocaState extends State<TestVoca> {
                                                 spreadRadius: 0.0)
                                           ]),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 13),
-                                        child:AutoSizeText("1.   "+question['wrong_word'][0],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                            fontSize: 18
-                                        ),),),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 13),
+                                        child: AutoSizeText(
+                                          "1.   " + question['wrong_word'][0],
+                                          maxFontSize: 30,
+                                          minFontSize: 10,
+                                          softWrap: true,
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
                                     ),
                                     onTap: () {
                                       setState(() {
-
                                         if (question['correct_number'] == 0) {
                                           correct++;
                                           count++;
@@ -600,8 +614,12 @@ class _TestVocaState extends State<TestVoca> {
                                                   .toString(),
                                               snapshot.data[global_index][4]
                                                   .toString());
-                                          wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                          wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                          wrong_hindi_words.add(snapshot
+                                              .data[global_index][0]
+                                              .toString());
+                                          wrong_korean_words.add(snapshot
+                                              .data[global_index][2]
+                                              .toString());
                                           incorrect++;
                                           count++;
                                           global_index++;
@@ -609,7 +627,7 @@ class _TestVocaState extends State<TestVoca> {
                                       });
                                     }),
                                 SizedBox(
-                                  height: vertical_size*0.015,
+                                  height: vertical_size * 0.015,
                                 ),
                                 InkWell(
                                     child: Container(
@@ -618,8 +636,8 @@ class _TestVocaState extends State<TestVoca> {
                                       height: vertical_size * 0.065,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(10.0)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
                                           boxShadow: [
                                             new BoxShadow(
                                                 color: Colors.black12,
@@ -628,13 +646,18 @@ class _TestVocaState extends State<TestVoca> {
                                                 spreadRadius: 0.0)
                                           ]),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 13),
-                                        child:AutoSizeText("2.   "+question['wrong_word'][1],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                            fontSize: 18
-                                        ),),),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 13),
+                                        child: AutoSizeText(
+                                          "2.   " + question['wrong_word'][1],
+                                          maxFontSize: 30,
+                                          minFontSize: 10,
+                                          softWrap: true,
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
                                     ),
                                     onTap: () {
-
                                       setState(() {
                                         if (question['correct_number'] == 1) {
                                           correct++;
@@ -652,8 +675,12 @@ class _TestVocaState extends State<TestVoca> {
                                                   .toString(),
                                               snapshot.data[global_index][4]
                                                   .toString());
-                                          wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                          wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                          wrong_hindi_words.add(snapshot
+                                              .data[global_index][0]
+                                              .toString());
+                                          wrong_korean_words.add(snapshot
+                                              .data[global_index][2]
+                                              .toString());
                                           incorrect++;
                                           count++;
                                           global_index++;
@@ -661,7 +688,7 @@ class _TestVocaState extends State<TestVoca> {
                                       });
                                     }),
                                 SizedBox(
-                                  height: vertical_size*0.015,
+                                  height: vertical_size * 0.015,
                                 ),
                                 InkWell(
                                     child: Container(
@@ -670,8 +697,8 @@ class _TestVocaState extends State<TestVoca> {
                                       height: vertical_size * 0.065,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(10.0)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
                                           boxShadow: [
                                             new BoxShadow(
                                                 color: Colors.black12,
@@ -680,13 +707,18 @@ class _TestVocaState extends State<TestVoca> {
                                                 spreadRadius: 0.0)
                                           ]),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 13),
-                                        child:AutoSizeText("3.   "+question['wrong_word'][2],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                            fontSize: 18
-                                        ),),),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 13),
+                                        child: AutoSizeText(
+                                          "3.   " + question['wrong_word'][2],
+                                          maxFontSize: 30,
+                                          minFontSize: 10,
+                                          softWrap: true,
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
                                     ),
                                     onTap: () {
-
                                       setState(() {
                                         if (question['correct_number'] == 2) {
                                           correct++;
@@ -704,8 +736,12 @@ class _TestVocaState extends State<TestVoca> {
                                                   .toString(),
                                               snapshot.data[global_index][4]
                                                   .toString());
-                                          wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                          wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                          wrong_hindi_words.add(snapshot
+                                              .data[global_index][0]
+                                              .toString());
+                                          wrong_korean_words.add(snapshot
+                                              .data[global_index][2]
+                                              .toString());
                                           incorrect++;
                                           count++;
                                           global_index++;
@@ -713,7 +749,7 @@ class _TestVocaState extends State<TestVoca> {
                                       });
                                     }),
                                 SizedBox(
-                                  height: vertical_size*0.015,
+                                  height: vertical_size * 0.015,
                                 ),
                                 InkWell(
                                   child: Container(
@@ -722,8 +758,8 @@ class _TestVocaState extends State<TestVoca> {
                                     height: vertical_size * 0.065,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
                                         boxShadow: [
                                           new BoxShadow(
                                               color: Colors.black12,
@@ -732,27 +768,41 @@ class _TestVocaState extends State<TestVoca> {
                                               spreadRadius: 0.0)
                                         ]),
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 13),
-                                      child:AutoSizeText("4.   "+question['wrong_word'][3],maxFontSize: 30,minFontSize: 10,softWrap: true,style: TextStyle(
-                                          fontSize: 18
-                                      ),),),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 13),
+                                      child: AutoSizeText(
+                                        "4.   " + question['wrong_word'][3],
+                                        maxFontSize: 30,
+                                        minFontSize: 10,
+                                        softWrap: true,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
                                   ),
                                   onTap: () {
                                     setState(() {
-
                                       if (question['correct_number'] == 3) {
                                         correct++;
                                         count++;
                                         global_index++;
                                       } else {
                                         unMemory_words(
-                                            snapshot.data[global_index][0].toString(),
-                                            snapshot.data[global_index][1].toString(),
-                                            snapshot.data[global_index][2].toString(),
-                                            snapshot.data[global_index][3].toString(),
-                                            snapshot.data[global_index][4].toString());
-                                        wrong_hindi_words.add(snapshot.data[global_index][0].toString());
-                                        wrong_korean_words.add(snapshot.data[global_index][2].toString());
+                                            snapshot.data[global_index][0]
+                                                .toString(),
+                                            snapshot.data[global_index][1]
+                                                .toString(),
+                                            snapshot.data[global_index][2]
+                                                .toString(),
+                                            snapshot.data[global_index][3]
+                                                .toString(),
+                                            snapshot.data[global_index][4]
+                                                .toString());
+                                        wrong_hindi_words.add(snapshot
+                                            .data[global_index][0]
+                                            .toString());
+                                        wrong_korean_words.add(snapshot
+                                            .data[global_index][2]
+                                            .toString());
                                         incorrect++;
                                         count++;
                                         global_index++;
@@ -768,23 +818,31 @@ class _TestVocaState extends State<TestVoca> {
                     ),
                   ),
                 ));
-          } else {
-            return Text("로딩 실패");
-          }
-        }), onWillPop: () async => false);
+              } else {
+                return Text("로딩 실패");
+              }
+            }),
+        onWillPop: () async => false);
   }
 }
 
 //페이지 이동
-void move_page(BuildContext context, String page_name, int _total_itemcount,
-    int correct,List<String> wrong_hindi_words,List<String> wrong_korean_words){
-
+void move_page(
+    BuildContext context,
+    String page_name,
+    int _total_itemcount,
+    int correct,
+    List<String> wrong_hindi_words,
+    List<String> wrong_korean_words) {
   SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (BuildContext context) => test_result(
-                page_name, _total_itemcount, correct,wrong_hindi_words,wrong_korean_words)));
+                page_name,
+                _total_itemcount,
+                correct,
+                wrong_hindi_words,
+                wrong_korean_words)));
   });
-
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "893105988674",
+    "project_id": "hindivocab",
+    "storage_bucket": "hindivocab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893105988674:android:1799ecd508def9eb6b79db",
+        "android_client_info": {
+          "package_name": "hindi.kr.ac.hindivocabulary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893105988674-bp47cusu4tq0rq9s67pi3db86epmr3cm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDro7JUphlNc8UEU1N2vTSHRGLJbpj151M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893105988674-bp47cusu4tq0rq9s67pi3db86epmr3cm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "893105988674-qh30t8hbm43c7sropvqjsfd6aeada8ig.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hindi.kr.ac.hindivocabulary"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

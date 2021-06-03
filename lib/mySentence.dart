@@ -106,12 +106,9 @@ class _sentenceState extends State<sentence> {
       temp_count = wordlist.getInt('count_num_sen');
     });
 
-
-
     if (temp_count != 0) {
       for (int i = 1; i < temp_count + 1; i++) {
         setState(() {
-
           this.sentences.add(wordlist.getString("s_word" + (i.toString())));
 
           this
@@ -134,9 +131,8 @@ class _sentenceState extends State<sentence> {
               .add(wordlist.getString('s_right' + (i.toString())));
         });
       }
-    }
-    else{
-      this.count=0;
+    } else {
+      this.count = 0;
     }
   }
 
@@ -146,62 +142,53 @@ class _sentenceState extends State<sentence> {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     count_sen = wordlist.getInt('count_num_sen');
     for (int i = 1; i < count_sen + 1; i++) {
+      if (this
+              .sentences[find_index]
+              .compareTo(wordlist.getString('s_word' + (i.toString()))) ==
+          0) {
+        this.sentences.removeAt(find_index);
+        wordlist.remove('s_word' + (i.toString()));
+      }
 
-        if (this
-            .sentences[find_index]
-            .compareTo(wordlist.getString('s_word' + (i.toString()))) ==
-            0) {
-
-          this.sentences.removeAt(find_index);
-          wordlist.remove('s_word' + (i.toString()));
-        }
-
-        if (this
-            .sentence_class[find_index]
-            .compareTo(wordlist.getString('s_word_class' + (i.toString()))) ==
-            0) {
-
-          this.sentence_class.removeAt(find_index);
-          wordlist.remove('s_word_class' + (i.toString()));
-        }
-        if (this
-            .sentence_mean[find_index]
-            .compareTo(wordlist.getString('s_mean' + (i.toString()))) ==
-            0) {
-
-          this.sentence_mean.removeAt(find_index);
-          wordlist.remove('s_mean' + (i.toString()));
-        }
-        if (this.sentence_example_hindi[find_index].compareTo(
-            wordlist.getString('s_example_hindi' + (i.toString()))) ==
-            0) {
-
-          this.sentence_example_hindi.removeAt(find_index);
-          wordlist.remove('s_example_hindi' + (i.toString()));
-        }
-        if (this.sentence_example_korean[find_index].compareTo(
-            wordlist.getString('s_example_korean' + (i.toString()))) ==
-            0) {
-
-          this.sentence_example_korean.removeAt(find_index);
-          wordlist.remove('s_example_korean' + (i.toString()));
-        }
-        if (this.sentence_wrong_example_korean[find_index].compareTo(
-            wordlist.getString('s_example_wrong_korean' + (i.toString()))) ==
-            0) {
-
-          this.sentence_wrong_example_korean.removeAt(find_index);
-          wordlist.remove('s_example_wrong_korean' + (i.toString()));
-        }
-        if (this
-            .sentence_right[find_index]
-            .compareTo(wordlist.getString('s_right' + (i.toString()))) ==
-            0) {
-
-          this.sentence_right.removeAt(find_index);
-          wordlist.remove('s_right' + (i.toString()));
-        }
-
+      if (this
+              .sentence_class[find_index]
+              .compareTo(wordlist.getString('s_word_class' + (i.toString()))) ==
+          0) {
+        this.sentence_class.removeAt(find_index);
+        wordlist.remove('s_word_class' + (i.toString()));
+      }
+      if (this
+              .sentence_mean[find_index]
+              .compareTo(wordlist.getString('s_mean' + (i.toString()))) ==
+          0) {
+        this.sentence_mean.removeAt(find_index);
+        wordlist.remove('s_mean' + (i.toString()));
+      }
+      if (this.sentence_example_hindi[find_index].compareTo(
+              wordlist.getString('s_example_hindi' + (i.toString()))) ==
+          0) {
+        this.sentence_example_hindi.removeAt(find_index);
+        wordlist.remove('s_example_hindi' + (i.toString()));
+      }
+      if (this.sentence_example_korean[find_index].compareTo(
+              wordlist.getString('s_example_korean' + (i.toString()))) ==
+          0) {
+        this.sentence_example_korean.removeAt(find_index);
+        wordlist.remove('s_example_korean' + (i.toString()));
+      }
+      if (this.sentence_wrong_example_korean[find_index].compareTo(
+              wordlist.getString('s_example_wrong_korean' + (i.toString()))) ==
+          0) {
+        this.sentence_wrong_example_korean.removeAt(find_index);
+        wordlist.remove('s_example_wrong_korean' + (i.toString()));
+      }
+      if (this
+              .sentence_right[find_index]
+              .compareTo(wordlist.getString('s_right' + (i.toString()))) ==
+          0) {
+        this.sentence_right.removeAt(find_index);
+        wordlist.remove('s_right' + (i.toString()));
+      }
     }
     count_sen--;
     wordlist.setInt('count_num_sen', count_sen);
@@ -256,7 +243,7 @@ class _sentenceState extends State<sentence> {
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top);
     return WillPopScope(
-        child:  Builder(
+        child: Builder(
           builder: (context) {
             if (this.count != 0) {
               if (index == 0 && this.count == 1) {
@@ -279,7 +266,6 @@ class _sentenceState extends State<sentence> {
                     this.korean_wrong_example =
                         sentence_wrong_example_korean[index];
                     this.right_num = sentence_right[index];
-
                   } else {
                     move_page(context, "재복습 추천 문장", this.count, this.correct,
                         wrong_hindi_words, wrong_korean_words);
