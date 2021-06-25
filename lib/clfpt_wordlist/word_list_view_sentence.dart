@@ -18,6 +18,7 @@ class level_Sentence extends StatefulWidget {
     this.file_name = file_name;
   }
 
+
   @override
   level_SentenceState createState() => level_SentenceState(
       this.wordlist, this.start_end_num, this.chapter_list, this.file_name);
@@ -41,9 +42,13 @@ class level_SentenceState extends State<level_Sentence> {
     setState(() {
       if ((wordlist.getString('current_sentence_chapter')) == null) {
         (wordlist.setString('current_sentence_chapter', 'A0 part1 (1-30)'));
-      } else {
-        (wordlist.setString('current_sentence_chapter', this.chapter_list));
+
+
       }
+      else{
+        (wordlist.setString('current_sentence_chapter',this.chapter_list));
+      }
+
     });
   }
 
@@ -52,17 +57,14 @@ class level_SentenceState extends State<level_Sentence> {
     // TODO: implement initState
     loading = false;
   }
-
   @override
   Widget build(BuildContext context) {
     //화면별 넓이 비율 자동 조절 변수
-    var horizontal_size = MediaQuery.of(context).size.width -
-        MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     return WillPopScope(
         child: SafeArea(
@@ -117,8 +119,8 @@ class level_SentenceState extends State<level_Sentence> {
                     ),
                   ),
                 ),
-                loadingAnimation(
-                    loading, vertical_size * 0.01, horizontal_size),
+                loadingAnimation(loading, vertical_size*0.01, horizontal_size),
+
                 Expanded(
                   child: ListView.separated(
                       padding:
@@ -163,14 +165,17 @@ class level_SentenceState extends State<level_Sentence> {
   }
 }
 
-Widget loadingAnimation(
-    bool loading, double vertical_size, double horizontal_size) {
-  if (loading) {
+Widget loadingAnimation(bool loading,double vertical_size, double horizontal_size)
+{
+  if(loading)
+  {
     return LinearProgressIndicator();
-  } else {
+  }
+  else{
     return Divider(
       color: Colors.white,
       height: vertical_size,
+
     );
   }
 }

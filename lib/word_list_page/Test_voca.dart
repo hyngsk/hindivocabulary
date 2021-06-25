@@ -126,25 +126,28 @@ class _TestVocaState extends State<TestVoca> {
       //처음에는 정답을 저장한 리스트 생성
       temp_randomword.add(hindi_correct_word);
       //답을 제외한 파트 별 단어 수에서 랜덤으로 3개 인덱스 뽑음
-      Loop1:
+
       for (int i = 0; i < 3; i++) {
         randomIndex = generateRandom(25, generateRandomseed());
         if (temp_randomword.first.compareTo(hindi_wrong_words[randomIndex]) !=
             0) {
           temp_randomword.add(hindi_wrong_words[randomIndex]);
         }
-        Loop2:
-        while (
-            temp_randomword.first.compareTo(hindi_wrong_words[randomIndex]) ==
-                0) {
-          randomIndex = generateRandom(25, generateRandomseed());
-          //3개의 랜덤 단어를 저장
-          if (temp_randomword.first.compareTo(hindi_wrong_words[randomIndex]) !=
-              0) {
-            temp_randomword.add(hindi_wrong_words[randomIndex]);
-            break Loop2;
-          }
+        else{
+          while(true)
+            {
+              randomIndex = generateRandom(25, generateRandomseed());
+              //3개의 랜덤 단어를 저장
+              if (temp_randomword.first.compareTo(hindi_wrong_words[randomIndex]) !=
+                  0) {
+                temp_randomword.add(hindi_wrong_words[randomIndex]);
+                break;
+
+              }
+
+            }
         }
+
       }
 
       //뽑는 4개중 중복된 인덱스를 걸러내는 반복문

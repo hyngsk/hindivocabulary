@@ -6,6 +6,7 @@ import 'package:hindivocabulary/word_list_page/word_one_by_one_view.dart';
 import 'package:hindivocabulary/function/unmemory_list.dart';
 import '../main.dart';
 
+
 //단어 외우는 방식 정할 때 나오는 사진, 문자
 final List<Map> select_icon_for_word = [
   {'id': 0, 'image': 'pictures/Choice_Voca/List_Voca.jpg', 'title': '단어장'},
@@ -31,6 +32,7 @@ class level_ extends StatefulWidget {
     this.file_name = file_name;
   }
 
+
   @override
   level_State createState() => level_State(
       this.wordlist, this.start_end_num, this.chapter_list, this.file_name);
@@ -41,6 +43,7 @@ class level_State extends State<level_> {
   List<String> wordlist;
   List<List> start_end_num;
   String file_name;
+
 
   level_State(List<String> wordlist, List<List> start_end_num,
       String chapter_list, String file_name) {
@@ -56,11 +59,13 @@ class level_State extends State<level_> {
     setState(() {
       if ((wordlist.getString('current_word_chapter')) == null) {
         (wordlist.setString('current_word_chapter', 'A0 part1 (1-30)'));
-      } else
-        (wordlist.setString('current_word_chapter', this.chapter_list));
+
+
+      }
+      else
+       (wordlist.setString('current_word_chapter',this.chapter_list));
     });
   }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -69,14 +74,13 @@ class level_State extends State<level_> {
 
   @override
   Widget build(BuildContext context) {
+
     //화면별 넓이 비율 자동 조절 변수
-    var horizontal_size = MediaQuery.of(context).size.width -
-        MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+    var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+        -MediaQuery.of(context).padding.right;
     var vertical_size = (MediaQuery.of(context).size.height -
         AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom);
+        MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
     //단어장 보여주는 방식 정하는 alertdialog
     void alert(BuildContext context, int start, int end, String page_title,
@@ -113,14 +117,12 @@ class level_State extends State<level_> {
         ),
         content: Builder(
           builder: (context) {
-            loading = false;
-            var horizontal_size = MediaQuery.of(context).size.width -
-                MediaQuery.of(context).padding.left -
-                MediaQuery.of(context).padding.right;
+            loading =false;
+            var horizontal_size = MediaQuery.of(context).size.width-MediaQuery.of(context).padding.left
+                -MediaQuery.of(context).padding.right;
             var vertical_size = (MediaQuery.of(context).size.height -
                 AppBar().preferredSize.height -
-                MediaQuery.of(context).padding.top -
-                MediaQuery.of(context).padding.bottom);
+                MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom);
 
             return WillPopScope(
                 child: Container(
@@ -133,124 +135,134 @@ class level_State extends State<level_> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
-                          child: Container(
-                            width: horizontal_size * 0.23,
-                            height: vertical_size * 0.19,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  select_icon_for_word[0]['image'],
-                                  width: horizontal_size * 0.2,
-                                  height: vertical_size * 0.13,
+                        child: Container(
+                          width: horizontal_size * 0.23,
+                          height: vertical_size * 0.19,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                select_icon_for_word[0]['image'],
+                                width: horizontal_size * 0.2,
+                                height: vertical_size * 0.13,
+                              ),
+                              Text(
+                                select_icon_for_word[0]['title'],
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
                                 ),
-                                Text(
-                                  select_icon_for_word[0]['title'],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                  ),
-                                )
-                              ],
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            loading=true;
+                          });
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => new word_list_voca(
+                              start_word_num: start,
+                              finish_word_num: end,
+                              page_name: page_title,
+                              file_name: file_name,
                             ),
                           ),
-                          onTap: () {
-                            setState(() {
-                              loading = true;
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => new word_list_voca(
-                                  start_word_num: start,
-                                  finish_word_num: end,
-                                  page_name: page_title,
-                                  file_name: file_name,
-                                ),
-                              ),
-                            );
-                          }),
+                        );
+
+          }
+                      ),
                       InkWell(
-                          child: Container(
-                            width: horizontal_size * 0.23,
-                            height: vertical_size * 0.19,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  select_icon_for_word[1]['image'],
-                                  width: horizontal_size * 0.2,
-                                  height: vertical_size * 0.13,
+                        child: Container(
+                          width: horizontal_size * 0.23,
+                          height: vertical_size * 0.19,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                select_icon_for_word[1]['image'],
+                                width: horizontal_size * 0.2,
+                                height: vertical_size * 0.13,
+                              ),
+                              Text(
+                                select_icon_for_word[1]['title'],
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
                                 ),
-                                Text(
-                                  select_icon_for_word[1]['title'],
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            loading =true;
+                          });
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => new word_one_by_one_view(
+                              start_word_num: start,
+                              finish_word_num: end,
+                              page_name: page_title,
+                              file_name: file_name,
                             ),
                           ),
-                          onTap: () {
-                            setState(() {
-                              loading = true;
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => new word_one_by_one_view(
-                                  start_word_num: start,
-                                  finish_word_num: end,
-                                  page_name: page_title,
-                                  file_name: file_name,
-                                ),
-                              ),
-                            );
-                          }),
+                        );
+
+          }
+                      ),
                       InkWell(
-                          child: Container(
-                            width: horizontal_size * 0.23,
-                            height: vertical_size * 0.19,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  select_icon_for_word[2]['image'],
-                                  width: horizontal_size * 0.2,
-                                  height: vertical_size * 0.13,
-                                ),
-                                Text(
-                                  select_icon_for_word[2]['title'],
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              loading = true;
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => new TestVoca(
-                                  start_word_num: start,
-                                  finish_word_num: end,
-                                  page_name: page_title,
-                                  file_name: file_name,
-                                ),
+                        child: Container(
+                          width: horizontal_size * 0.23,
+                          height: vertical_size * 0.19,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                select_icon_for_word[2]['image'],
+                                width: horizontal_size * 0.2,
+                                height: vertical_size * 0.13,
                               ),
-                            );
-                          }),
+                              Text(
+                                select_icon_for_word[2]['title'],
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            loading=true;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                              new TestVoca(
+                                start_word_num: start,
+                                finish_word_num: end,
+                                page_name: page_title,
+                                file_name: file_name,
+                              ),
+                            ),
+
+                          );
+
+                        }
+                      ),
                     ],
                   ),
                 ),
-                onWillPop: () async {
+                onWillPop: ()async {
                   Navigator.pop(context);
-                });
+
+                }
+                );
           },
         ),
       );
@@ -311,8 +323,7 @@ class level_State extends State<level_> {
                     ),
                   ),
                 ),
-                loadingAnimation(
-                    loading, vertical_size * 0.01, horizontal_size),
+                loadingAnimation(loading, vertical_size*0.01, horizontal_size),
                 Expanded(
                   child: ListView.separated(
                       padding:
@@ -345,14 +356,17 @@ class level_State extends State<level_> {
   }
 }
 
-Widget loadingAnimation(
-    bool loading, double vertical_size, double horizontal_size) {
-  if (loading) {
-    return LinearProgressIndicator();
-  } else {
+Widget loadingAnimation(bool loading,double vertical_size, double horizontal_size)
+{
+  if(loading)
+    {
+      return LinearProgressIndicator();
+    }
+  else{
     return Divider(
       color: Colors.white,
       height: vertical_size,
+
     );
   }
 }
