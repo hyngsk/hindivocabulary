@@ -5,7 +5,7 @@ import 'package:hindivocabulary/function/unmemory_list.dart';
 import 'package:hindivocabulary/word_list_page/words.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:hindivocabulary/function/test_result_page.dart';
+import 'package:hindivocabulary/function/test_result_sentence_page.dart';
 import 'package:hindivocabulary/main.dart';
 import 'package:hindivocabulary/clfpt_wordlist/CFLPT_chapter_list.dart';
 
@@ -701,7 +701,7 @@ class _sentenceState extends State<sentence> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => test_result(
+              builder: (BuildContext context) => test_sentence_result(
                   page_name,
                   _total_itemcount,
                   correct,

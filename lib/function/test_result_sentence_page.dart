@@ -5,7 +5,7 @@ import 'package:hindivocabulary/main.dart';
 
 //시험 후 틀린 단어 한 번 보고 시험 점수도 알 수 있는 페이지
 
-class test_result extends StatefulWidget {
+class test_sentence_result extends StatefulWidget {
   //해당 단원 이름
   String _page_name;
 
@@ -19,7 +19,7 @@ class test_result extends StatefulWidget {
   List<String> wrong_hindi_words = new List<String>();
   List<String> wrong_korean_words = new List<String>();
 
-  test_result(String _page_name, int _total_itemcount, int _correct_count,
+  test_sentence_result(String _page_name, int _total_itemcount, int _correct_count,
       List<String> wrong_hindi_words, List<String> wrong_korean_words) {
     this._page_name = _page_name;
     this._total_itemcount = _total_itemcount;
@@ -29,7 +29,7 @@ class test_result extends StatefulWidget {
   }
 
   @override
-  _test_resultState createState() => _test_resultState(
+  _test_sentence_resultState createState() => _test_sentence_resultState(
       this._page_name,
       this._total_itemcount,
       this._correct_count,
@@ -37,7 +37,7 @@ class test_result extends StatefulWidget {
       this.wrong_korean_words);
 }
 
-class _test_resultState extends State<test_result> {
+class _test_sentence_resultState extends State<test_sentence_result> {
   //해당 단원 이름
   String _page_name;
 
@@ -57,7 +57,7 @@ class _test_resultState extends State<test_result> {
   List<String> wrong_hindi_words = new List<String>();
   List<String> wrong_korean_words = new List<String>();
 
-  _test_resultState(String _page_name, int _total_itemcount, int _correct_count,
+  _test_sentence_resultState(String _page_name, int _total_itemcount, int _correct_count,
       List<String> wrong_hindi_words, List<String> wrong_korean_words) {
     this._page_name = _page_name;
     this._total_itemcount = _total_itemcount;
@@ -120,15 +120,15 @@ class _test_resultState extends State<test_result> {
     int correct_word_num;
 
     setState(() {
-      if((wordlist.getInt('total_word'))==null || (wordlist.getInt('total_word_correct'))==null)
+      if((wordlist.getInt('total_sentence'))==null || (wordlist.getInt('total_sentence_correct'))==null)
       {
         total_record_grade = '시험 미실시';
         total_record_score = 0;
-        wordlist.setString('word_grade', total_record_grade);
+        wordlist.setString('sentence_grade', total_record_grade);
       }
       else{
-        total_word_num = wordlist.getInt('total_word');
-        correct_word_num = wordlist.getInt('total_word_correct');
+        total_word_num = wordlist.getInt('total_sentence');
+        correct_word_num = wordlist.getInt('total_sentence_correct');
         total_record_score = ((correct_word_num/total_word_num)*100).round();
         if(total_record_score<30)
           total_record_grade = 'F';
@@ -145,7 +145,7 @@ class _test_resultState extends State<test_result> {
         else
           total_record_grade = 'A+';
 
-        wordlist.setString('word_grade', total_record_grade);
+        wordlist.setString('sentence_grade', total_record_grade);
       }
 
     });
@@ -213,9 +213,9 @@ class _test_resultState extends State<test_result> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                    Color.fromARGB(240, 10, 15, 64),
-                    Color.fromARGB(240, 108, 121, 240)
-                  ])),
+                        Color.fromARGB(240, 10, 15, 64),
+                        Color.fromARGB(240, 108, 121, 240)
+                      ])),
               child: Column(
                 children: [
                   //파트 이름, 번호, 단어 수
@@ -282,7 +282,7 @@ class _test_resultState extends State<test_result> {
                           height: vertical_size * 0.25,
                           alignment: Alignment.center,
                           padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                           child: Column(
                             children: [
                               Container(
@@ -489,9 +489,9 @@ class _mySentence_resultState extends State<mySentence_result> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                    Color.fromARGB(240, 10, 15, 64),
-                    Color.fromARGB(240, 108, 121, 240)
-                  ])),
+                        Color.fromARGB(240, 10, 15, 64),
+                        Color.fromARGB(240, 108, 121, 240)
+                      ])),
               child: Column(
                 children: [
                   //파트 이름, 번호, 단어 수

@@ -37,7 +37,7 @@ class level_SentenceState extends State<level_Sentence> {
     this.start_end_num = start_end_num;
     this.file_name = file_name;
   }
-  _loading() async {
+  _loading(String chapter_sentence) async {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     setState(() {
       if ((wordlist.getString('current_sentence_chapter')) == null) {
@@ -46,7 +46,7 @@ class level_SentenceState extends State<level_Sentence> {
 
       }
       else{
-        (wordlist.setString('current_sentence_chapter',this.chapter_list));
+        (wordlist.setString('current_sentence_chapter',chapter_sentence));
       }
 
     });
@@ -134,6 +134,7 @@ class level_SentenceState extends State<level_Sentence> {
                             trailing: Icon(Icons.keyboard_arrow_right),
                             onTap: () {
                               setState(() {
+                                _loading(wordlist[index]);
                                 loading = true;
                               });
                               Navigator.push(

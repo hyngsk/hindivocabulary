@@ -51,10 +51,10 @@ class level_State extends State<level_> {
     this.wordlist = wordlist;
     this.start_end_num = start_end_num;
     this.file_name = file_name;
-    _loading();
+
   }
 
-  _loading() async {
+  _loading(String chapter) async {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     setState(() {
       if ((wordlist.getString('current_word_chapter')) == null) {
@@ -63,7 +63,7 @@ class level_State extends State<level_> {
 
       }
       else
-       (wordlist.setString('current_word_chapter',this.chapter_list));
+       (wordlist.setString('current_word_chapter',chapter));
     });
   }
   @override
@@ -238,6 +238,7 @@ class level_State extends State<level_> {
                         onTap: () {
                           setState(() {
                             loading=true;
+
                           });
                           Navigator.push(
                             context,
@@ -335,8 +336,12 @@ class level_State extends State<level_> {
                         return ListTile(
                           title: Text(wordlist[index]),
                           trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () => alert(context, this_page_start_num,
-                              this_page_end_num, wordlist[index], file_name),
+                          onTap: () {
+                            setState(() {
+                              _loading(wordlist[index]);
+                            });
+                            alert(context, this_page_start_num,
+                              this_page_end_num, wordlist[index], file_name);}
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>

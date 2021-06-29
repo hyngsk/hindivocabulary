@@ -112,11 +112,13 @@ class unMemory_sentence {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     int count;
 
-    if ((wordlist.getInt('count_num_sen') ?? 0) == 0) {
-      (wordlist.setInt('count_num_sen', 1));
+    if (wordlist.getInt('count_num_sen')==null || wordlist.getInt('count_num_sen')==0) {
+      wordlist.setInt('count_num_sen', 1);
+      count = wordlist.getInt('count_num_sen');
 
-      count = (wordlist.getInt('count_num_sen'));
-    } else {
+    }
+
+    else {
       count = (wordlist.getInt('count_num_sen'));
       count = count + 1;
       wordlist.setInt('count_num_sen', count);

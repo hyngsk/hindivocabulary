@@ -48,7 +48,7 @@ class setting extends StatelessWidget {
             onTap: () => alert(
                 context,
                 '앱 정보',
-                '▶ 앱 기획 및 제작자\n한국외국어대학교 인도학과 15학번 구태훈\n\n▶ 아이콘 및 배너 디자인 총괄 담당\n (UI Design)\n Park SoJiung, 구태훈\n\n▶ 앱 소유권\n 한국외국어대학교 특수외국어진흥원(CFL)  ',
+                '▶ 앱 기획 및 제작자\n한국외국어대학교 인도학과 15학번 구태훈\n\n▶ 아이콘 및 배너 디자인 총괄 담당\n Park SoJiung, 구태훈\n\n▶ 앱 검수 및 수정\n 신윤수, 이주연, 정유진, 최영우\n\n▶ 앱 소유권\n 한국외국어대학교 특수외국어진흥원(CFL)  ',
                 15),
           ),
           ListTile(
@@ -206,6 +206,15 @@ class faqList extends StatelessWidget {
                             context,
                             '문장 학습',
                             '문장 학습에서 틀린 문장은 CFLPT 단어 부분을 참고했습니다. 해당 문장은 CFLPT 단어장에 있는 예시 문장을 근거로 제작되었습니다',
+                            14),
+                      ),
+                      ListTile(
+                        title: Text('메인 화면 단어, 문장 등급은 어떤 기준인가요?'),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                        onTap: () => alert(
+                            context,
+                            '등급 기',
+                            '등급의 기준은 시험 단어 중 테스트 기능, 문장 학습을 완료하면 맞은 단어와 지금까지 학습한 단어 수를 계산합니다. 이를 근거로 30점 미만이면 F이고 10점 단위마다 등급이 올라갑니다.',
                             14),
                       ),
                       ListTile(
