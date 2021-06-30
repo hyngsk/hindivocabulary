@@ -53,7 +53,15 @@ class level_State extends State<level_> {
     this.file_name = file_name;
 
   }
+  //해당 챕터를 진행했는지 아니면 아직 진행하지 않았는지 구분하는 함수. 1이면 해당 챕터 공부했음, null이면 아직 안 함.
+  _completed_chapter_word_distinguish(String chapter) async{
+    SharedPreferences completed_words_chapter = await SharedPreferences.getInstance();
+    setState(() {
+      completed_words_chapter.setInt(chapter, 1);
+    });
+  }
 
+  //해당 챕터를 저장한 부분을 불러오고 없으면 저장하는 함수
   _loading(String chapter) async {
     SharedPreferences wordlist = await SharedPreferences.getInstance();
     setState(() {
@@ -338,7 +346,10 @@ class level_State extends State<level_> {
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
                             setState(() {
+                              //챕터 클릭하면 완료한 챕터로 표시
+                              _completed_chapter_word_distinguish(wordlist[index]);
                               _loading(wordlist[index]);
+
                             });
                             alert(context, this_page_start_num,
                               this_page_end_num, wordlist[index], file_name);}

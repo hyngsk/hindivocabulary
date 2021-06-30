@@ -90,8 +90,12 @@ class _TestVocaState extends State<TestVoca> {
   //단어당 4지 선다형 과 정답을 뽑을 때 쓰는 변수
   Map<String, dynamic> question;
   //build가 주기적으로 일어나며 makequestion 함수에 랜덤 기능이 있으므로
+
   //한 번만 진행하기 위해 만든 bool 변수
   bool only_one_time_makequestion = true;
+
+  //한 번만 결과 페이지 나타내기 위해 만든 bool qustn
+  bool only_one_time_show_result = true;
 
   Map<String, dynamic> make_question(
       bool choice_num,
@@ -239,7 +243,7 @@ class _TestVocaState extends State<TestVoca> {
 
   @override
   Widget build(BuildContext context) {
-    print("build");
+
 
     var horizontal_size = MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
@@ -270,8 +274,6 @@ class _TestVocaState extends State<TestVoca> {
 
                   this.korean_word = snapshot.data[global_index][2].toString();
 
-
-                  //print(question);
                 } else {
                   try {
                     if (global_index < _total_itemcount &&
@@ -282,16 +284,22 @@ class _TestVocaState extends State<TestVoca> {
                       this.korean_word =
                           snapshot.data[global_index][2].toString();
 
-
-                      //print(question);
-
                     } else {
-                      move_page(context, this.page_name, this._total_itemcount,
-                          this.correct, wrong_hindi_words, wrong_korean_words);
+                      if(only_one_time_show_result)
+                        {
+                          move_page(context, this.page_name, this._total_itemcount,
+                              this.correct, wrong_hindi_words, wrong_korean_words);
+                        }
+                      only_one_time_show_result = false;
+
                     }
                   } on Exception catch (_) {
-                    move_page(context, this.page_name, this._total_itemcount,
-                        this.correct, wrong_hindi_words, wrong_korean_words);
+                    if(only_one_time_show_result)
+                      {
+                        move_page(context, this.page_name, this._total_itemcount,
+                            this.correct, wrong_hindi_words, wrong_korean_words);
+                      }
+                    only_one_time_show_result = false;
                   }
                 }
 
@@ -876,7 +884,8 @@ void move_page(
     int _total_itemcount,
     int correct,
     List<String> wrong_hindi_words,
-    List<String> wrong_korean_words) {
+    List<String> wrong_korean_words,
+) {
   SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
     Navigator.push(
         context,
@@ -888,5 +897,6 @@ void move_page(
                 wrong_hindi_words,
                 wrong_korean_words)));
   });
+
 }
 

@@ -52,6 +52,13 @@ class level_SentenceState extends State<level_Sentence> {
     });
   }
 
+  //해당 챕터를 진행했는지 아니면 아직 진행하지 않았는지 구분하는 함수. 1이면 해당 챕터 공부했음, null이면 아직 안 함.
+  _completed_chapter_sentence_distinguish(String chapter) async{
+    SharedPreferences completed_sentences_chapter = await SharedPreferences.getInstance();
+    setState(() {
+      completed_sentences_chapter.setInt(chapter, 1);
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -134,6 +141,7 @@ class level_SentenceState extends State<level_Sentence> {
                             trailing: Icon(Icons.keyboard_arrow_right),
                             onTap: () {
                               setState(() {
+                                _completed_chapter_sentence_distinguish(wordlist[index]);
                                 _loading(wordlist[index]);
                                 loading = true;
                               });
