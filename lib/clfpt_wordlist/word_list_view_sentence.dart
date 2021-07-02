@@ -52,11 +52,13 @@ class level_SentenceState extends State<level_Sentence> {
     });
   }
 
-  //해당 챕터를 진행했는지 아니면 아직 진행하지 않았는지 구분하는 함수. 1이면 해당 챕터 공부했음, null이면 아직 안 함.
+  //해당 챕터를 진행했는지 아니면 아직 진행하지 않았는지 구분하는 함수. 2이면 해당 챕터 공부했음, null이면 아직 안 함.
+  //진행한 챕터를 2로 표시한 이유는 단어 학습에서 이미 진행한 것을 1로 표시하였기 때문. 둘다 1로 표시하면 캐쉬 정보가 공유되어
+  //같이 퍼센트가 올라가는 상황이 도래됨.
   _completed_chapter_sentence_distinguish(String chapter) async{
     SharedPreferences completed_sentences_chapter = await SharedPreferences.getInstance();
     setState(() {
-      completed_sentences_chapter.setInt(chapter, 1);
+      completed_sentences_chapter.setInt(chapter, 2);
     });
   }
   @override

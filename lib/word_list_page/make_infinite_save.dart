@@ -26,7 +26,7 @@ calculate_progress_sentence() async{
   List<String> total_page = A0_word_list_page+ A1_word_list_page+A2_word_list_page+B1_word_list_page;
   SharedPreferences completed_sentences_chapter = await SharedPreferences.getInstance();
   for (int i =0; i<total_length; i++){
-    if(completed_sentences_chapter.getInt(total_page[i])==1){
+    if(completed_sentences_chapter.getInt(total_page[i])==2){
       current_percentage+=1;
     }
   }

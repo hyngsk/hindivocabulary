@@ -105,12 +105,12 @@ _downloading_current_sentence_chapter() async{
         this.rememorize_sentence = (wordlist.getInt('count_num_sen') ?? 0);
       }
       if (wordlist.getString('word_grade') == null) {
-        this.current_word_Grade = 'None';
+        this.current_word_Grade = '시험 미실시';
       } else {
         this.current_word_Grade = wordlist.getString('word_grade');
       }
       if (wordlist.getString('sentence_grade') == null) {
-        this.current_sentence_Grade = 'None';
+        this.current_sentence_Grade = '시험 미실시';
       } else {
         this.current_sentence_Grade = wordlist.getString('sentence_grade');
       }
@@ -365,7 +365,7 @@ _downloading_current_sentence_chapter() async{
                             animation: true,
                             percent: this.current_word_Percentage,
                             center: new Text(
-                              this.current_word_Percentage.toStringAsFixed(2).toString()+"%",
+                              ((this.current_word_Percentage)*100).toStringAsFixed(2).toString()+"%",
                               style:
                               new TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                             ),
@@ -385,7 +385,7 @@ _downloading_current_sentence_chapter() async{
                             animation: true,
                             percent: this.current_sentence_Percentage,
                             center: new Text(
-                              this.current_sentence_Percentage.toStringAsFixed(2).toString()+"%",
+                              ((this.current_sentence_Percentage)*100).toStringAsFixed(2).toString()+"%",
                               style:
                               new TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                             ),

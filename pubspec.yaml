@@ -74,10 +74,43 @@ flutter:
     - pictures/cfl_logo.png
     - pictures/remember_again.png
     - assets/loading.gif
+    #A0 엑셀 파일 리스트(A0는 양이 적어 나누지 않음)
     - assets/A0.xlsx
-    - assets/A1.xlsx
-    - assets/A2.xlsx
-    - assets/B1.xlsx
+
+    #A1 엑셀 파일 리스트
+    - assets/A1_1.xlsx
+    - assets/A1_2.xlsx
+    - assets/A1_3.xlsx
+    - assets/A1_4.xlsx
+    - assets/A1_5.xlsx
+    - assets/A1_6.xlsx
+    - assets/A1_7.xlsx
+    - assets/A1_8.xlsx
+    #A2 엑셀 파일 리스트
+    - assets/A2_1.xlsx
+    - assets/A2_2.xlsx
+    - assets/A2_3.xlsx
+    - assets/A2_4.xlsx
+    - assets/A2_5.xlsx
+    - assets/A2_6.xlsx
+    - assets/A2_7.xlsx
+    - assets/A2_8.xlsx
+    - assets/A2_9.xlsx
+    - assets/A2_10.xlsx
+    #B1 엑셀 파일 리스트
+    - assets/B1_1.xlsx
+    - assets/B1_2.xlsx
+    - assets/B1_3.xlsx
+    - assets/B1_4.xlsx
+    - assets/B1_5.xlsx
+    - assets/B1_6.xlsx
+    - assets/B1_7.xlsx
+    - assets/B1_8.xlsx
+    - assets/B1_9.xlsx
+    - assets/B1_10.xlsx
+    - assets/B1_11.xlsx
+    - assets/B1_12.xlsx
+    - assets/B1_13.xlsx
 
     #초기 기능 설명
     - pictures/introduction/delete_my_word.jpg
