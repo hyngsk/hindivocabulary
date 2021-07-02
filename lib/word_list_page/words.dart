@@ -155,7 +155,7 @@ Future<List<dynamic>> make_word_list(
 
   List<dynamic> all_row = excel.tables['Sheet1'].rows;
 
-  for(int i =0; i<finish_index-start_index; i++){
+  for(int i =0; i<finish_index-start_index+1; i++){
     word_list.add(all_row[i]);
   }
 

@@ -133,6 +133,9 @@ class _sentenceState extends State<sentence> {
 
   Color hint_color;
 
+  //결과 페이지 한 번만 보여주게 만드는 변수
+  bool result_page_one_time = true;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   //이번 해당 장에 틀린 힌디어 단어 리스트
@@ -163,7 +166,7 @@ class _sentenceState extends State<sentence> {
         child: new FutureBuilder(
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              //hint_color = Colors.white;
+
               if (index == 0 && count == 1) {
                 this.hindi_word = snapshot.data[index][0].toString();
                 this.word_case = snapshot.data[index][1].toString();
@@ -184,12 +187,22 @@ class _sentenceState extends State<sentence> {
                         snapshot.data[index][5].toString();
                     this.right_num = snapshot.data[index][6].toString();
                   } else {
+                    if(result_page_one_time)
+                      {
+                        move_page(context, this.page_name, this._total_itemcount,
+                            this.correct, wrong_hindi_words, wrong_korean_words);
+                      }
+                    result_page_one_time = false;
+
+
+                  }
+                } on Exception catch (_) {
+                  if(result_page_one_time)
+                  {
                     move_page(context, this.page_name, this._total_itemcount,
                         this.correct, wrong_hindi_words, wrong_korean_words);
                   }
-                } on Exception catch (_) {
-                  move_page(context, this.page_name, this._total_itemcount,
-                      this.correct, wrong_hindi_words, wrong_korean_words);
+                  result_page_one_time = false;
                 }
               }
 
@@ -550,15 +563,15 @@ class _sentenceState extends State<sentence> {
                                         ),
                                       ),
                                       onTap: () {
-                                        if (_total_itemcount == count) {
-                                          move_page(
-                                              context,
-                                              this.page_name,
-                                              this._total_itemcount,
-                                              this.correct,
-                                              wrong_hindi_words,
-                                              wrong_korean_words);
-                                        }
+                                        // if (_total_itemcount == count) {
+                                        //   move_page(
+                                        //       context,
+                                        //       this.page_name,
+                                        //       this._total_itemcount,
+                                        //       this.correct,
+                                        //       wrong_hindi_words,
+                                        //       wrong_korean_words);
+                                        // }
                                         setState(() {
                                           count++;
                                           index++;
@@ -602,15 +615,15 @@ class _sentenceState extends State<sentence> {
                                         ),
                                       ),
                                       onTap: () {
-                                        if (_total_itemcount == count) {
-                                          move_page(
-                                              context,
-                                              this.page_name,
-                                              this._total_itemcount,
-                                              this.correct,
-                                              wrong_hindi_words,
-                                              wrong_korean_words);
-                                        }
+                                        // if (_total_itemcount == count) {
+                                        //   move_page(
+                                        //       context,
+                                        //       this.page_name,
+                                        //       this._total_itemcount,
+                                        //       this.correct,
+                                        //       wrong_hindi_words,
+                                        //       wrong_korean_words);
+                                        // }
                                         setState(() {
                                           hint_color = Colors.white;
                                           count++;
